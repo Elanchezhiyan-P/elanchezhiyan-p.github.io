@@ -1,0 +1,423 @@
+import SeahorseImage from "@/assets/project/Seahorse.png";
+import MpsImage from "@/assets/project/MPS.jpg";
+import QueryBuilderImage from "@/assets/project/Querybuilder.png";
+import IcsImage from "@/assets/project/ics.jpg";
+import ScoutImage from "@/assets/project/Scout.jpg";
+import IOSBackupToolImage from "@/assets/project/Scout-iOS.png";
+import Qliq1sImage from "@/assets/project/Qliq1s.jpg";
+import ExpertConnectImage from "@/assets/project/expertconnectlegal.png";
+import KuralInsightsImage from "@/assets/project/kural-insights.png";
+import GitHubUserSearchImage from "@/assets/project/github-user-search.png";
+import WorldCountryExplorerImage from "@/assets/project/WorldCountryExplorer.png";
+import TamilSongDownloaderImage from "@/assets/project/tamilsongdownloader.png";
+import BlogSubscriptionImage from "@/assets/project/BlogSubscriptionSystem.png";
+import SSOIntegrationImage from "@/assets/project/SSOIntegration.png";
+import NetimobiledeviceImage from "@/assets/project/Netimobiledevice.png";
+import HeicJpegToolkitImage from "@/assets/project/HeicJpegToolkit.png";
+import ArcticCodeImage from "@/assets/project/arctic-code.png";
+import TeleMedixImage from "@/assets/project/telemedix.png";
+import { ProjectCardProps } from "@/components/ProjectCard";
+
+export const projects: (ProjectCardProps & {
+  keyFeatures?: string[];
+  technicalImplementation?: string;
+})[] = [
+  {
+    id: "seahorse-analytics",
+    title: "Seahorse Analytics",
+    description:
+      "A high-performance analytics platform designed for Seahorse metabolic analyzers. Delivers real-time data visualization and interactive dashboards for biological assay insights.",
+    image: SeahorseImage,
+    technologies: [".NET Core", "AmChart", "Canvas", "SignalR", "PostgreSQL"],
+    links: {
+      live: "https://seahorseanalytics.agilent.com",
+    },
+    type: "client",
+    featured: true,
+    keyFeatures: [
+      "Real-time data visualization",
+      "Scalable architecture",
+      "Integration with Seahorse analyzers",
+    ],
+    technicalImplementation:
+      "Developed with .NET Core for backend APIs and SignalR for live data feeds. PostgreSQL serves as the primary data store. Data visualizations are rendered using AmChart within a Canvas-powered UI for responsive performance.",
+  },
+  {
+    id: "mps-finance",
+    title: "MPS Applications - Finance",
+    description:
+      "Enterprise-grade financial module within the MPS platform enabling seamless transaction control, live reporting, and data-driven decision-making for clients.",
+    image: MpsImage,
+    technologies: ["JavaScript", "Dotnet Core", "SQL Server", "HangFire"],
+    links: {
+      live: "https://mps.secur-serv.com/",
+    },
+    type: "client",
+    featured: true,
+    keyFeatures: [
+      "Real-time transaction management",
+      "Comprehensive reporting",
+      "Secure data handling",
+    ],
+    technicalImplementation:
+      "Engineered using .NET Core and SQL Server. HangFire manages background jobs such as batch reporting and periodic transaction summarization. Frontend logic leverages JavaScript-based dynamic charts and tables.",
+  },
+  {
+    id: "query-builder",
+    title: "Query Builder",
+    description:
+      "A Windows-based GUI application enabling users to construct and test SQL queries visually with drag-and-drop capabilities, syntax validation, and result preview.",
+    image: QueryBuilderImage,
+    technologies: ["C#", "WinForms", "SQL Server"],
+    links: {
+      live: "#",
+    },
+    type: "client",
+    featured: false,
+    keyFeatures: [
+      "Drag-and-drop SQL query builder",
+      "Syntax highlighting and validation",
+      "Integrated test query execution",
+    ],
+    technicalImplementation:
+      "Built in C# using WinForms for a desktop interface. Employs SQL Server for query execution. Features syntax highlighting and error feedback integrated directly into the builder.",
+  },
+  {
+    id: "ics",
+    title: "ICS",
+    description:
+      "A secure locker management system enabling remote access to lockers in hospitals and banks via mobile/web applications, with integrated PLC control.",
+    image: IcsImage,
+    technologies: ["Dotnet Core", "C#", "PLC", "IOT", "SQL Server"],
+    links: {
+      live: "https://simtraxxwork.com/",
+    },
+    type: "client",
+    featured: false,
+    keyFeatures: [
+      "Remote locker control via web and mobile",
+      "Secure access logging and tracking",
+      "Integration with PLCs for real-time signal handling",
+    ],
+    technicalImplementation:
+      "Implemented using .NET Core and C# with IoT-based PLC communication protocols. SQL Server handles secure transaction logging. Real-time control and telemetry ensure operational reliability.",
+  },
+  {
+    id: "remotecom",
+    title: "RemoteCOM",
+    description:
+      "Real-time monitoring solution for parolees and individuals under house arrest, offering geolocation tracking and secure communication across North America.",
+    image: ScoutImage,
+    technologies: ["React", ".NET", "Azure", "SignalR"],
+    links: {
+      live: "https://rcomscout.com/login",
+    },
+    type: "client",
+    featured: true,
+    keyFeatures: [
+      "Real-time monitoring of individuals",
+      "Geolocation tracking",
+      "Secure communication and alert system",
+    ],
+    technicalImplementation:
+      "React is used for the frontend, while backend APIs are built in .NET Core. Real-time updates and alerts are managed using SignalR. Azure provides cloud hosting, identity, and access management.",
+  },
+  {
+    id: "ios-backup-tool",
+    title: "IOS Backup Tool",
+    description:
+      "A cross-platform desktop application for backing up iOS device data and viewing device metadata, supporting Apple protocols.",
+    image: IOSBackupToolImage,
+    technologies: [
+      "C#",
+      "DotNet Core",
+      "Apple Mobile Device API",
+      "iOS",
+      "Electron.Net",
+    ],
+    links: {
+      live: "https://remote-com.com/",
+    },
+    type: "client",
+    featured: false,
+    keyFeatures: [
+      "Local iOS device backup",
+      "Detailed device information viewer",
+      "Electron-powered cross-platform UI",
+    ],
+    technicalImplementation:
+      "Developed using Electron.NET and .NET Core. Interacts with Apple Mobile Device API to access and back up data. Offers a detailed device dashboard with local storage support.",
+  },
+  {
+    id: "qliq1s",
+    title: "Qliq1s",
+    description:
+      "A hybrid social platform combining personal social networking with business engagement features, available on both web and mobile.",
+    image: Qliq1sImage,
+    technologies: ["Dotnet Framework", "ZegoCloud", "Firebase"],
+    links: {
+      live: "https://qliq1s.com/",
+    },
+    type: "client",
+    featured: false,
+    keyFeatures: [
+      "Social media features (posts, likes, comments)",
+      "Business profiles and messaging",
+      "Mobile and web app versions",
+    ],
+    technicalImplementation:
+      "Flutter is used for building cross-platform UI. Backend logic is powered by .NET Framework. ZegoCloud provides messaging infrastructure, and Firebase supports real-time data sync and authentication.",
+  },
+  {
+    id: "expert-connect-legal",
+    title: "Expert Connect Legal",
+    description:
+      "A legal service marketplace facilitating expert discovery, consultations, and file exchange with integrated chat and payment.",
+    image: ExpertConnectImage,
+    technologies: ["Blob Storage", "Dotnet Core", "Azure SQL"],
+    links: {
+      live: "https://www.expertconnectlegal.com/web",
+    },
+    type: "client",
+    featured: false,
+    keyFeatures: [
+      "Booking system for legal services",
+      "Expert-client chat feature",
+      "Payment and invoice integration",
+    ],
+    technicalImplementation:
+      "Backend services developed in .NET Core, with Angular frontend integration. Azure Blob Storage manages document exchange, and Azure SQL ensures data persistence and scalability.",
+  },
+  {
+    id: "kural-insights",
+    title: "Kural Insights",
+    description:
+      "A minimalistic React web app that displays a random Thirukural verse with its English and Tamil translations every time the page is refreshed.",
+    image: KuralInsightsImage,
+    technologies: ["React.js", "HuggingFace"],
+    links: {
+      github: "https://github.com/Elanchezhiyan-P/KuralInsights",
+      live: "https://kural-insights.netlify.app/",
+    },
+    type: "personal",
+    featured: false,
+    keyFeatures: [
+      "Random Thirukural display",
+      "English and Tamil translation",
+      "Minimal UI with refresh trigger",
+    ],
+    technicalImplementation:
+      "Uses React.js for a lightweight interface and fetches curated Thirukural content from HuggingFace datasets. Designed for speed and simplicity with clean UI and API-driven content loading.",
+  },
+  {
+    id: "gitHub-user-search",
+    title: "GitHub User Search",
+    description:
+      "A React-based GitHub user lookup tool that fetches and displays detailed profiles including repositories, followers, and bio.",
+    image: GitHubUserSearchImage,
+    technologies: ["React.js", "Github API"],
+    links: {
+      github: "https://github.com/Elanchezhiyan-P/GitHub-User-Search",
+    },
+    type: "personal",
+    featured: false,
+    keyFeatures: [
+      "GitHub user profile lookup",
+      "Displays repositories, followers, and more",
+      "Simple search UI with error handling",
+    ],
+    technicalImplementation:
+      "Built with React.js and GitHub’s REST API. Axios handles data requests, and the app includes responsive error handling for user search scenarios and API limits.",
+  },
+  {
+    id: "world-country-explorer",
+    title: "World Country Explorer",
+    description:
+      "An educational web app for exploring detailed information about countries around the world with filtering, search, and responsive display.",
+    image: WorldCountryExplorerImage,
+    technologies: ["React.js", "MockingAPI"],
+    links: {
+      github: "https://github.com/Elanchezhiyan-P/world-country-explorer",
+    },
+    type: "personal",
+    featured: false,
+    keyFeatures: [
+      "List and explore countries worldwide",
+      "Displays flags, populations, and more",
+      "Search and filter functionality",
+    ],
+    technicalImplementation:
+      "Developed using React.js and REST Countries API. Modular components support filtering and search. Includes country flag, region, and demographic data in a mobile-friendly layout.",
+  },
+  {
+    id: "tamil-song-downloader",
+    title: "Tamil Song Downloader",
+    description:
+      "A CLI-based Python tool that scrapes Tamil song listings from online sources for downloading and offline listening.",
+    image: TamilSongDownloaderImage,
+    technologies: ["Python", "BeautifulSoup", "Scraping"],
+    links: {
+      github: "https://github.com/Elanchezhiyan-P/tamil-song-downloader",
+    },
+    type: "personal",
+    featured: false,
+    keyFeatures: [
+      "Scrape Tamil songs from various sources",
+      "Download songs via CLI",
+      "Parse and clean HTML content",
+    ],
+    technicalImplementation:
+      "Built with Python and BeautifulSoup for HTML parsing. Supports metadata cleanup and download of audio links. Basic CLI options allow filtering and site targeting.",
+  },
+  {
+    id: "blog-subscription-system",
+    title: "Blog Subscription System",
+    description:
+      "A basic console-based blog subscription utility for managing email subscribers and dispatching blog post updates.",
+    image: BlogSubscriptionImage,
+    technologies: ["Dotnet", "C#", "Console"],
+    links: {
+      github: "https://github.com/Elanchezhiyan-P/BlogSubscriptionSystem",
+      medium:
+        "https://elanchezhiyan-p.medium.com/how-to-implement-a-blog-subscription-system-in-c-using-events-ecab13b6d65b",
+    },
+    type: "personal",
+    featured: false,
+    keyFeatures: [
+      "Email-based blog subscription",
+      "Console-based management interface",
+      "Automatic notification on new posts",
+    ],
+    technicalImplementation:
+      "Written in C# as a command-line tool. Maintains subscribers in memory and simulates notifications. Easily extendable for email integrations or file-based storage.",
+  },
+  {
+    id: "SSOIntegrationSolution",
+    title: "SSOIntegrationSolution",
+    description:
+      "A comprehensive .NET Core web application demonstrating two common Single Sign-On (SSO) approaches: one using an interactive login button and another enabling automatic silent authentication. This solution is compatible with major Identity Providers (IdPs) such as Azure AD, Okta, or Auth0, offering seamless and secure login experiences across services.",
+    image: SSOIntegrationImage,
+    technologies: ["Dotnet Core", "C#", "Azure AD", "SSO"],
+    links: {
+      github: "https://github.com/Elanchezhiyan-P/SSOIntegrationSolution",
+    },
+    type: "personal",
+    featured: false,
+    keyFeatures: [
+      "SSO via Azure Active Directory",
+      "Dual implementation strategy",
+      "Secure user authentication flow",
+      "Interactive login and silent SSO flows",
+      "OAuth2 / OpenID Connect support",
+    ],
+    technicalImplementation:
+      "Developed using .NET Core and C#. The solution demonstrates two SSO approaches. The first uses a login button to redirect users to the identity provider for authentication and token exchange using OAuth2/OpenID Connect. The second automatically checks authentication status on protected routes and redirects to the IdP if needed. Authentication is configured using AddMicrosoftAccount and secure cookies. The project is designed to be IdP-agnostic with configuration driven from appsettings.json.",
+  },
+  {
+    id: "Netimobiledevice",
+    title: "Netimobiledevice",
+    description:
+      "A diagnostic utility that allows access to iOS device metadata from Windows machines using native communication protocols.",
+    image: NetimobiledeviceImage,
+    technologies: ["Dotnet Core", "C#", "iOS", "Scraping"],
+    links: {
+      github: "https://github.com/artehe/Netimobiledevice",
+    },
+    type: "opensource",
+    featured: true,
+    keyFeatures: [
+      "Access iOS device data from Windows",
+      "Retrieve detailed device metadata",
+      "Supports scraping and device info export",
+    ],
+    technicalImplementation:
+      "Built with .NET Core and C#. Connects to iOS devices via proprietary Apple interfaces and extracts system details. Supports data scraping, export, and integration with third-party tools.",
+  },
+  {
+    id: "ArcticCodeVaultContributor",
+    title: "Arctic Code Vault Contributor",
+    description:
+      "Contributed to open-source repositories that were archived in the GitHub Arctic Code Vault as part of GitHub's global archival initiative for preserving public repositories for future generations.",
+    image: ArcticCodeImage,
+    technologies: [
+      "GitHub",
+      "Open-Source",
+      "Archival Program",
+      "Digital Preservation",
+    ],
+    links: {
+      github:
+        "https://github.com/Elanchezhiyan-P/HospitalManagementSystem-using-python-flask-with-fingerprint-sensor",
+    },
+    type: "opensource",
+    featured: false,
+    keyFeatures: [
+      "Contributed to repositories selected for the GitHub Archive Program",
+      "Repositories preserved in the Arctic Code Vault for future generations",
+      "Recognized for contributing quality open-source software",
+    ],
+    technicalImplementation:
+      "The repositories included were built using Python, Flask, and other open-source technologies. These contributions were selected to be part of GitHub’s global initiative to preserve code long-term, ensuring its accessibility and historical value for future generations.",
+  },
+  {
+    id: "HeicJpegToolkit",
+    title: "HeicJpegToolkit",
+    description:
+      "A .NET-based utility library for converting HEIC images to JPEG and other common formats, designed for integration into existing workflows.",
+    image: HeicJpegToolkitImage,
+    technologies: ["Dotnet framework", "C#", "dll", "console"],
+    links: {
+      github: "https://github.com/Elanchezhiyan-P/HeicJpegToolkit",
+      nuget: "https://www.nuget.org/packages/HeicJpegToolkit",
+      medium:
+        "https://elanchezhiyan-p.medium.com/heic-to-jpg-converter-efficiently-convert-heic-images-to-jpg-using-heicjpegtoolkit-148c99c24653",
+    },
+    type: "nuget",
+    featured: true,
+    keyFeatures: [
+      "Convert HEIC to JPEG format",
+      "Supports additional image conversions",
+      "Lightweight .NET console utility",
+    ],
+    technicalImplementation:
+      "Developed as a .NET console app. Leverages Windows APIs and external DLLs to handle HEIC decoding and JPEG encoding. Optimized for performance in batch operations and desktop pipelines.",
+  },
+  {
+    id: "TeleMEDix",
+    title: "TeleMEDix",
+    description:
+      "TeleMEDix is a comprehensive telemedicine platform developed using .NET Core for backend services and React for the frontend. The system enables remote consultations and efficient patient management, adhering to CCDA and HL7 FHIR standards for secure healthcare data exchange. The platform is integrated with Azure services for scalable storage, using CosmosDB and Blob Storage for managing patient data and consultation files. A DICOM Viewer is incorporated for displaying and interacting with medical images, and Persona is used for secure user authentication and management.",
+    image: TeleMedixImage,
+    technologies: [
+      "Dotnet Core",
+      "CosmosDB",
+      "Azure",
+      "App Service",
+      "Blob",
+      "React",
+    ],
+    links: {
+      live: "https://tmx.azurewebsites.net/",
+    },
+    type: "client",
+    featured: true,
+    keyFeatures: [
+      "CCDA standard for patient data exchange",
+      "HL7 FHIR standard compliance",
+      "Remote consultations and patient management",
+      "Secure data storage and retrieval",
+      "React-based frontend",
+      "Persona integration for user management",
+      "DICOM Viewer for medical imaging",
+    ],
+    technicalImplementation:
+      "TeleMEDix combines .NET Core for backend API services and React for the dynamic frontend interface, creating a responsive and user-friendly experience. The backend integrates CosmosDB for scalable, secure patient data storage, while Azure Blob Storage is used to manage consultation files, medical records, and images. The application follows CCDA standards for patient data exchange and integrates with Kno2 for secure data interoperability. For medical imaging, a DICOM Viewer is implemented, allowing healthcare professionals to view and interact with medical images seamlessly. Persona is used for secure user management and authentication, ensuring robust user access control across the platform. This entire solution is hosted on Azure App Service, providing scalability and reliability.",
+  },
+];
+
+export const getFeaturedProjects = () =>
+  projects.filter((project) => project.featured);
+export const getProjectsByType = (type: string) =>
+  projects.filter((project) => project.type === type);
+export const getProjectById = (id: string) =>
+  projects.find((project) => project.id === id);
