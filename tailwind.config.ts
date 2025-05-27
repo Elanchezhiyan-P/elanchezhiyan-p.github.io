@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -53,33 +52,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Azure-inspired colors
-				azure: {
-					'50': '#f0f9ff',
-					'100': '#e0f2fe',
-					'200': '#bae6fd',
-					'300': '#7dd3fc',
-					'400': '#38bdf8',
-					'500': '#0ea5e9',
-					'600': '#0284c7',
-					'700': '#0369a1',
-					'800': '#075985',
-					'900': '#0c4a6e',
-					'950': '#082f49',
-				},
-				code: {
-					'50': '#f9fafb',
-					'100': '#f3f4f6',
-					'200': '#e5e7eb',
-					'300': '#d1d5db',
-					'400': '#9ca3af',
-					'500': '#6b7280',
-					'600': '#4b5563',
-					'700': '#374151',
-					'800': '#1f2937',
-					'900': '#111827',
-					'950': '#030712',
-				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -112,44 +84,11 @@ export default {
 					to: {
 						height: '0'
 					}
-				},
-				'fade-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateY(10px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
-				},
-				'fade-out': {
-					'0%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					},
-					'100%': {
-						opacity: '0',
-						transform: 'translateY(10px)'
-					}
-				},
-				'scale-in': {
-					'0%': {
-						transform: 'scale(0.95)',
-						opacity: '0'
-					},
-					'100%': {
-						transform: 'scale(1)',
-						opacity: '1'
-					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.4s ease-out',
-				'fade-out': 'fade-out 0.4s ease-out',
-				'scale-in': 'scale-in 0.3s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out'
 			}
 		}
 	},

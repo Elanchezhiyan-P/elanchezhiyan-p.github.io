@@ -1,137 +1,75 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import {
-  ArrowRight,
-  Code,
-  Github,
-  Package,
-  BookOpen,
-  ExternalLink,
-} from "lucide-react";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
-import ProjectCard from "@/components/ProjectCard";
-import BlogPostCard from "@/components/BlogPostCard";
-import { getFeaturedProjects } from "@/data/projects";
-import { getRecentBlogPosts } from "@/data/blog-posts";
-import EnhancedNavBar from "@/components/EnhancedNavBar";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Loader from "../components/Loader";
+import ChatbotWidget from "../components/ChatbotWidget";
+import HeroSection from "../components/HeroSection";
+import FeaturedProjectsSection from "../components/FeaturedProjectsSection";
+import RecentBlogsSection from "../components/RecentBlogsSection";
+import TestimonialsSection from "../components/TestimonialsSection";
+import { fetchProjects, Project } from "../data/projects";
+import { fetchBlogPosts, BlogPost } from "../data/blog-posts";
 
 const Index = () => {
-  const [featuredProjects, setFeaturedProjects] = useState([]);
-  const [recentPosts, setRecentPosts] = useState([]);
-  const [loadingProjects, setLoadingProjects] = useState(true);
-  const [loadingPosts, setLoadingPosts] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
+  const [recentBlogs, setRecentBlogs] = useState<BlogPost[]>([]);
 
-  // Fetch Featured Projects
   useEffect(() => {
-    const fetchProjects = async () => {
+    const loadData = async () => {
       try {
-        setLoadingProjects(true);
-        const projects = await getFeaturedProjects();
-        setFeaturedProjects(projects);
+        // Load featured projects
+        const projectsData = await fetchProjects();
+        const featured = projectsData.projects.filter(
+          (project) => project.featured
+        );
+        setFeaturedProjects(featured);
+
+        // Load recent blog posts (latest 3)
+        const blogs = await fetchBlogPosts();
+        const sortedBlogs = blogs.sort(
+          (a, b) =>
+            new Date(b.publishedAt).getTime() -
+            new Date(a.publishedAt).getTime()
+        );
+        setRecentBlogs(sortedBlogs.slice(0, 3));
       } catch (error) {
-        console.error("Error fetching featured projects:", error);
+        console.error("Error loading data:", error);
       } finally {
-        setLoadingProjects(false);
+        // Simulate loading time
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       }
     };
 
-    fetchProjects();
+    loadData();
   }, []);
 
-  // Fetch Recent Blog Posts
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoadingPosts(true);
-        const posts = await getRecentBlogPosts(3);
-        setRecentPosts(posts);
-      } catch (error) {
-        console.error("Error fetching recent blog posts:", error);
-      } finally {
-        setLoadingPosts(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
-    <main className="bg-gradient-to-br from-blue-50 via-white to-gray-100 min-h-screen">
-      <NavBar />
+    <motion.div
+      className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      <Navbar />
 
-      {/* Hero Section */}
-      <section className="flex flex-col md:flex-row items-center justify-between px-8 py-20 max-w-6xl mx-auto">
-        <div className="flex-1">
-          <h1 className="text-5xl font-extrabold text-blue-900 mb-4">
-            Hi, I'm <span className="text-blue-600">Elanchezhiyan</span>
-          </h1>
-          <p className="text-lg text-gray-700 mb-6">
-            .NET & Azure Developer | Building scalable cloud solutions and
-            sharing knowledge.
-          </p>
-          <div className="flex gap-4">
-            <Button asChild size="lg" className="rounded-full">
-              <Link to="/projects">View Projects</Link>
-            </Button>
+      <main className="container mx-auto px-4 py-8">
+        <HeroSection />
+        <FeaturedProjectsSection featuredProjects={featuredProjects} />
+        <RecentBlogsSection recentBlogs={recentBlogs} />
+        <TestimonialsSection />
+      </main>
 
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="rounded-full"
-            >
-              <Link to="/contact">Get in Touch</Link>
-            </Button>
-          </div>
-        </div>
-        <div className="flex-1 flex justify-center mt-10 md:mt-0">
-          <img
-            src="https://avatars.githubusercontent.com/u/29861348?v=4"
-            alt="Elanchezhiyan"
-            className="w-56 h-56 rounded-full shadow-lg border-4 border-blue-200 object-cover"
-          />
-        </div>
-      </section>
-
-      {/* Featured Projects Section */}
-      <section className="max-w-6xl mx-auto px-8 py-12" id="projects">
-        <h2 className="text-3xl font-bold text-blue-900 mb-8">
-          Featured Projects
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {loadingProjects ? (
-            <div className="text-center">Loading projects...</div>
-          ) : (
-            featuredProjects
-              .slice(0, 3)
-              .map((project) => <ProjectCard key={project.id} {...project} />)
-          )}
-        </div>
-      </section>
-
-      {/* Recent Blog Posts Section */}
-      <section className="max-w-6xl mx-auto px-8 py-12" id="blog">
-        <h2 className="text-3xl font-bold text-blue-900 mb-8">
-          Latest Blog Posts
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {loadingPosts ? (
-            <div className="text-center">Loading articles...</div>
-          ) : (
-            recentPosts
-              .slice(0, 3)
-              .map((post) => <BlogPostCard key={post.id} {...post} />)
-          )}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="text-center py-8 text-gray-500">
-        &copy; {new Date().getFullYear()} Elanchezhiyan P. All rights reserved.
-      </footer>
-    </main>
+      <Footer />
+      <ChatbotWidget />
+    </motion.div>
   );
 };
 

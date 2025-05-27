@@ -1,0 +1,28 @@
+{
+  "testimonials": [
+    {
+      "id": 1,
+      "text": "I recommend Elanchezhiyan for his exceptional skills in .NET development. His proficiency in coding, problem-solving, and dedication to delivering high-quality solutions make them an asset to any team.",
+      "author": "Arun Prasadh",
+      "position": "Project Manager",
+      "company": "Guidewire Business Analyst",
+      "avatar": "https://media.licdn.com/dms/image/v2/D5603AQF8w4f_Suz0MA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1701147321636?e=2147483647&v=beta&t=7UBP5lDqggajOfwo0T6mlST8zruANiukqMsQYBxXUwg"
+    },
+    {
+      "id": 2,
+      "text": "A strong leader with a problem-solving mindset. His contributions made a measurable impact on our projects.",
+      "author": "Shehab Rasheed",
+      "position": "Project Manager",
+      "company": "Scantron Corporation",
+      "avatar": "#"
+    },
+    {
+      "id": 3,
+      "text": "Elanchezhiyan has demonstrated deep expertise in developing healthcare-related applications, including handling standards such as CCDA, FHIR, and compliance with HIPAA regulations. His technical acumen and domain knowledge make him a valuable contributor to any health IT project.",
+      "author": "Emanuel Mkrtichian",
+      "position": "Product Owner",
+      "company": "Bluezones Global",
+      "avatar": "#"
+    }
+  ]
+}

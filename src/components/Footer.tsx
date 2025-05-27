@@ -1,140 +1,96 @@
 import { Link } from "react-router-dom";
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Mail,
-  Facebook,
-  Instagram,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Twitter, Facebook, FileText } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+const socialLinks = [
+  { name: "GitHub", icon: Github, url: "https://github.com" },
+  { name: "LinkedIn", icon: Linkedin, url: "https://linkedin.com" },
+  { name: "Twitter", icon: Twitter, url: "https://twitter.com" },
+  { name: "Facebook", icon: Facebook, url: "https://facebook.com" },
+  { name: "Medium", icon: FileText, url: "https://medium.com" },
+];
+
+const FooterLink = ({
+  to,
+  children,
+}: {
+  to: string;
+  children: React.ReactNode;
+}) => (
+  <Link
+    to={to}
+    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+  >
+    {children}
+  </Link>
+);
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  const socialLinks = [
-    { icon: Mail, href: "mailto:elanche97@gmail.com", label: "Email" },
-    {
-      icon: Github,
-      href: "https://github.com/elanchezhiyan-p",
-      label: "GitHub",
-    },
-    {
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/elanchezhiyan-p/",
-      label: "LinkedIn",
-    },
-    {
-      icon: Facebook,
-      href: "https://www.facebook.com/alwayselanchezhiyan",
-      label: "Facebook",
-    },
-    {
-      icon: Instagram,
-      href: "https://www.instagram.com/always_elanchezhiyan/",
-      label: "Instagram",
-    },
-    { icon: Twitter, href: "https://x.com/always_elan_p", label: "Twitter" },
-  ];
-
-  const footerLinks = [
-    {
-      heading: "Pages",
-      links: [
-        { text: "Home", path: "/" },
-        { text: "About", path: "/about" },
-        { text: "Projects", path: "/projects" },
-        { text: "Blog", path: "/blog" },
-        { text: "Contact", path: "/contact" },
-      ],
-    },
-    {
-      heading: "Resources",
-      links: [
-        { text: "Open Source", path: "/projects?filter=opensource" },
-        { text: "NuGet Packages", path: "/projects?filter=nuget" },
-        { text: "Medium Articles", path: "/blog" },
-      ],
-    },
-    {
-      heading: "Contact",
-      links: [
-        { text: "Email", path: "mailto:elanche97@gmail.com" },
-        {
-          text: "LinkedIn",
-          path: "https://www.linkedin.com/in/elanchezhiyan-p/",
-        },
-        { text: "Twitter", path: "https://x.com/always_elan_p" },
-      ],
-    },
-  ];
-
   return (
-    <footer className="bg-azure-50 dark:bg-azure-950/20 pt-16 pb-8">
+    <footer className="bg-gray-50 dark:bg-gray-900 py-12 relative">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-1">
-            <Link
-              to="/"
-              className="text-2xl font-bold text-azure-700 mb-4 block"
-            >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Brand Column */}
+          <div>
+            <h3 className="font-bold text-xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
               Elanchezhiyan P
-            </Link>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              Full-stack developer specializing in .NET, Azure, and cloud
-              technologies. Building secure, scalable applications and sharing
-              knowledge.
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4 max-w-xs">
+              A passionate .NET Full Stack Developer with over 6 years of
+              experience, specializing in Azure-based solutions.
             </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="text-foreground/80 hover:text-azure-600 transition-colors"
-                >
-                  <social.icon size={20} />
-                </a>
-              ))}
-            </div>
           </div>
 
-          {footerLinks.map((group) => (
-            <div key={group.heading} className="lg:col-span-1">
-              <h3 className="font-semibold mb-4 text-lg">{group.heading}</h3>
-              <ul className="space-y-2">
-                {group.links.map((link) => (
-                  <li key={link.text}>
-                    {link.path.startsWith("/") ? (
-                      <Link
-                        to={link.path}
-                        className="text-muted-foreground hover:text-azure-600 transition-colors"
-                      >
-                        {link.text}
-                      </Link>
-                    ) : (
-                      <a
-                        href={link.path}
-                        target={
-                          link.path.startsWith("mailto:") ? undefined : "_blank"
-                        }
-                        rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-azure-600 transition-colors"
-                      >
-                        {link.text}
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Quick Links Column */}
+          <div>
+            <h4 className="font-semibold text-gray-900 dark:text-white mb-4">
+              Quick Links
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <FooterLink to="/">Home</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/about">About</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/projects">Projects</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/certifications">Certifications</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/blog">Blog</FooterLink>
+              </li>
+              <li>
+                <FooterLink to="/contact">Contact</FooterLink>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div>
+            <h4 className="font-semibold text-gray-900 dark:text-white mb-4">
+              Get In Touch
+            </h4>
+            <p className="text-gray-600 dark:text-gray-400 mb-2">
+              <a href="mailto:elanche97@gmail.com" className="hover:underline">
+                elanche97@gmail.com
+              </a>
+            </p>
+            <p className="text-gray-600 dark:text-gray-400">
+              <a href="tel:+919942644999" className="hover:underline">
+                +91 99426 44999
+              </a>
+            </p>
+          </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border/60 text-center md:text-left md:flex md:justify-center md:items-center">
-          <p className="text-sm text-muted-foreground">
-            © {currentYear} Elanchezhiyan P. All rights reserved.
+        {/* Social Links and Copyright */}
+        <div className="flex flex-col md:flex-row justify-center items-center mt-10 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-gray-600 dark:text-gray-400 mb-4 md:mb-0 text-center">
+            © {new Date().getFullYear()} Elanchezhiyan P. All rights reserved.
           </p>
         </div>
       </div>
