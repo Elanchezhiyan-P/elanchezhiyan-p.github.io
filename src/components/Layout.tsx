@@ -55,6 +55,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       document.documentElement.classList.add("dark");
     }
 
+    // Initialize theme color
+    const savedThemeColor = localStorage.getItem("themeColor") || "blue";
+    const root = document.documentElement;
+    root.classList.remove("theme-blue", "theme-green");
+    if (savedThemeColor === "green") {
+      root.style.setProperty("--primary", "142 69% 58%");
+      root.style.setProperty("--primary-foreground", "355 7% 97%");
+      root.classList.add("theme-green");
+    } else {
+      root.style.setProperty("--primary", "217.2 91.2% 59.8%");
+      root.style.setProperty("--primary-foreground", "222.2 84% 4.9%");
+      root.classList.add("theme-blue");
+    }
+
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
 
     checkMobile();
@@ -147,7 +161,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowSettings(true)}
-                className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
+                className="hidden rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
                 aria-label="Open settings"
               >
                 <Settings className="w-5 h-5" />
@@ -185,7 +199,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowSettings(true)}
-                className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
+                className="hidden rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
                 aria-label="Open settings"
               >
                 <Settings className="w-5 h-5" />

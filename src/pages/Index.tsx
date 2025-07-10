@@ -7,10 +7,20 @@ import {
   Zap,
   ChevronLeft,
   ChevronRight,
+  Github,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import projectsData from "@/data/projects.json";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 import SeahorseImage from "@/assets/project/Seahorse.png";
 import MpsImage from "@/assets/project/MPS.jpg";
@@ -163,7 +173,7 @@ const Index = () => {
               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 p-1 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-blue-500/25 theme-green:group-hover:shadow-green-500/25">
                 <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-4 flex items-center justify-center overflow-hidden">
                   <img
-                    src="../public/Elan.jpg"
+                    src="../Elan.jpg"
                     alt="Elanchezhiyan P"
                     className="w-full h-full rounded-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:brightness-110"
                   />
@@ -199,7 +209,7 @@ const Index = () => {
         </div>
 
         <div
-          className="relative overflow-hidden rounded-2xl glass hover-glow border border-gray-300 dark:border-gray-600 shadow-md"
+          className="relative overflow-hidden rounded-2xl shadow-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 transition-all duration-500"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -209,51 +219,72 @@ const Index = () => {
           >
             {featuredProjects.map((project) => (
               <div key={project.id} className="w-full flex-shrink-0">
-                <div className="flex flex-col lg:flex-row">
-                  <div className="lg:w-1/2">
-                    <img
-                      src={imageMap[project.id]}
-                      alt={project.title}
-                      className="w-full h-64 lg:h-96 object-cover"
-                    />
+                <Card className="group flex flex-col lg:flex-row overflow-hidden border-none bg-transparent shadow-none">
+                  {/* Image Side */}
+                  <div className="lg:w-1/2 flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6 lg:p-10">
+                    <div className="relative w-full h-64 lg:h-80 flex items-center justify-center">
+                      <img
+                        src={imageMap[project.id]}
+                        alt={project.title}
+                        className="w-full h-full object-cover rounded-2xl shadow-md transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105"
+                      />
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
+                    </div>
                   </div>
-                  <div className="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
-                    <h3 className="text-2xl lg:text-3xl font-bold mb-4">
+                  {/* Content Side */}
+                  <div className="lg:w-1/2 flex flex-col justify-center p-8 lg:p-12">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300 px-3 py-1 rounded-full text-xs font-semibold tracking-wide border border-blue-100 dark:border-blue-800">
+                        Featured
+                      </Badge>
+                    </div>
+                    <h3 className="text-2xl lg:text-3xl font-extrabold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
+                    <p className="text-gray-600 dark:text-gray-300 mb-5 text-base lg:text-lg leading-relaxed">
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 theme-green:bg-green-100 theme-green:dark:bg-green-900/30 theme-green:text-green-800 theme-green:dark:text-green-300 text-sm rounded-full"
+                          className="inline-block bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-3 py-1 rounded-full text-xs font-medium border border-gray-200 dark:border-gray-700"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
-                    <div className="flex gap-4">
-                      <a
-                        href={project.links?.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-gray-800 hover:bg-gray-900 text-white rounded-lg transition-colors"
+                    <div className="flex gap-4 mt-2">
+                      <Button
+                        variant="outline"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold border-blue-200 dark:border-blue-800 shadow-sm transition duration-200 hover:border-blue-500 theme-green:hover:border-green-500"
+                        asChild
                       >
-                        View Code
-                      </a>
-                      <a
-                        href={project.links?.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white rounded-lg transition-colors"
+                        <a
+                          href={project.links?.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Github className="h-4 w-4" />
+                          View Code
+                        </a>
+                      </Button>
+                      <Button
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-5 py-2.5 rounded-lg font-semibold shadow-md transition duration-200 inline-flex items-center gap-2"
+                        asChild
                       >
-                        Live Demo
-                      </a>
+                        <a
+                          href={project.links?.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          Live Demo
+                        </a>
+                      </Button>
                     </div>
                   </div>
-                </div>
+                </Card>
               </div>
             ))}
           </div>
@@ -261,13 +292,15 @@ const Index = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
+            aria-label="Previous project"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
+            aria-label="Next project"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
@@ -278,11 +311,12 @@ const Index = () => {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
+                className={`w-3 h-3 rounded-full border-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
                   index === currentSlide
-                    ? "bg-blue-600 theme-green:bg-green-600"
-                    : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                    ? "bg-blue-600 border-blue-600 theme-green:bg-green-600 theme-green:border-green-600"
+                    : "bg-gray-200 border-gray-300 dark:bg-gray-700 dark:border-gray-600 hover:bg-blue-200 dark:hover:bg-blue-800/40 theme-green:hover:bg-green-200 theme-green:dark:hover:bg-green-800/40"
                 }`}
+                aria-label={`Go to project ${index + 1}`}
               />
             ))}
           </div>
@@ -299,62 +333,69 @@ const Index = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          <div className="glass rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 group hover-glow border border-gray-200 dark:border-gray-700 shadow-sm bg-white/80 dark:bg-gray-800/70 backdrop-blur-sm">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 theme-green:bg-green-100 theme-green:dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 theme-green:group-hover:bg-green-200 theme-green:dark:group-hover:bg-green-800/50 transition-colors">
-              <Code className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
+          {/* Full-Stack Development Card */}
+          <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
+            <div className="flex flex-col items-center p-8">
+              <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
+                <Code className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
+                Full-Stack Development
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
+                Building scalable applications with .NET Core, React, and modern
+                JavaScript frameworks.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-4">
-              Full-Stack Development
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Building scalable applications with .NET Core, React, and modern
-              JavaScript frameworks.
-            </p>
-          </div>
+          </Card>
 
-          <div className="glass rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 group hover-glow border border-gray-200 dark:border-gray-700 shadow-sm bg-white/80 dark:bg-gray-800/70 backdrop-blur-sm">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 theme-green:bg-green-100 theme-green:dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 theme-green:group-hover:bg-green-200 theme-green:dark:group-hover:bg-green-800/50 transition-colors">
-              <Cloud className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
+          {/* Cloud Solutions Card */}
+          <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
+            <div className="flex flex-col items-center p-8">
+              <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
+                <Cloud className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
+                Cloud Solutions
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
+                Azure expertise in App Services, SQL Database, Blob Storage, and
+                serverless architectures.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-4">Cloud Solutions</h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Azure expertise in App Services, SQL Database, Blob Storage, and
-              serverless architectures.
-            </p>
-          </div>
+          </Card>
 
-          <div className="glass rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300 group hover-glow border border-gray-200 dark:border-gray-700 shadow-sm bg-white/80 dark:bg-gray-800/70 backdrop-blur-sm">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 theme-green:bg-green-100 theme-green:dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 theme-green:group-hover:bg-green-200 theme-green:dark:group-hover:bg-green-800/50 transition-colors">
-              <Zap className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
+          {/* DevOps & Automation Card */}
+          <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
+            <div className="flex flex-col items-center p-8">
+              <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
+                <Zap className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
+                DevOps & Automation
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
+                CI/CD pipelines, Infrastructure as Code, and automated
+                deployment strategies.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-4">DevOps & Automation</h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              CI/CD pipelines, Infrastructure as Code, and automated deployment
-              strategies.
-            </p>
-          </div>
+          </Card>
         </div>
       </section>
 
       {/* Call to Action */}
-      <section className="container mx-auto px-4 mt-12">
-        <div className="glass rounded-2xl p-4 text-center hover-glow border border-gray-200 dark:border-gray-700 shadow-md bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-            Ready to Build Something Amazing?
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Let's discuss your next project and create scalable, secure
-            solutions that drive your business forward.
+      <section className="text-center my-16">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 bg-white dark:bg-gray-900 shadow-lg p-10 md:p-14 flex flex-col items-center">
+          <h3 className="text-3xl md:text-4xl font-extrabold mb-4 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+            🚀 Ready to Build Something Amazing?
+          </h3>
+          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 mt-2">
+            Let's turn your ideas into reality with robust, scalable, and
+            beautiful software solutions.
           </p>
-          <Link to="/contact">
-            <Button
-              size="lg"
-              className="bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white px-8 py-4 text-lg hover-glow"
-            >
-              Start a Conversation
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </Link>
+          <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-md transition-all duration-300 hover:scale-105">
+            Let's Connect
+          </Button>
         </div>
       </section>
     </div>

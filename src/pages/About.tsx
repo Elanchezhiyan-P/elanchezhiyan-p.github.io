@@ -25,6 +25,7 @@ import {
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { MobileTimeline } from "@/components/MobileTimeline";
 import { Helmet } from "react-helmet-async";
+import { Badge } from "@/components/ui/badge";
 
 const About = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -105,99 +106,490 @@ const About = () => {
   ];
 
   const crmIntegrations = [
-    "NetSuite",
-    "HubSpot",
-    "ConnectWise",
-    "EverFi",
-    "ServiceNow",
-    "Zego Cloud",
-    "ProcessMaker",
-    "QuestionPro",
+    {
+      name: "NetSuite",
+      description: "ERP & CRM integration",
+      icon: "🏢",
+      category: "Enterprise",
+    },
+    {
+      name: "HubSpot",
+      description: "Marketing & Sales CRM",
+      icon: "🎯",
+      category: "Marketing",
+    },
+    {
+      name: "ConnectWise",
+      description: "IT Service Management",
+      icon: "🔧",
+      category: "IT Services",
+    },
+    {
+      name: "EverFi",
+      description: "Education & Compliance",
+      icon: "📚",
+      category: "Education",
+    },
+    {
+      name: "ServiceNow",
+      description: "Enterprise Service Management",
+      icon: "⚡",
+      category: "Enterprise",
+    },
+    {
+      name: "Zego Cloud",
+      description: "Cloud-based CRM",
+      icon: "☁️",
+      category: "Cloud",
+    },
+    {
+      name: "ProcessMaker",
+      description: "Business Process Automation",
+      icon: "🔄",
+      category: "Automation",
+    },
+    {
+      name: "QuestionPro",
+      description: "Survey & Research Platform",
+      icon: "📊",
+      category: "Research",
+    },
   ];
 
   const dotnetSkills = [
-    ".NET MAUI",
-    ".NET Core Web Applications",
-    ".NET Core with PLC Integration",
-    ".NET Core with RFID Readers",
-    ".NET Core API Development",
-    ".NET Framework Applications",
-    ".NET with NHibernate",
-    ".NET with IoC Pattern",
-    ".NET MVC with Stripe",
-    ".NET MVC with Azure",
-    ".NET API Applications",
-    ".NET with Selenium Automation",
-    ".NET with PhantomJS Scraping",
-    ".NET with ReactJS",
-    "Windows Applications",
-    "Windows Services",
-    "SSO Integration (Microsoft, Google, Facebook, LinkedIn)",
-    ".NET Core with iOS",
-    ".NET with AI/ML Integration",
-    "Angular with .NET",
-    "React with .NET",
-    "Next.Js",
-    "Nest.Js",
-    "Node.js",
-    "PHP",
-    "Adobe ColdFusion",
+    {
+      name: ".NET MAUI",
+      description: "Cross-platform mobile & desktop apps",
+      icon: "📱",
+      category: "Mobile",
+    },
+    {
+      name: ".NET Core Web Applications",
+      description: "Modern web applications & APIs",
+      icon: "🌐",
+      category: "Web",
+    },
+    {
+      name: ".NET Core with PLC Integration",
+      description: "Industrial automation systems",
+      icon: "⚙️",
+      category: "Industrial",
+    },
+    {
+      name: ".NET Core with RFID Readers",
+      description: "IoT & hardware integration",
+      icon: "📡",
+      category: "IoT",
+    },
+    {
+      name: ".NET Core API Development",
+      description: "RESTful & GraphQL APIs",
+      icon: "🔌",
+      category: "API",
+    },
+    {
+      name: ".NET Framework Applications",
+      description: "Legacy & enterprise systems",
+      icon: "🏛️",
+      category: "Enterprise",
+    },
+    {
+      name: ".NET with NHibernate",
+      description: "Object-relational mapping",
+      icon: "🗄️",
+      category: "ORM",
+    },
+    {
+      name: ".NET with IoC Pattern",
+      description: "Dependency injection & DI containers",
+      icon: "🔧",
+      category: "Architecture",
+    },
+    {
+      name: ".NET MVC with Stripe",
+      description: "Payment processing integration",
+      icon: "💳",
+      category: "Payments",
+    },
+    {
+      name: ".NET MVC with Azure",
+      description: "Cloud-native applications",
+      icon: "☁️",
+      category: "Cloud",
+    },
+    {
+      name: ".NET API Applications",
+      description: "Microservices & API gateways",
+      icon: "🔗",
+      category: "Microservices",
+    },
+    {
+      name: ".NET with Selenium Automation",
+      description: "Test automation & web scraping",
+      icon: "🤖",
+      category: "Testing",
+    },
+    {
+      name: ".NET with PhantomJS Scraping",
+      description: "Web scraping & data extraction",
+      icon: "🕷️",
+      category: "Data",
+    },
+    {
+      name: ".NET with ReactJS",
+      description: "Full-stack React integration",
+      icon: "⚛️",
+      category: "Frontend",
+    },
+    {
+      name: "Windows Applications",
+      description: "Desktop & system applications",
+      icon: "🖥️",
+      category: "Desktop",
+    },
+    {
+      name: "Windows Services",
+      description: "Background services & daemons",
+      icon: "⚙️",
+      category: "Services",
+    },
+    {
+      name: "SSO Integration",
+      description: "Microsoft, Google, Facebook, LinkedIn",
+      icon: "🔐",
+      category: "Security",
+    },
+    {
+      name: ".NET Core with iOS",
+      description: "iOS app development",
+      icon: "🍎",
+      category: "Mobile",
+    },
+    {
+      name: ".NET with AI/ML Integration",
+      description: "Machine learning & AI services",
+      icon: "🧠",
+      category: "AI/ML",
+    },
+    {
+      name: "Angular with .NET",
+      description: "Angular frontend integration",
+      icon: "🅰️",
+      category: "Frontend",
+    },
+    {
+      name: "React with .NET",
+      description: "React frontend integration",
+      icon: "⚛️",
+      category: "Frontend",
+    },
+    {
+      name: "Next.Js",
+      description: "React framework & SSR",
+      icon: "⚡",
+      category: "Frontend",
+    },
+    {
+      name: "Nest.Js",
+      description: "Node.js backend framework",
+      icon: "🪺",
+      category: "Backend",
+    },
+    {
+      name: "Node.js",
+      description: "JavaScript runtime & server",
+      icon: "🟢",
+      category: "Backend",
+    },
+    {
+      name: "PHP",
+      description: "Server-side scripting",
+      icon: "🐘",
+      category: "Backend",
+    },
+    {
+      name: "Adobe ColdFusion",
+      description: "Enterprise web development",
+      icon: "❄️",
+      category: "Enterprise",
+    },
   ];
 
   const tools = [
-    "PowerBI",
-    "Power Automate",
-    "SSRS",
-    "SSIS",
-    "ETL Process",
-    "Redis Cache",
-    "AmChart",
-    "CanvasJs",
-    "Chart.js",
-    "Aspose Document Editors",
-    "Firebase",
-    "Zego Cloud",
-    "ProcessMaker",
-    "QuestionPro",
-    "Selenium Automation",
-    "PhantomJS Scraping",
-    "HTML2Canvas",
-    "NetiMobileDevice",
+    {
+      name: "PowerBI",
+      description: "Business intelligence & analytics",
+      icon: "📊",
+      category: "Analytics",
+    },
+    {
+      name: "Power Automate",
+      description: "Workflow automation",
+      icon: "🔄",
+      category: "Automation",
+    },
+    {
+      name: "SSRS",
+      description: "SQL Server Reporting Services",
+      icon: "📋",
+      category: "Reporting",
+    },
+    {
+      name: "SSIS",
+      description: "SQL Server Integration Services",
+      icon: "🔗",
+      category: "ETL",
+    },
+    {
+      name: "ETL Process",
+      description: "Data extraction & transformation",
+      icon: "🔄",
+      category: "Data",
+    },
+    {
+      name: "Redis Cache",
+      description: "In-memory data store",
+      icon: "⚡",
+      category: "Caching",
+    },
+    {
+      name: "AmChart",
+      description: "Interactive charts & graphs",
+      icon: "📈",
+      category: "Visualization",
+    },
+    {
+      name: "CanvasJs",
+      description: "JavaScript charting library",
+      icon: "🎨",
+      category: "Visualization",
+    },
+    {
+      name: "Chart.js",
+      description: "Simple chart library",
+      icon: "📊",
+      category: "Visualization",
+    },
+    {
+      name: "Aspose Document Editors",
+      description: "Document processing & editing",
+      icon: "📄",
+      category: "Documents",
+    },
+    {
+      name: "Firebase",
+      description: "Google's app development platform",
+      icon: "🔥",
+      category: "Backend",
+    },
+    {
+      name: "Zego Cloud",
+      description: "Cloud-based solutions",
+      icon: "☁️",
+      category: "Cloud",
+    },
+    {
+      name: "ProcessMaker",
+      description: "Business process automation",
+      icon: "⚙️",
+      category: "Automation",
+    },
+    {
+      name: "QuestionPro",
+      description: "Survey & research platform",
+      icon: "📝",
+      category: "Research",
+    },
+    {
+      name: "Selenium Automation",
+      description: "Web testing automation",
+      icon: "🤖",
+      category: "Testing",
+    },
+    {
+      name: "PhantomJS Scraping",
+      description: "Headless browser automation",
+      icon: "👻",
+      category: "Automation",
+    },
+    {
+      name: "HTML2Canvas",
+      description: "Screenshot & PDF generation",
+      icon: "📸",
+      category: "Utilities",
+    },
+    {
+      name: "NetiMobileDevice",
+      description: "Mobile device management",
+      icon: "📱",
+      category: "Mobile",
+    },
   ];
 
   const databases = [
-    "SQL Server",
-    "SQL Server Profiler",
-    "Azure SQL",
-    "Azure Storage Table",
-    "MySQL",
-    "PostgreSQL",
-    "AS400",
-    "SQLite",
-    "CosmosDB",
-    "MongoDB",
-    "Firebird",
-    "Oracle",
+    {
+      name: "SQL Server",
+      description: "Microsoft's relational database",
+      icon: "🗄️",
+      category: "Relational",
+    },
+    {
+      name: "SQL Server Profiler",
+      description: "Database performance monitoring",
+      icon: "📊",
+      category: "Monitoring",
+    },
+    {
+      name: "Azure SQL",
+      description: "Cloud-based SQL database",
+      icon: "☁️",
+      category: "Cloud",
+    },
+    {
+      name: "Azure Storage Table",
+      description: "NoSQL data storage",
+      icon: "📋",
+      category: "NoSQL",
+    },
+    {
+      name: "MySQL",
+      description: "Open-source relational database",
+      icon: "🐬",
+      category: "Relational",
+    },
+    {
+      name: "PostgreSQL",
+      description: "Advanced open-source database",
+      icon: "🐘",
+      category: "Relational",
+    },
+    {
+      name: "AS400",
+      description: "IBM's enterprise system",
+      icon: "💻",
+      category: "Legacy",
+    },
+    {
+      name: "SQLite",
+      description: "Lightweight embedded database",
+      icon: "💾",
+      category: "Embedded",
+    },
+    {
+      name: "CosmosDB",
+      description: "Microsoft's NoSQL database",
+      icon: "🌌",
+      category: "NoSQL",
+    },
+    {
+      name: "MongoDB",
+      description: "Document-oriented database",
+      icon: "🍃",
+      category: "NoSQL",
+    },
+    {
+      name: "Firebird",
+      description: "Open-source relational database",
+      icon: "🔥",
+      category: "Relational",
+    },
+    {
+      name: "Oracle",
+      description: "Enterprise database system",
+      icon: "🏛️",
+      category: "Enterprise",
+    },
   ];
 
   const collaborationAndOtherSkills = [
-    "Android and iOS Development Collaboration",
-    "Client Interaction & Requirement Gathering",
-    "Team Leadership and Mentoring",
-    "Continuous Learning & Adaptability",
-    "Open Source Contributions",
-    "Technical Documentation",
-    "Agile/Scrum Methodologies",
+    {
+      name: "Android & iOS Development",
+      description: "Cross-platform mobile collaboration",
+      icon: "📱",
+      category: "Mobile",
+    },
+    {
+      name: "Client Interaction",
+      description: "Requirement gathering & communication",
+      icon: "🤝",
+      category: "Communication",
+    },
+    {
+      name: "Team Leadership",
+      description: "Mentoring & project management",
+      icon: "👥",
+      category: "Leadership",
+    },
+    {
+      name: "Continuous Learning",
+      description: "Adaptability & skill development",
+      icon: "📚",
+      category: "Growth",
+    },
+    {
+      name: "Open Source Contributions",
+      description: "Community involvement & sharing",
+      icon: "🌟",
+      category: "Community",
+    },
+    {
+      name: "Technical Documentation",
+      description: "Code documentation & guides",
+      icon: "📝",
+      category: "Documentation",
+    },
+    {
+      name: "Agile/Scrum Methodologies",
+      description: "Project management frameworks",
+      icon: "🔄",
+      category: "Methodology",
+    },
   ];
 
   const certifications = [
     {
-      name: "Microsoft Certified: Azure Solutions Architect Expert",
-      link: "https://example.com/azure-architect",
+      name: ".NET Full Stack Developer - C# Corner",
+      issuer: "C# Corner",
+      date: "May 2025",
+      link: "https://www.c-sharpcorner.com/uploadfile/certification-exam/rzmmaqtc/certification.pdf?trk=public_profile_see-credential",
+      icon: "💻",
+      category: "Development",
     },
     {
-      name: "Microsoft Certified: Azure Developer Associate",
-      link: "https://example.com/azure-developer",
+      name: "Foundational C# with Microsoft",
+      issuer: "freeCodeCamp",
+      date: "Feb 2025",
+      credentialId: "elanchezhiyan-p-fcswm",
+      link: "https://freecodecamp.org/certification/Elanchezhiyan-P/foundational-c-sharp-with-microsoft?trk=public_profile_see-credential",
+      icon: "🔷",
+      category: "Programming",
+    },
+    {
+      name: "Responsive Web Design",
+      issuer: "freeCodeCamp",
+      date: "Feb 2025",
+      credentialId: "elanchezhiyan-p-rwd",
+      link: "https://www.freecodecamp.org/certification/Elanchezhiyan-P/responsive-web-design?trk=public_profile_see-credential",
+      icon: "📱",
+      category: "Web Design",
+    },
+    {
+      name: "Jira Fundamentals Badge",
+      issuer: "Atlassian",
+      date: "Feb 2024",
+      credentialId: "299136941",
+      link: "https://university.atlassian.com/student/award/17WcnErMoSR8bgZ9hsN3hSTw?trk=public_profile_see-credential",
+      icon: "🎯",
+      category: "Project Management",
+    },
+    {
+      name: "cPanel User Interface Proficiency",
+      issuer: "cPanel University",
+      date: "Jan 2025",
+      credentialId: "851a-2616-8f92-f311",
+      link: "https://university.cpanel.net/?trk=public_profile_see-credential",
+      icon: "⚙️",
+      category: "System Administration",
     },
   ];
 
@@ -217,44 +609,74 @@ const About = () => {
     icon: Icon,
     gradient,
     description,
+    isCrm = false,
   }: {
     title: string;
-    skills: string[];
+    skills: any[];
     icon: any;
     gradient: string;
     description: string;
+    isCrm?: boolean;
   }) => (
-    <Card className="glass transition-all duration-500 hover:scale-105 border border-white/20 backdrop-blur-xl shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 hover:shadow-lg">
-      <CardHeader className="pb-4">
-        <div className="flex items-center gap-4 mb-2">
+    <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
+      <CardContent className="p-6">
+        <div className="flex items-center gap-4 mb-6">
           <div
             className={`p-4 rounded-2xl bg-gradient-to-br ${gradient} shadow-lg`}
           >
             <Icon className="w-8 h-8 text-white" />
           </div>
           <div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
               {title}
-            </CardTitle>
-            <CardDescription className="text-gray-600 dark:text-gray-400 mt-1">
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
               {description}
-            </CardDescription>
+            </p>
           </div>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {skills.map((skill, index) => (
-            <div
-              key={index}
-              className="glass rounded-xl p-4 backdrop-blur-sm border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              <span className="text-gray-800 dark:text-gray-200 text-sm font-medium leading-relaxed">
-                {skill}
-              </span>
-            </div>
-          ))}
-        </div>
+
+        {isCrm ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {skills.map((crm, index) => (
+              <div
+                key={index}
+                className="group relative rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="text-2xl">{crm.icon}</div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {crm.name}
+                    </h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {crm.description}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Badge variant="secondary" className="text-xs">
+                    {crm.category}
+                  </Badge>
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {skills.map((skill, index) => (
+              <div
+                key={index}
+                className="rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+              >
+                <span className="text-gray-800 dark:text-gray-200 text-sm font-medium leading-relaxed group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {skill}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
@@ -345,7 +767,13 @@ const About = () => {
                         index % 2 === 0 ? "flex-row" : "flex-row-reverse"
                       } relative`}
                     >
-                      <div className="absolute left-1/2 transform -translate-x-1/2 w-28 h-28 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600 rounded-full flex items-center justify-center text-white font-bold shadow-2xl z-10 border-4 border-white dark:border-gray-900 backdrop-blur-sm">
+                      <div
+                        className={`absolute left-1/2 transform -translate-x-1/2 w-28 h-28 rounded-full flex items-center justify-center text-white font-bold shadow-2xl z-10 border-4 border-white dark:border-gray-900 backdrop-blur-sm transition-all duration-500 hover:scale-110 ${
+                          index === experiences.length - 1
+                            ? "bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 animate-pulse shadow-green-200 dark:shadow-green-400"
+                            : "bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600"
+                        }`}
+                      >
                         <div className="text-center">
                           <div className="text-sm font-bold">
                             {exp.year.split(" ")[0]}
@@ -353,6 +781,11 @@ const About = () => {
                           <div className="text-xs opacity-90">
                             {exp.year.split(" ")[1]}
                           </div>
+                          {index === experiences.length - 1 && (
+                            <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -361,7 +794,7 @@ const About = () => {
                           index % 2 === 0 ? "pr-24" : "pl-24"
                         }`}
                       >
-                        <div className="glass rounded-3xl p-8 hover-glow transition-all duration-500 hover:scale-105 backdrop-blur-xl border border-gray-300 dark:border-white/20 shadow-md">
+                        <div className="glass rounded-3xl p-8 transition-all duration-500 hover:scale-105 backdrop-blur-xl border border-white/20 shadow-lg hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
                           <div className="flex items-center gap-3 mb-6">
                             <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
                               {exp.title}
@@ -369,24 +802,32 @@ const About = () => {
                             {exp.type === "promotion" && (
                               <Trophy className="w-6 h-6 text-yellow-500 animate-pulse" />
                             )}
+                            {index === experiences.length - 1 && (
+                              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full">
+                                <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                                Current
+                              </div>
+                            )}
                           </div>
-                          <div className="rounded-2xl p-4 mb-6 border border-gray-300 dark:border-white/20 shadow-md bg-gradient-to-r from-blue-100/60 to-indigo-100/60 dark:from-blue-900/30 dark:to-indigo-900/30 theme-green:from-green-100/60 theme-green:to-emerald-100/60 theme-green:dark:from-green-900/30 theme-green:dark:to-emerald-900/30">
-                            {exp.companyWebsite ? (
+
+                          {exp.companyWebsite && (
+                            <div className="mb-6">
                               <a
                                 href={exp.companyWebsite}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-lg font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 inline-flex items-center gap-2 hover:underline"
+                                className="inline-flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-100/80 to-indigo-100/80 dark:from-blue-900/30 dark:to-indigo-900/30 theme-green:from-green-100/80 theme-green:to-emerald-100/80 theme-green:dark:from-green-900/30 theme-green:dark:to-emerald-900/30 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700 hover:bg-gradient-to-r hover:from-blue-200/80 hover:to-indigo-200/80 dark:hover:from-blue-800/40 dark:hover:to-indigo-800/40 theme-green:hover:from-green-200/80 theme-green:hover:to-emerald-200/80 theme-green:dark:hover:from-green-800/40 theme-green:dark:hover:to-emerald-800/40 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
                               >
-                                <ExternalLink className="w-4 h-4" />
-                                {exp.companyWebsite}
+                                <ExternalLink className="w-4 h-4 text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400 group-hover:rotate-12 transition-transform duration-300" />
+                                <span className="text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 font-semibold group-hover:underline">
+                                  {exp.company}
+                                </span>
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                  Visit Website →
+                                </span>
                               </a>
-                            ) : (
-                              <span className="text-lg font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300">
-                                {exp.companyWebsite}
-                              </span>
-                            )}
-                          </div>
+                            </div>
+                          )}
 
                           <div className="flex items-center gap-2 mb-4">
                             <MapPin className="w-4 h-4 text-gray-500" />
@@ -403,7 +844,7 @@ const About = () => {
                             {exp.description}
                           </p>
 
-                          <div className="mt-6 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 text-white shadow-lg">
+                          <div className="mt-6 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
                             {exp.type === "promotion"
                               ? "🚀 Promoted"
                               : "🎯 New Role"}
@@ -427,42 +868,47 @@ const About = () => {
           <div className="space-y-12">
             <SkillCard
               title="CRM Integrations"
-              description="Seamless integration with leading CRM platforms"
+              description="Seamless integration with leading CRM platforms across industries"
               skills={crmIntegrations}
               icon={Zap}
               gradient="from-orange-500 to-red-600"
+              isCrm={true}
             />
 
             <SkillCard
               title=".NET Applications"
-              description="Full-stack development with Microsoft technologies"
+              description="Comprehensive .NET ecosystem development across platforms"
               skills={dotnetSkills}
               icon={Code}
               gradient="from-blue-500 to-purple-600"
+              isCrm={true}
             />
 
             <SkillCard
               title="Tools & Technologies"
-              description="Modern development and integration tools"
+              description="Modern development and integration tools ecosystem"
               skills={tools}
               icon={Wrench}
               gradient="from-green-500 to-teal-600"
+              isCrm={true}
             />
 
             <SkillCard
               title="Databases"
-              description="Multi-database expertise and management"
+              description="Multi-database expertise and management across platforms"
               skills={databases}
               icon={Database}
               gradient="from-yellow-500 to-orange-600"
+              isCrm={true}
             />
 
             <SkillCard
               title="Collaboration & Soft Skills"
-              description="Effective communication and team leadership"
+              description="Effective communication, leadership, and team collaboration"
               skills={collaborationAndOtherSkills}
               icon={Brain}
               gradient="from-pink-500 to-purple-600"
+              isCrm={true}
             />
           </div>
         </section>
@@ -499,32 +945,83 @@ const About = () => {
         {/* Certifications */}
         <section>
           <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
-            Certifications
+            Certifications & Achievements
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {certifications.map((cert) => (
-              <a
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {certifications.map((cert, index) => (
+              <Card
                 key={cert.name}
-                href={cert.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass rounded-3xl p-8 flex items-center justify-between hover:scale-105 transition-all duration-500 hover-glow backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20"
+                className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-center gap-6">
-                  <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600">
-                    <Award className="w-8 h-8 text-white" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 rounded-t-2xl"></div>
+
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Header with icon and external link */}
+                    <div className="flex items-center justify-between">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
+                        <span className="text-xl">{cert.icon}</span>
+                      </div>
+                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
+                        {cert.name}
+                      </h3>
+
+                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {cert.issuer}
+                      </p>
+
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary" className="text-xs">
+                          {cert.category}
+                        </Badge>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          {cert.date}
+                        </span>
+                      </div>
+
+                      {cert.credentialId && (
+                        <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            ID: {cert.credentialId}
+                          </span>
+                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold">{cert.name}</h3>
-                </div>
-                <ExternalLink className="w-5 h-5 text-gray-500" />
-              </a>
+                </CardContent>
+
+                <a
+                  href={cert.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute inset-0"
+                  aria-label={`View ${cert.name} certification`}
+                />
+              </Card>
             ))}
+          </div>
+
+          {/* Summary section */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 theme-green:from-green-50 theme-green:to-emerald-50 theme-green:dark:from-green-900/20 theme-green:dark:to-emerald-900/20 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700">
+              <span className="text-2xl">🎓</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                {certifications.length} Professional Certifications
+              </span>
+            </div>
           </div>
         </section>
 
         {/* Call to Action */}
         <section className="text-center">
-          <div className="glass rounded-3xl p-12 backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20">
+          <div className="glass rounded-3xl p-12 backdrop-blur-xl border-4 border-blue-500 dark:border-blue-400 theme-green:border-green-500 theme-green:dark:border-green-400 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 shadow-xl hover:shadow-2xl transition-all duration-300">
             <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Ready to Build Something Amazing?
             </h3>

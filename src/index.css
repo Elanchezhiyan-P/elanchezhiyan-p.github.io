@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -101,6 +100,21 @@ All colors MUST be HSL.
     --sidebar-primary: 142 69% 58%;
     --sidebar-ring: 142 69% 58%;
   }
+
+  /* Add theme-blue for consistency */
+  .theme-blue {
+    --primary: 217.2 91.2% 59.8%;
+    --ring: 217.2 91.2% 59.8%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .theme-blue.dark {
+    --primary: 217.2 91.2% 59.8%;
+    --ring: 217.2 91.2% 59.8%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
 }
 
 @layer base {
@@ -110,7 +124,8 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Roboto", sans-serif;
   }
 }
 
@@ -144,14 +159,18 @@ All colors MUST be HSL.
 }
 
 .hover-glow::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: -2px;
   right: -2px;
   bottom: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.4));
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.4),
+    rgba(147, 51, 234, 0.4)
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -159,7 +178,11 @@ All colors MUST be HSL.
 }
 
 .theme-green .hover-glow::before {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.4), rgba(16, 185, 129, 0.4));
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.4),
+    rgba(16, 185, 129, 0.4)
+  );
 }
 
 .hover-glow:hover::before {
@@ -168,17 +191,13 @@ All colors MUST be HSL.
 
 .hover-glow:hover {
   transform: translateY(-2px);
-  box-shadow: 
-    0 10px 25px rgba(59, 130, 246, 0.2),
-    0 0 0 2px rgba(59, 130, 246, 0.1),
-    0 0 0 4px rgba(147, 51, 234, 0.05);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2),
+    0 0 0 2px rgba(59, 130, 246, 0.1), 0 0 0 4px rgba(147, 51, 234, 0.05);
 }
 
 .theme-green .hover-glow:hover {
-  box-shadow: 
-    0 10px 25px rgba(34, 197, 94, 0.2),
-    0 0 0 2px rgba(34, 197, 94, 0.1),
-    0 0 0 4px rgba(16, 185, 129, 0.05);
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.2),
+    0 0 0 2px rgba(34, 197, 94, 0.1), 0 0 0 4px rgba(16, 185, 129, 0.05);
 }
 
 /* Enhanced particle background */
@@ -268,27 +287,24 @@ All colors MUST be HSL.
   transition-duration: 0s !important;
 }
 
-/* Ensure green theme buttons and elements are properly styled */
+/* Remove these overrides to prevent blue buttons turning green in green theme */
+/*
 .theme-green .bg-blue-600 {
   background-color: rgb(34 197 94) !important;
 }
-
 .theme-green .hover\:bg-blue-700:hover {
   background-color: rgb(21 128 61) !important;
 }
-
 .theme-green .border-blue-600 {
   border-color: rgb(34 197 94) !important;
 }
-
 .theme-green .text-blue-600 {
   color: rgb(34 197 94) !important;
 }
-
 .theme-green .hover\:bg-blue-50:hover {
   background-color: rgb(240 253 244) !important;
 }
-
 .theme-green .dark\:hover\:bg-blue-900\/20:hover {
   background-color: rgb(20 83 45 / 0.2) !important;
 }
+*/
