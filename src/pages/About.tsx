@@ -596,7 +596,7 @@ const About = () => {
   const handleResumeDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement("a");
-    link.href = "/resume-elanchezhiyan.pdf"; // You'll need to add this file to the public folder
+    link.href = "/public/resume/elanchezhiyan_p.pdf"; // Correct path in public folder
     link.download = "Elanchezhiyan_P_Resume.pdf";
     document.body.appendChild(link);
     link.click();
@@ -731,18 +731,34 @@ const About = () => {
         <section className="text-center">
           <div className="glass rounded-3xl p-8 max-w-2xl mx-auto backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20">
             <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
-              Download My Resume
+              Resume
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
               Get a detailed overview of my experience, skills, and achievements
             </p>
-            <Button
-              onClick={handleResumeDownload}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download Resume PDF
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                asChild
+                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                <a
+                  href="/public/resume/elanchezhiyan_p.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="w-5 h-5 mr-2" />
+                  View Resume PDF
+                </a>
+              </Button>
+              <Button
+                onClick={handleResumeDownload}
+                variant="outline"
+                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-105"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Download Resume PDF
+              </Button>
+            </div>
           </div>
         </section>
 

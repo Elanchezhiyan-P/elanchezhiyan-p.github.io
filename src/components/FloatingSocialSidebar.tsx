@@ -76,17 +76,19 @@ export const FloatingSocialSidebar: React.FC = () => {
 
   return (
     <div
-      className="fixed z-40 bg-blue-100 dark:bg-blue-900/20 theme-green:bg-green-100 theme-green:dark:bg-green-900/20 rounded-lg transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/30 theme-green:border-green-200/50 theme-green:dark:border-green-700/30"
+      className="fixed z-40 bg-gradient-to-br from-blue-200/80 via-white/80 to-blue-100/80 dark:from-blue-900/60 dark:via-gray-900/80 dark:to-blue-800/60 theme-green:from-green-200/80 theme-green:via-white/80 theme-green:to-green-100/80 theme-green:dark:from-green-900/60 theme-green:dark:via-gray-900/80 theme-green:dark:to-green-800/60 rounded-lg transition-all duration-300 hover:scale-105 backdrop-blur-lg border border-blue-300/40 dark:border-blue-800/40 theme-green:border-green-300/40 theme-green:dark:border-green-800/40 shadow-lg"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
+        width: "52px",
+        minWidth: "52px",
       }}
     >
       {/* Header with Controls */}
-      <div className="flex items-center justify-between p-2 border-b border-blue-200/50 dark:border-blue-700/30 theme-green:border-green-200/50 theme-green:dark:border-green-700/30">
+      <div className="flex items-center justify-between p-1 border-b border-blue-300/40 dark:border-blue-800/40 theme-green:border-green-300/40 theme-green:dark:border-green-800/40 bg-gradient-to-r from-blue-100/60 to-blue-200/60 dark:from-blue-900/40 dark:to-blue-800/40 theme-green:from-green-100/60 theme-green:to-green-200/60 theme-green:dark:from-green-900/40 theme-green:dark:to-green-800/40">
         <button
           onClick={togglePosition}
-          className="p-1 rounded hover:bg-blue-200/50 dark:hover:bg-blue-700/30 theme-green:hover:bg-green-200/50 theme-green:dark:hover:bg-green-700/30 transition-colors text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300"
+          className="p-1 rounded hover:bg-blue-300/40 dark:hover:bg-blue-800/40 theme-green:hover:bg-green-300/40 theme-green:dark:hover:bg-green-800/40 transition-colors text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 shadow"
           aria-label={isOnRight ? "Move to left side" : "Move to right side"}
         >
           {isOnRight ? (
@@ -98,7 +100,7 @@ export const FloatingSocialSidebar: React.FC = () => {
 
         <button
           onClick={() => setIsVisible(!isVisible)}
-          className="p-1 rounded hover:bg-blue-200/50 dark:hover:bg-blue-700/30 theme-green:hover:bg-green-200/50 theme-green:dark:hover:bg-green-700/30 transition-colors text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300"
+          className="p-1 rounded hover:bg-blue-300/40 dark:hover:bg-blue-800/40 theme-green:hover:bg-green-300/40 theme-green:dark:hover:bg-green-800/40 transition-colors text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 shadow"
           aria-label={isVisible ? "Hide social links" : "Show social links"}
         >
           {isVisible ? (
@@ -111,18 +113,18 @@ export const FloatingSocialSidebar: React.FC = () => {
 
       {/* Social Links */}
       {isVisible && (
-        <div className="flex flex-col space-y-2 p-3 bg-blue-50/30 dark:bg-blue-900/10 theme-green:bg-green-50/30 theme-green:dark:bg-green-900/10 rounded-b-lg">
+        <div className="flex flex-col space-y-2 p-2 bg-gradient-to-br from-blue-50/40 via-white/60 to-blue-100/40 dark:from-blue-900/20 dark:via-gray-900/40 dark:to-blue-800/20 theme-green:from-green-50/40 theme-green:via-white/60 theme-green:to-green-100/40 theme-green:dark:from-green-900/20 theme-green:dark:via-gray-900/40 theme-green:dark:to-green-800/20 rounded-b-lg">
           {socialLinks.map(({ icon: Icon, href, label, hoverColor }) => (
             <a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`w-12 h-12 rounded-lg border border-blue-300/50 dark:border-blue-600/50 theme-green:border-green-300/50 theme-green:dark:border-green-600/50 bg-blue-100/50 dark:bg-blue-800/30 theme-green:bg-green-100/50 theme-green:dark:bg-green-800/30 text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 transition-all duration-300 hover:scale-110 hover:shadow-lg flex items-center justify-center ${hoverColor} backdrop-blur-sm`}
+              className={`w-8 h-8 rounded-lg border border-blue-300/40 dark:border-blue-800/40 theme-green:border-green-300/40 theme-green:dark:border-green-800/40 bg-gradient-to-br from-blue-100/60 to-blue-200/60 dark:from-blue-900/40 dark:to-blue-800/40 theme-green:from-green-100/60 theme-green:to-green-200/60 theme-green:dark:from-green-900/40 theme-green:dark:to-green-800/40 text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 transition-all duration-300 hover:scale-110 hover:shadow-lg flex items-center justify-center ${hoverColor} backdrop-blur-lg shadow`}
               aria-label={label}
               onClick={(e) => e.stopPropagation()}
             >
-              <Icon className="w-5 h-5" />
+              <Icon className="w-4 h-4" />
             </a>
           ))}
         </div>

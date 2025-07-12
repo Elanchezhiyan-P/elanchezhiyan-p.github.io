@@ -1,10 +1,9 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/Layout";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -17,25 +16,36 @@ import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 const App = () => {
   useEffect(() => {
     // SEO optimization
-    document.title = "Elanchezhiyan P - Seasoned Software Developer | .NET & Azure Expert";
-    
+    document.title =
+      "Elanchezhiyan P - Seasoned Software Developer | .NET & Azure Expert";
+
     // Add meta tags
-    const metaDescription = document.createElement('meta');
-    metaDescription.name = 'description';
-    metaDescription.content = 'Elanchezhiyan P - Seasoned Software Developer with 5+ years experience in .NET, Azure, CRM integrations, and cloud architecture. Expert in building scalable applications.';
+    const metaDescription = document.createElement("meta");
+    metaDescription.name = "description";
+    metaDescription.content =
+      "Elanchezhiyan P - Seasoned Software Developer with 5+ years experience in .NET, Azure, CRM integrations, and cloud architecture. Expert in building scalable applications.";
     document.head.appendChild(metaDescription);
 
-    const metaKeywords = document.createElement('meta');
-    metaKeywords.name = 'keywords';
-    metaKeywords.content = 'Elanchezhiyan P, Software Developer, .NET Developer, Azure Expert, CRM Integration, Cloud Architecture, Full Stack Developer, Seasoned Developer';
+    const metaKeywords = document.createElement("meta");
+    metaKeywords.name = "keywords";
+    metaKeywords.content =
+      "Elanchezhiyan P, Software Developer, .NET Developer, Azure Expert, CRM Integration, Cloud Architecture, Full Stack Developer, Seasoned Developer";
     document.head.appendChild(metaKeywords);
 
-    const metaAuthor = document.createElement('meta');
-    metaAuthor.name = 'author';
-    metaAuthor.content = 'Elanchezhiyan P';
+    const metaAuthor = document.createElement("meta");
+    metaAuthor.name = "author";
+    metaAuthor.content = "Elanchezhiyan P";
     document.head.appendChild(metaAuthor);
   }, []);
 
@@ -46,6 +56,7 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <Layout>
               <Routes>
                 <Route path="/" element={<Index />} />

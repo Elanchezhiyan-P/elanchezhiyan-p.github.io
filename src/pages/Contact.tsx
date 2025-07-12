@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "emailjs-com"; // Added EmailJS import
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -38,15 +39,47 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    if (!isValidEmail(formData.email)) {
       toast({
-        title: "Message sent successfully!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        title: "Invalid email address!",
+        description:
+          "Please enter a valid email address and avoid using disposable/test email services.",
+        variant: "destructive",
       });
-      setFormData({ name: "", email: "", subject: "", message: "" });
       setIsSubmitting(false);
-    }, 1000);
+      return;
+    }
+
+    // EmailJS integration
+    const serviceID = "elan_serviceId"; // Replace with your EmailJS service ID
+    const templateID = "template_contactus"; // Replace with your EmailJS template ID
+    const userID = "FYZYdf1_r-enWrKCY"; // Replace with your EmailJS public key
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
+    emailjs.send(serviceID, templateID, templateParams, userID).then(
+      (response) => {
+        toast({
+          title: "Message sent successfully!",
+          description: "Thank you for reaching out. I'll get back to you soon.",
+        });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setIsSubmitting(false);
+      },
+      (error) => {
+        toast({
+          title: "Failed to send message.",
+          description: "Please try again later or contact me directly.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+      }
+    );
   };
 
   const contactInfo = [
@@ -108,6 +141,183 @@ const Contact = () => {
       role: "Startup Founder",
     },
   ];
+
+  // Disable right-click on this page
+  React.useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+  // Email validation function
+  const isValidEmail = (email: string) => {
+    // Basic email regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return false;
+    // Block test/disposable domains
+    const blockedDomains = [
+      "mailinator.com",
+      "guerrillamail.com",
+      "10minutemail.com",
+      "tempmail.com",
+      "yopmail.com",
+      "trashmail.com",
+      "fakeinbox.com",
+      "getnada.com",
+      "dispostable.com",
+      "mintemail.com",
+      "spamgourmet.com",
+      "sharklasers.com",
+      "maildrop.cc",
+      "moakt.com",
+      "mytemp.email",
+      "throwawaymail.com",
+      "mailnesia.com",
+      "mailcatch.com",
+      "mail-temp.com",
+      "emailondeck.com",
+      "temp-mail.org",
+      "temp-mail.io",
+      "temp-mail.xyz",
+      "temp-mail.com",
+      "temp-mail.net",
+      "temp-mail.info",
+      "temp-mail.biz",
+      "temp-mail.us",
+      "temp-mail.co",
+      "temp-mail.cc",
+      "temp-mail.top",
+      "temp-mail.site",
+      "temp-mail.store",
+      "temp-mail.world",
+      "temp-mail.space",
+      "temp-mail.online",
+      "temp-mail.email",
+      "temp-mail.cloud",
+      "temp-mail.lol",
+      "temp-mail.fun",
+      "temp-mail.today",
+      "temp-mail.pro",
+      "temp-mail.app",
+      "temp-mail.page",
+      "temp-mail.tech",
+      "temp-mail.systems",
+      "temp-mail.services",
+      "temp-mail.tools",
+      "temp-mail.website",
+      "temp-mail.zone",
+      "temp-mail.group",
+      "temp-mail.team",
+      "temp-mail.company",
+      "temp-mail.center",
+      "temp-mail.city",
+      "temp-mail.club",
+      "temp-mail.community",
+      "temp-mail.cool",
+      "temp-mail.expert",
+      "temp-mail.family",
+      "temp-mail.games",
+      "temp-mail.guru",
+      "temp-mail.house",
+      "temp-mail.life",
+      "temp-mail.love",
+      "temp-mail.media",
+      "temp-mail.money",
+      "temp-mail.news",
+      "temp-mail.party",
+      "temp-mail.press",
+      "temp-mail.pub",
+      "temp-mail.rest",
+      "temp-mail.run",
+      "temp-mail.shop",
+      "temp-mail.show",
+      "temp-mail.site",
+      "temp-mail.social",
+      "temp-mail.store",
+      "temp-mail.tech",
+      "temp-mail.today",
+      "temp-mail.tools",
+      "temp-mail.top",
+      "temp-mail.trade",
+      "temp-mail.tv",
+      "temp-mail.us",
+      "temp-mail.vip",
+      "temp-mail.work",
+      "temp-mail.world",
+      "temp-mail.xyz",
+      "tempmail.net",
+      "tempmail.org",
+      "tempmail.us",
+      "tempmail.xyz",
+      "tempmail.email",
+      "tempmail.lol",
+      "tempmail.fun",
+      "tempmail.today",
+      "tempmail.pro",
+      "tempmail.app",
+      "tempmail.page",
+      "tempmail.tech",
+      "tempmail.systems",
+      "tempmail.services",
+      "tempmail.tools",
+      "tempmail.website",
+      "tempmail.zone",
+      "tempmail.group",
+      "tempmail.team",
+      "tempmail.company",
+      "tempmail.center",
+      "tempmail.city",
+      "tempmail.club",
+      "tempmail.community",
+      "tempmail.cool",
+      "tempmail.expert",
+      "tempmail.family",
+      "tempmail.games",
+      "tempmail.guru",
+      "tempmail.house",
+      "tempmail.life",
+      "tempmail.love",
+      "tempmail.media",
+      "tempmail.money",
+      "tempmail.news",
+      "tempmail.party",
+      "tempmail.press",
+      "tempmail.pub",
+      "tempmail.rest",
+      "tempmail.run",
+      "tempmail.shop",
+      "tempmail.show",
+      "tempmail.site",
+      "tempmail.social",
+      "tempmail.store",
+      "tempmail.tech",
+      "tempmail.today",
+      "tempmail.tools",
+      "tempmail.top",
+      "tempmail.trade",
+      "tempmail.tv",
+      "tempmail.us",
+      "tempmail.vip",
+      "tempmail.work",
+      "tempmail.world",
+      "tempmail.xyz",
+    ];
+    const domain = email.split("@")[1]?.toLowerCase();
+    if (domain && blockedDomains.includes(domain)) return false;
+    return true;
+  };
+
+  // Check if all mandatory fields are filled and email is valid
+  const isFormValid =
+    formData.name.trim() !== "" &&
+    formData.email.trim() !== "" &&
+    formData.subject.trim() !== "" &&
+    formData.message.trim() !== "" &&
+    isValidEmail(formData.email);
 
   return (
     <div className="min-h-screen">
@@ -205,7 +415,7 @@ const Contact = () => {
 
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !isFormValid}
                   className="w-full"
                   size="lg"
                 >

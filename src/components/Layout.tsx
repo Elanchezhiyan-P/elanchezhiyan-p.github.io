@@ -9,6 +9,8 @@ import {
   Github,
   Linkedin,
   Mail,
+  Facebook,
+  Instagram,
   Home,
   User,
   FolderOpen,
@@ -39,13 +41,23 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       icon: Github,
       href: "https://github.com/elanchezhiyan-p",
       label: "GitHub",
+      color:
+        "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800",
     },
     {
       icon: Linkedin,
       href: "https://linkedin.com/in/elanchezhiyan-p",
       label: "LinkedIn",
+      color:
+        "bg-white dark:bg-gray-900 text-blue-700 dark:text-blue-400 border border-blue-300 dark:border-blue-700 hover:bg-blue-100 dark:hover:bg-blue-800",
     },
-    { icon: Mail, href: "mailto:elanche97@gmail.com", label: "Email" },
+    {
+      icon: Mail,
+      href: "mailto:elanche97@gmail.com",
+      label: "Email",
+      color:
+        "bg-white dark:bg-gray-900 text-red-600 dark:text-red-400 border border-red-300 dark:border-red-700 hover:bg-red-100 dark:hover:bg-red-800",
+    },
   ];
 
   useEffect(() => {
@@ -174,36 +186,59 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Mobile Header */}
       {isMobile && (
         <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-gray-200 dark:border-gray-700 shadow-md">
-          <div className="container mx-auto px-6 py-4 flex flex-col items-center">
-            <Link
-              to="/"
-              className="text-lg font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide"
-            >
-              Elanchezhiyan P
-            </Link>
-            <div className="flex items-center gap-4 mt-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleDarkMode}
-                className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
-                aria-label="Toggle dark mode"
+          <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center w-full">
+              <Link
+                to="/"
+                className="text-lg font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide dark:text-white"
+                style={{
+                  WebkitTextStroke: "0.5px #222",
+                  textShadow: "0 1px 8px rgba(0,0,0,0.25)",
+                }}
               >
-                {isDarkMode ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowSettings(true)}
-                className="hidden rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
-                aria-label="Open settings"
-              >
-                <Settings className="w-5 h-5" />
-              </Button>
+                Elanchezhiyan P
+              </Link>
+              <div className="flex-1" />
+              {/* Social Icons flush right */}
+              <div className="flex items-center gap-1">
+                {socialLinks.map(({ icon: Icon, href, label, color }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`rounded-full p-2 transition ${color}`}
+                    aria-label={label}
+                    style={{ lineHeight: 0 }}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </a>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 ml-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleDarkMode}
+                  className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
+                  aria-label="Toggle dark mode"
+                >
+                  {isDarkMode ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowSettings(true)}
+                  className="hidden rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
+                  aria-label="Open settings"
+                >
+                  <Settings className="w-5 h-5" />
+                </Button>
+              </div>
             </div>
           </div>
         </header>

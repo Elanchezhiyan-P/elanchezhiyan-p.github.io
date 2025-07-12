@@ -111,50 +111,60 @@ const Blog: React.FC = () => {
   const latestPost = blogPosts.find((post) => post.isLatest);
 
   return (
-    <div className="pt-16 md:pt-20 pb-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-14 md:pt-20 pb-10">
+      <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
         {/* Header */}
-        <section className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">Blog & Articles</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <section className="text-center mb-10 md:mb-16">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4">
+            Blog & Articles
+          </h1>
+          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Insights, tutorials, and thoughts on .NET development, cloud
             architecture, and software engineering best practices.
           </p>
         </section>
 
         {/* Stats */}
-        <section className="mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <section className="mb-8 md:mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             <Card className="text-center">
-              <CardContent className="p-4">
-                <div className="text-2xl font-bold text-blue-600 mb-1">
+              <CardContent className="p-3 md:p-4">
+                <div className="text-xl md:text-2xl font-bold text-blue-600 mb-1">
                   {blogPosts.length}+
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs md:text-sm text-muted-foreground">
                   Articles Published
                 </p>
               </CardContent>
             </Card>
             <Card className="text-center">
-              <CardContent className="p-4">
-                <div className="text-2xl font-bold text-green-600 mb-1">
+              <CardContent className="p-3 md:p-4">
+                <div className="text-xl md:text-2xl font-bold text-green-600 mb-1">
                   ~15k+
                 </div>
-                <p className="text-sm text-muted-foreground">Total Views</p>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Total Views
+                </p>
               </CardContent>
             </Card>
             <Card className="text-center">
-              <CardContent className="p-4">
-                <div className="text-2xl font-bold text-purple-600 mb-1">
+              <CardContent className="p-3 md:p-4">
+                <div className="text-xl md:text-2xl font-bold text-purple-600 mb-1">
                   10+
                 </div>
-                <p className="text-sm text-muted-foreground">Followers</p>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Followers
+                </p>
               </CardContent>
             </Card>
             <Card className="text-center">
-              <CardContent className="p-4">
-                <div className="text-2xl font-bold text-orange-600 mb-1">1</div>
-                <p className="text-sm text-muted-foreground">Platform</p>
+              <CardContent className="p-3 md:p-4">
+                <div className="text-xl md:text-2xl font-bold text-orange-600 mb-1">
+                  1
+                </div>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Platform
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -162,17 +172,19 @@ const Blog: React.FC = () => {
 
         {/* Featured Post */}
         {latestPost && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold mb-8">Latest Article</h2>
+          <section className="mb-10 md:mb-16">
+            <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
+              Latest Article
+            </h2>
             <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-500 relative">
-              <div className="absolute top-6 right-6 z-10">
+              <div className="absolute top-4 right-4 z-10">
                 <Badge className="bg-red-500 text-white shadow-lg">
                   Latest
                 </Badge>
               </div>
-              <div className="md:flex">
+              <div className="flex flex-col md:flex-row">
                 {/* Image */}
-                <div className="md:w-1/2 relative overflow-hidden">
+                <div className="w-full md:w-1/2 relative overflow-hidden">
                   <img
                     src={latestPost.image}
                     alt={latestPost.title}
@@ -181,46 +193,46 @@ const Blog: React.FC = () => {
                       const ratio = img.naturalWidth / img.naturalHeight;
                       setLatestImageRatio(ratio);
                     }}
-                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl md:rounded-l-xl md:rounded-t-none ${
                       latestImageRatio && latestImageRatio > 1.3
-                        ? "h-64 md:h-full"
-                        : "h-96"
+                        ? "h-48 md:h-full"
+                        : "h-64"
                     }`}
                   />
                   <div className="absolute inset-0 border-4 border-transparent group-hover:border-t-red-500 group-hover:border-l-red-500 transition-colors duration-300" />
                 </div>
 
                 {/* Content */}
-                <CardContent className="md:w-1/2 p-8">
-                  <div className="flex items-center gap-2 mb-4">
+                <CardContent className="w-full md:w-1/2 p-5 md:p-8">
+                  <div className="flex flex-wrap items-center gap-2 mb-3 md:mb-4">
                     <Badge className={getSourceBadgeColor(latestPost.source)}>
                       {latestPost.source}
                     </Badge>
-                    <div className="flex items-center text-sm text-muted-foreground">
+                    <div className="flex items-center text-xs md:text-sm text-muted-foreground">
                       <Calendar className="h-4 w-4 mr-1" />
                       {new Date(latestPost.date).toLocaleDateString()}
                     </div>
-                    <div className="flex items-center text-sm text-muted-foreground">
+                    <div className="flex items-center text-xs md:text-sm text-muted-foreground">
                       <Clock className="h-4 w-4 mr-1" />
                       {latestPost.readTime}
                     </div>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 group-hover:text-red-600 transition-colors">
+                  <h3 className="text-lg md:text-2xl font-bold mb-3 md:mb-4 group-hover:text-red-600 transition-colors">
                     {latestPost.title}
                   </h3>
-                  <p className="text-muted-foreground mb-6">
+                  <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
                     {latestPost.excerpt}
                   </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
                     {latestPost.tags.map((tag) => (
                       <Badge key={tag} variant="secondary">
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
                     <Button
-                      className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-white font-semibold shadow-md bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400 transition duration-200"
+                      className="relative inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-white font-semibold shadow-md bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400 transition duration-200 text-sm md:text-base"
                       asChild
                     >
                       <a
@@ -232,7 +244,7 @@ const Blog: React.FC = () => {
                         Read Article
                       </a>
                     </Button>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-xs md:text-sm text-muted-foreground">
                       {latestPost.views} views
                     </span>
                   </div>
@@ -244,14 +256,16 @@ const Blog: React.FC = () => {
 
         {/* Articles Grid */}
         <section>
-          <h2 className="text-2xl font-bold mb-8">All Articles</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
+            All Articles
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
             {blogPosts
               .filter((post) => !post.isLatest)
               .map((post, index) => (
                 <Card
                   key={post.id}
-                  className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative"
+                  className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative rounded-xl"
                   style={{ animationDelay: `${index * 100}ms` }}
                   onMouseEnter={() => setHoveredPost(post.id)}
                   onMouseLeave={() => setHoveredPost(null)}
@@ -260,7 +274,7 @@ const Blog: React.FC = () => {
                     <img
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-40 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl"
                     />
                     <div
                       className={`absolute inset-0 border-2 border-transparent transition-all duration-300 ${
@@ -270,8 +284,8 @@ const Blog: React.FC = () => {
                       }`}
                     />
                   </div>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-3">
+                  <CardContent className="p-4 md:p-6">
+                    <div className="flex items-center justify-between mb-2 md:mb-3">
                       <Badge className={getSourceBadgeColor(post.source)}>
                         {post.source}
                       </Badge>
@@ -279,20 +293,20 @@ const Blog: React.FC = () => {
                         {post.views} views
                       </span>
                     </div>
-                    <h3 className="font-bold mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    <h3 className="font-bold mb-2 md:mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 text-base md:text-lg">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                    <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-3">
                       {post.excerpt}
                     </p>
-                    <div className="flex items-center text-xs text-muted-foreground mb-4">
+                    <div className="flex items-center text-xs text-muted-foreground mb-3 md:mb-4">
                       <Calendar className="h-3 w-3 mr-1" />
                       {new Date(post.date).toLocaleDateString()}
                       <span className="mx-2">•</span>
                       <Clock className="h-3 w-3 mr-1" />
                       {post.readTime}
                     </div>
-                    <div className="flex flex-wrap gap-1 mb-4">
+                    <div className="flex flex-wrap gap-1 mb-3 md:mb-4">
                       {post.tags.slice(0, 3).map((tag) => (
                         <Badge key={tag} variant="outline" className="text-xs">
                           {tag}
@@ -305,7 +319,7 @@ const Blog: React.FC = () => {
                       )}
                     </div>
                     <Button
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md font-semibold shadow-sm transition duration-200 inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-5 md:py-2 rounded-md font-semibold shadow-sm transition duration-200 inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-sm md:text-base"
                       asChild
                     >
                       <a
@@ -324,22 +338,38 @@ const Blog: React.FC = () => {
         </section>
 
         {/* Newsletter Signup */}
-        <div className="mt-16 text-center">
-          <div className="glass rounded-xl p-8">
-            <h2 className="text-2xl font-bold mb-4">Want to stay updated?</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+        <div className="mt-10 md:mt-16 text-center">
+          <div className="glass rounded-xl p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
+              Want to stay updated?
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-4 md:mb-6 text-sm md:text-base">
               Follow me on Medium for the latest articles on .NET development
               and Azure cloud solutions.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-3 md:gap-4 justify-center mb-4">
               <Button
                 variant="outline"
-                className="border-blue-600 text-blue-600 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-700 transition-colors duration-200"
+                className="border-blue-600 text-blue-600 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-700 transition-colors duration-200 text-sm md:text-base px-4 md:px-6 py-2 md:py-2.5"
                 asChild
               >
                 <a href={mediumLink} target="_blank" rel="noopener noreferrer">
                   Medium
                 </a>
+              </Button>
+            </div>
+            <div className="flex flex-col md:flex-row gap-3 md:gap-6 justify-center">
+              <Button
+                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold px-6 py-3 md:px-8 md:py-3 rounded-xl shadow-lg transition duration-200 text-base md:text-lg"
+                asChild
+              >
+                <a href="/contact">Get In Touch</a>
+              </Button>
+              <Button
+                className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold px-6 py-3 md:px-8 md:py-3 rounded-xl shadow-lg transition duration-200 text-base md:text-lg"
+                asChild
+              >
+                <a href="/projects">View My Work</a>
               </Button>
             </div>
           </div>
