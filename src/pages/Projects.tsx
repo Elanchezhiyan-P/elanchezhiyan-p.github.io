@@ -5,7 +5,7 @@ import projectsData from "../data/projects.json";
 import SeahorseImage from "@/assets/project/Seahorse.png";
 import MpsImage from "@/assets/project/MPS.jpg";
 import QueryBuilderImage from "@/assets/project/Querybuilder.png";
-import IcsImage from "@/assets/project/ics.jpg";
+import IcsImage from "@/assets/project/ics_temp.jpg";
 import ScoutImage from "@/assets/project/Scout.jpg";
 import IOSBackupToolImage from "@/assets/project/Scout-iOS.png";
 import Qliq1sImage from "@/assets/project/Qliq1s.jpg";
