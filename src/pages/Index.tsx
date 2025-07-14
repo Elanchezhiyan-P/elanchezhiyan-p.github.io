@@ -93,112 +93,72 @@ const Index = () => {
   };
 
   return (
-    <div className="space-y">
-      <title>
-        Elanchezhiyan P - Seasoned Software Developer | .NET & Azure Expert
-      </title>
-
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="flex-1 space-y-8 animate-slide-in-left">
-            <div className="space-y-4">
-              <h1 className="text-4xl md:text-4xl lg:text-6xl font-bold">
-                <span className="block">Hi, I'm</span>
-                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-500 bg-clip-text text-transparent leading-tight">
-                  Elanchezhiyan P
-                </span>
-              </h1>
-              <div className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 space-y-2">
-                <p className="font-semibold">Seasoned Software Developer</p>
-                <p>
-                  {yearsOfExperience}+ years of experience architecting scalable
-                  and secure cloud applications.
-                </p>
-              </div>
+      <section className="container mx-auto px-4 pt-10 pb-16 flex flex-col md:flex-row items-center gap-10">
+        <div className="w-full md:w-1/2 flex flex-col justify-center text-left">
+          <h1 className="text-3xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+            Hi, I'm Elanchezhiyan
+          </h1>
+          <h2 className="text-lg md:text-2xl font-semibold mb-2 text-blue-700 dark:text-blue-300 theme-green:text-green-600">
+            Seasoned Software Developer
+          </h2>
+          <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-3 max-w-xl">
+            I build scalable, high-performance software for startups and
+            enterprises. Let's turn your ideas into reality.
+          </p>
+          <div className="flex flex-row gap-3 mb-4">
+            <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow border border-blue-100 dark:border-blue-800 py-3 px-4 min-w-[90px]">
+              <span className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                5.9+
+              </span>
+              <span className="text-xs text-gray-700 dark:text-gray-300 mt-1">
+                Years
+              </span>
             </div>
-
-            <div className="flex flex-wrap gap-4">
-              <Link to="/projects">
-                <Button
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white px-6 md:px-8 py-3 md:py-4 text-base md:text-lg hover-glow"
-                >
-                  View My Work
-                  <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
-                </Button>
-              </Link>
-              <Link to="/contact">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 theme-green:border-green-600 theme-green:text-green-600 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/20 hover-glow"
-                >
-                  Get In Touch
-                </Button>
-              </Link>
+            <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow border border-blue-100 dark:border-blue-800 py-3 px-4 min-w-[90px]">
+              <span className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                30+
+              </span>
+              <span className="text-xs text-gray-700 dark:text-gray-300 mt-1">
+                Projects
+              </span>
             </div>
-
-            {/* Quick Stats */}
-            <div className="flex flex-wrap gap-6 md:gap-8 pt-8">
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-blue-600 theme-green:text-green-600">
-                  {yearsOfExperience}+
-                </div>
-                <div className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                  Years Experience
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-blue-600 theme-green:text-green-600">
-                  30+
-                </div>
-                <div className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                  Projects Completed
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-blue-600 theme-green:text-green-600">
-                  40%
-                </div>
-                <div className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                  Performance Improvement
-                </div>
-              </div>
+            <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow border border-blue-100 dark:border-blue-800 py-3 px-4 min-w-[90px]">
+              <span className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                40%
+              </span>
+              <span className="text-xs text-gray-700 dark:text-gray-300 mt-1">
+                Improvement
+              </span>
             </div>
           </div>
-
-          <div className="flex-1 flex justify-center">
-            <div className="relative group">
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 p-1 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-blue-500/25 theme-green:group-hover:shadow-green-500/25">
-                <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-4 flex items-center justify-center overflow-hidden">
-                  <img
-                    src="../Elan.jpg"
-                    alt="Elanchezhiyan P"
-                    className="w-full h-full rounded-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:brightness-110"
-                  />
-                </div>
-              </div>
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-green-500 rounded-full border-4 border-white dark:border-gray-900 animate-pulse"></div>
-
-              {/* Floating elements around image */}
-              <div
-                className="absolute -top-2 -left-2 w-6 h-6 bg-blue-500/30 theme-green:bg-green-500/30 rounded-full animate-bounce"
-                style={{ animationDelay: "0.5s" }}
-              ></div>
-              <div
-                className="absolute bottom-4 -left-6 w-4 h-4 bg-purple-500/40 theme-green:bg-emerald-500/40 rounded-full animate-bounce"
-                style={{ animationDelay: "1s" }}
-              ></div>
-              <div
-                className="absolute top-1/2 -right-8 w-5 h-5 bg-indigo-500/35 theme-green:bg-teal-500/35 rounded-full animate-bounce"
-                style={{ animationDelay: "1.5s" }}
-              ></div>
-            </div>
+          <div className="flex gap-3 mt-2">
+            <Button
+              asChild
+              className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-5 py-2 text-base font-semibold rounded-xl shadow-md transition-all duration-300 hover:scale-105"
+            >
+              <Link to="/projects">View My Work</Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="px-5 py-2 text-base font-semibold rounded-xl border-blue-200 dark:border-blue-800 shadow-sm transition duration-200 hover:border-blue-500 theme-green:hover:border-green-500"
+            >
+              <Link to="/contact">Get in Touch</Link>
+            </Button>
+          </div>
+        </div>
+        <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end mt-6 md:mt-0">
+          <div className="group relative flex items-center justify-center p-0 md:p-2">
+            <img
+              src="/Elan.jpg"
+              alt="Elanchezhiyan"
+              className="w-40 h-40 md:w-64 md:h-64 object-cover rounded-full shadow-lg border-4 border-blue-200 dark:border-blue-800 transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105"
+            />
           </div>
         </div>
       </section>
-
       {/* Featured Projects Carousel */}
       <section className="container mx-auto px-4">
         <div className="text-center mb-12">
@@ -207,7 +167,6 @@ const Index = () => {
             Showcasing scalable solutions and innovative architectures
           </p>
         </div>
-
         <div
           className="relative overflow-hidden rounded-2xl shadow-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 transition-all duration-500"
           onMouseEnter={() => setIsHovered(true)}
@@ -288,23 +247,21 @@ const Index = () => {
               </div>
             ))}
           </div>
-
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
             aria-label="Previous project"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
             aria-label="Next project"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
-
           {/* Dots Indicator */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
             {featuredProjects.map((_, index) => (
@@ -322,7 +279,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
       {/* Services/Skills Preview */}
       <section className="container mx-auto px-4">
         <div className="text-center mt-10 mb-12">
@@ -331,7 +287,6 @@ const Index = () => {
             Specialized in modern cloud-native development
           </p>
         </div>
-
         <div className="grid md:grid-cols-3 gap-8">
           {/* Full-Stack Development Card */}
           <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
@@ -348,7 +303,6 @@ const Index = () => {
               </p>
             </div>
           </Card>
-
           {/* Cloud Solutions Card */}
           <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
             <div className="flex flex-col items-center p-8">
@@ -364,7 +318,6 @@ const Index = () => {
               </p>
             </div>
           </Card>
-
           {/* DevOps & Automation Card */}
           <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
             <div className="flex flex-col items-center p-8">
@@ -382,7 +335,6 @@ const Index = () => {
           </Card>
         </div>
       </section>
-
       {/* Call to Action */}
       <section className="text-center my-16">
         <div className="mx-auto max-w-2xl rounded-2xl border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 bg-white dark:bg-gray-900 shadow-lg p-10 md:p-14 flex flex-col items-center">

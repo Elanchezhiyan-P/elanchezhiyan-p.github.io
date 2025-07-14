@@ -76,7 +76,7 @@ export const FloatingSocialSidebar: React.FC = () => {
 
   return (
     <div
-      className="fixed z-40 bg-gradient-to-br from-blue-200/80 via-white/80 to-blue-100/80 dark:from-blue-900/60 dark:via-gray-900/80 dark:to-blue-800/60 theme-green:from-green-200/80 theme-green:via-white/80 theme-green:to-green-100/80 theme-green:dark:from-green-900/60 theme-green:dark:via-gray-900/80 theme-green:dark:to-green-800/60 rounded-lg transition-all duration-300 hover:scale-105 backdrop-blur-lg border border-blue-300/40 dark:border-blue-800/40 theme-green:border-green-300/40 theme-green:dark:border-green-800/40 shadow-lg"
+      className="fixed z-40 bg-gradient-to-br from-blue-200/80 via-white/80 to-blue-100/80 dark:from-blue-900/60 dark:via-gray-900/80 dark:to-blue-800/60 theme-green:from-green-200/80 theme-green:via-white/80 theme-green:to-green-100/80 theme-green:dark:from-green-900/60 theme-green:dark:via-gray-900/80 theme-green:dark:to-green-800/60 rounded-lg transition-all duration-300 hover:scale-105 backdrop-blur-lg border border-blue-300/40 dark:border-blue-800/40 theme-green:border-green-300/40 theme-green:dark:border-green-800/40 shadow-lg hidden md:block"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,

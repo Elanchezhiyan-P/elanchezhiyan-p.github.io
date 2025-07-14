@@ -4,14 +4,16 @@ import ChatbotAvatar from "@/assets/chatbot.jpg";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-interface FloatingChatbotProps {
-  isMobile?: boolean;
-}
-
-export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
-  isMobile = false,
-}) => {
+export const FloatingChatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <>
@@ -33,7 +35,7 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       {isOpen && (
         <div
           className={`fixed z-50 w-80 max-w-[calc(100vw-2rem)] rounded-2xl shadow-2xl animate-fade-in bg-white/80 dark:bg-gray-900/80 backdrop-blur border border-blue-100 dark:border-gray-800 flex flex-col overflow-hidden ${
-            isMobile ? "bottom-40 right-6" : "bottom-24 right-6"
+            isMobile ? "bottom-40 right-6" : "bottom-12 right-6"
           }`}
           style={{ minHeight: "340px" }}
         >

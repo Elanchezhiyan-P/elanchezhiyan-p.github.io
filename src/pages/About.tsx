@@ -684,13 +684,10 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>
-          About Elanchezhiyan P - Senior .NET & Azure Developer | 5+ Years
-          Experience
-        </title>
+        <title>{`About Elanchezhiyan P - Senior .NET & Azure Developer | ${yearsOfExperience}+ Years Experience`}</title>
         <meta
           name="description"
-          content="Learn about Elanchezhiyan P, a seasoned software developer with 5+ years of experience in .NET Core, Azure Cloud, CRM integrations, and modern web technologies. Expert in building scalable, secure applications."
+          content={`Learn about Elanchezhiyan P, a seasoned software developer with ${yearsOfExperience}+ years of experience in .NET Core, Azure Cloud, CRM integrations, and modern web technologies. Expert in building scalable, secure applications.`}
         />
         <meta
           name="keywords"
@@ -708,38 +705,39 @@ const About = () => {
         <link rel="canonical" href="https://elanchezhiyan.dev/about" />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-12 space-y-20">
+      <div className="container mx-auto px-2 py-8 space-y-16">
         {/* Hero Section */}
         <section className="text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             About Me
           </h1>
-          <div className="glass rounded-3xl p-8 max-w-4xl mx-auto backdrop-blur-xl border border-white/20">
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+          <div className="rounded-2xl p-6 max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow border border-blue-100 dark:border-blue-900">
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               I'm a seasoned software developer with{" "}
               <span className="font-bold text-blue-600 theme-green:text-green-600">
                 {yearsOfExperience}+ years
               </span>{" "}
               of experience in building scalable, secure cloud applications. My
-              expertise spans across .NET technologies, Azure cloud services,
-              CRM integrations, and modern web development frameworks.
+              expertise spans .NET technologies, Azure cloud services, CRM
+              integrations, and modern web development frameworks.
             </p>
           </div>
         </section>
 
         {/* Resume Download Section */}
         <section className="text-center">
-          <div className="glass rounded-3xl p-8 max-w-2xl mx-auto backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          <div className="rounded-2xl p-6 max-w-xl mx-auto bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 shadow border border-blue-100 dark:border-blue-900">
+            <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Resume
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Get a detailed overview of my experience, skills, and achievements
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Get a detailed overview of my experience, skills, and
+              achievements.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 asChild
-                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-6 py-2 text-base font-semibold rounded-xl shadow transition-all duration-300 hover:scale-105"
               >
                 <a
                   href="/resume/Elanchezhiyan_P.pdf"
@@ -753,7 +751,7 @@ const About = () => {
               <Button
                 onClick={handleResumeDownload}
                 variant="outline"
-                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-105"
+                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-6 py-2 text-base font-semibold rounded-xl transition-all duration-300 hover:scale-105"
               >
                 <Download className="w-5 h-5 mr-2" />
                 Download Resume PDF
@@ -764,112 +762,103 @@ const About = () => {
 
         {/* Experience Timeline */}
         <section>
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
             Professional Journey
           </h2>
-
           {isMobile ? (
             <MobileTimeline experiences={experiences} />
           ) : (
-            <div className="relative max-w-6xl mx-auto">
-              <div className="relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-200 via-blue-500 to-blue-800 theme-green:from-green-200 theme-green:via-green-500 theme-green:to-green-800 rounded-full shadow-lg"></div>
-
-                <div className="space-y-16">
-                  {experiences.map((exp, index) => (
+            <div className="relative max-w-5xl mx-auto">
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-200 via-blue-500 to-blue-800 theme-green:from-green-200 theme-green:via-green-500 theme-green:to-green-800 rounded-full shadow-lg"></div>
+              <div className="space-y-12">
+                {experiences.map((exp, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-center ${
+                      index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+                    } relative`}
+                  >
                     <div
-                      key={index}
-                      className={`flex items-center ${
-                        index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-                      } relative`}
+                      className={`absolute left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full flex items-center justify-center text-white font-bold shadow-lg z-10 border-4 border-white dark:border-gray-900 bg-gradient-to-br ${
+                        index === experiences.length - 1
+                          ? "from-green-500 via-emerald-500 to-teal-600 animate-pulse"
+                          : "from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600"
+                      }`}
                     >
-                      <div
-                        className={`absolute left-1/2 transform -translate-x-1/2 w-28 h-28 rounded-full flex items-center justify-center text-white font-bold shadow-2xl z-10 border-4 border-white dark:border-gray-900 backdrop-blur-sm transition-all duration-500 hover:scale-110 ${
-                          index === experiences.length - 1
-                            ? "bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 animate-pulse shadow-green-200 dark:shadow-green-400"
-                            : "bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600"
-                        }`}
-                      >
-                        <div className="text-center">
-                          <div className="text-sm font-bold">
-                            {exp.year.split(" ")[0]}
+                      <div className="text-center">
+                        <div className="text-xs font-bold">
+                          {exp.year.split(" ")[0]}
+                        </div>
+                        <div className="text-xs opacity-90">
+                          {exp.year.split(" ")[1]}
+                        </div>
+                        {index === experiences.length - 1 && (
+                          <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                            <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
                           </div>
-                          <div className="text-xs opacity-90">
-                            {exp.year.split(" ")[1]}
-                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      className={`w-5/12 ${
+                        index % 2 === 0 ? "pr-12" : "pl-12"
+                      }`}
+                    >
+                      <div className="rounded-2xl p-6 bg-white dark:bg-gray-900 shadow border border-blue-100 dark:border-blue-900">
+                        <div className="flex items-center gap-2 mb-3">
+                          <h3 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+                            {exp.title}
+                          </h3>
+                          {exp.type === "promotion" && (
+                            <Trophy className="w-5 h-5 text-yellow-500 animate-pulse" />
+                          )}
                           {index === experiences.length - 1 && (
-                            <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                              <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
-                            </div>
+                            <span className="px-2 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full">
+                              Current
+                            </span>
                           )}
                         </div>
-                      </div>
-
-                      <div
-                        className={`w-5/12 ${
-                          index % 2 === 0 ? "pr-24" : "pl-24"
-                        }`}
-                      >
-                        <div className="glass rounded-3xl p-8 transition-all duration-500 hover:scale-105 backdrop-blur-xl border border-white/20 shadow-lg hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
-                          <div className="flex items-center gap-3 mb-6">
-                            <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
-                              {exp.title}
-                            </h3>
-                            {exp.type === "promotion" && (
-                              <Trophy className="w-6 h-6 text-yellow-500 animate-pulse" />
-                            )}
-                            {index === experiences.length - 1 && (
-                              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full">
-                                <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
-                                Current
-                              </div>
-                            )}
+                        {exp.companyWebsite && (
+                          <div className="mb-3">
+                            <a
+                              href={exp.companyWebsite}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700 hover:bg-gradient-to-r hover:from-blue-200 hover:to-indigo-200 dark:hover:from-blue-800/30 dark:hover:to-indigo-800/30 theme-green:hover:from-green-200 theme-green:hover:to-emerald-200 theme-green:dark:hover:from-green-800/30 theme-green:dark:hover:to-emerald-800/30 transition-all duration-300 hover:scale-105"
+                            >
+                              <ExternalLink className="w-4 h-4 text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400" />
+                              <span className="text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 font-semibold">
+                                {exp.company}
+                              </span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                Visit Website →
+                              </span>
+                            </a>
                           </div>
-
-                          {exp.companyWebsite && (
-                            <div className="mb-6">
-                              <a
-                                href={exp.companyWebsite}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-100/80 to-indigo-100/80 dark:from-blue-900/30 dark:to-indigo-900/30 theme-green:from-green-100/80 theme-green:to-emerald-100/80 theme-green:dark:from-green-900/30 theme-green:dark:to-emerald-900/30 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700 hover:bg-gradient-to-r hover:from-blue-200/80 hover:to-indigo-200/80 dark:hover:from-blue-800/40 dark:hover:to-indigo-800/40 theme-green:hover:from-green-200/80 theme-green:hover:to-emerald-200/80 theme-green:dark:hover:from-green-800/40 theme-green:dark:hover:to-emerald-800/40 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
-                              >
-                                <ExternalLink className="w-4 h-4 text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400 group-hover:rotate-12 transition-transform duration-300" />
-                                <span className="text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 font-semibold group-hover:underline">
-                                  {exp.company}
-                                </span>
-                                <span className="text-xs text-gray-500 dark:text-gray-400">
-                                  Visit Website →
-                                </span>
-                              </a>
-                            </div>
-                          )}
-
-                          <div className="flex items-center gap-2 mb-4">
-                            <MapPin className="w-4 h-4 text-gray-500" />
-                            <span className="text-gray-500 text-sm">
-                              {exp.location}
-                            </span>
-                          </div>
-                          {exp.intro && (
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 italic">
-                              {exp.intro}
-                            </p>
-                          )}
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                            {exp.description}
+                        )}
+                        <div className="flex items-center gap-2 mb-2">
+                          <MapPin className="w-4 h-4 text-gray-500" />
+                          <span className="text-gray-500 text-xs">
+                            {exp.location}
+                          </span>
+                        </div>
+                        {exp.intro && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1 italic">
+                            {exp.intro}
                           </p>
-
-                          <div className="mt-6 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                            {exp.type === "promotion"
-                              ? "🚀 Promoted"
-                              : "🎯 New Role"}
-                          </div>
+                        )}
+                        <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                          {exp.description}
+                        </p>
+                        <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 text-white shadow transition-all duration-300 hover:scale-105">
+                          {exp.type === "promotion"
+                            ? "🚀 Promoted"
+                            : "🎯 New Role"}
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -877,11 +866,10 @@ const About = () => {
 
         {/* Technical Expertise Section */}
         <section>
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-300 to-purple-600 theme-green:from-green-300 theme-green:to-emerald-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-blue-300 to-purple-600 theme-green:from-green-300 theme-green:to-emerald-300 bg-clip-text text-transparent">
             Technical Expertise
           </h2>
-
-          <div className="space-y-12">
+          <div className="space-y-8">
             <SkillCard
               title="CRM Integrations"
               description="Seamless integration with leading CRM platforms across industries"
@@ -890,7 +878,6 @@ const About = () => {
               gradient="from-orange-500 to-red-600"
               isCrm={true}
             />
-
             <SkillCard
               title=".NET Applications"
               description="Comprehensive .NET ecosystem development across platforms"
@@ -899,7 +886,6 @@ const About = () => {
               gradient="from-blue-500 to-purple-600"
               isCrm={true}
             />
-
             <SkillCard
               title="Tools & Technologies"
               description="Modern development and integration tools ecosystem"
@@ -908,7 +894,6 @@ const About = () => {
               gradient="from-green-500 to-teal-600"
               isCrm={true}
             />
-
             <SkillCard
               title="Databases"
               description="Multi-database expertise and management across platforms"
@@ -917,7 +902,6 @@ const About = () => {
               gradient="from-yellow-500 to-orange-600"
               isCrm={true}
             />
-
             <SkillCard
               title="Collaboration & Soft Skills"
               description="Effective communication, leadership, and team collaboration"
@@ -931,26 +915,26 @@ const About = () => {
 
         {/* Freelance Services Section */}
         <section>
-          <div className="glass rounded-3xl p-12 backdrop-blur-xl border border-white/20 bg-gradient-to-br from-purple-50/50 via-blue-50/50 to-indigo-50/50 dark:from-purple-900/20 dark:via-blue-900/20 dark:to-indigo-900/20">
-            <h3 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          <div className="rounded-2xl p-8 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-purple-900/10 dark:via-blue-900/10 dark:to-indigo-900/10 shadow border border-purple-100 dark:border-purple-900">
+            <h3 className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Available for Freelance Projects
             </h3>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto text-center">
+            <p className="text-base text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto text-center">
               I offer comprehensive software development services including .NET
               applications, Azure cloud solutions, CRM integrations, and custom
               web applications. Check out my portfolio to see my recent work.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 asChild
-                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-6 py-2 text-base font-semibold rounded-xl shadow transition-all duration-300 hover:scale-105"
               >
                 <a href="/projects">View My Projects</a>
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-105"
+                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-6 py-2 text-base font-semibold rounded-xl transition-all duration-300 hover:scale-105"
               >
                 <a href="/contact">Hire Me</a>
               </Button>
@@ -960,10 +944,10 @@ const About = () => {
 
         {/* Certifications */}
         <section>
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
             Certifications & Achievements
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {certifications.map((cert, index) => (
               <Card
                 key={cert.name}
@@ -971,48 +955,38 @@ const About = () => {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 rounded-t-2xl"></div>
-
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {/* Header with icon and external link */}
+                <CardContent className="p-5">
+                  <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
-                        <span className="text-xl">{cert.icon}</span>
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow">
+                        <span className="text-lg">{cert.icon}</span>
                       </div>
                       <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300" />
                     </div>
-
-                    {/* Content */}
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
-                        {cert.name}
-                      </h3>
-
-                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {cert.issuer}
-                      </p>
-
-                      <div className="flex items-center gap-2">
-                        <Badge variant="secondary" className="text-xs">
-                          {cert.category}
-                        </Badge>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {cert.date}
-                        </span>
-                      </div>
-
-                      {cert.credentialId && (
-                        <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-                          <span className="text-xs text-gray-500 dark:text-gray-400">
-                            ID: {cert.credentialId}
-                          </span>
-                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                      )}
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
+                      {cert.name}
+                    </h3>
+                    <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                      {cert.issuer}
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {cert.category}
+                      </Badge>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {cert.date}
+                      </span>
                     </div>
+                    {cert.credentialId && (
+                      <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          ID: {cert.credentialId}
+                        </span>
+                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
-
                 <a
                   href={cert.link}
                   target="_blank"
@@ -1023,12 +997,10 @@ const About = () => {
               </Card>
             ))}
           </div>
-
-          {/* Summary section */}
-          <div className="mt-12 text-center">
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 theme-green:from-green-50 theme-green:to-emerald-50 theme-green:dark:from-green-900/20 theme-green:dark:to-emerald-900/20 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700">
-              <span className="text-2xl">🎓</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10 theme-green:from-green-50 theme-green:to-emerald-50 theme-green:dark:from-green-900/10 theme-green:dark:to-emerald-900/10 border border-blue-100 dark:border-blue-700 theme-green:border-green-100 theme-green:dark:border-green-700">
+              <span className="text-xl">🎓</span>
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
                 {certifications.length} Professional Certifications
               </span>
             </div>
@@ -1037,15 +1009,15 @@ const About = () => {
 
         {/* Call to Action */}
         <section className="text-center">
-          <div className="glass rounded-3xl p-12 backdrop-blur-xl border-4 border-blue-500 dark:border-blue-400 theme-green:border-green-500 theme-green:dark:border-green-400 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          <div className="rounded-2xl p-8 bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 dark:from-blue-900/10 dark:via-purple-900/10 dark:to-indigo-900/10 shadow border-2 border-blue-500 dark:border-blue-400 theme-green:border-green-500 theme-green:dark:border-green-400">
+            <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Ready to Build Something Amazing?
             </h3>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-base text-gray-600 dark:text-gray-300 mb-5 max-w-xl mx-auto">
               With extensive experience across multiple technologies and
               industries, I'm ready to help bring your vision to life.
             </p>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-6 py-2 text-base font-semibold rounded-xl shadow transition-all duration-300 hover:scale-105">
               Let's Connect
             </Button>
           </div>
