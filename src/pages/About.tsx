@@ -596,7 +596,7 @@ const About = () => {
   const handleResumeDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement("a");
-    link.href = "/public/resume/elanchezhiyan_p.pdf"; // Correct path in public folder
+    link.href = "/resume/Elanchezhiyan_P.pdf"; // Correct path for GitHub Pages
     link.download = "Elanchezhiyan_P_Resume.pdf";
     document.body.appendChild(link);
     link.click();
@@ -742,7 +742,7 @@ const About = () => {
                 className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
               >
                 <a
-                  href="/public/resume/elanchezhiyan_p.pdf"
+                  href="/resume/Elanchezhiyan_P.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
