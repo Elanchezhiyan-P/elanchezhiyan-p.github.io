@@ -1,0 +1,23 @@
+{
+  "name": "Elanchezhiyan P's Portfolio",
+  "short_name": "Elanchezhiyan P",
+  "description": "Portfolio of Elanchezhiyan P, a seasoned software developer specializing in .NET and Azure.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0078d7",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
