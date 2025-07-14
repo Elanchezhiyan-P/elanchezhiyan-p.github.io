@@ -57,12 +57,14 @@ index.css         # Tailwind CSS entry
 ### Installation
 
 1. **Clone the repository:**
+
    ```sh
    git clone https://github.com/elanchezhiyan-p/profile.git
    cd profile
    ```
 
 2. **Install dependencies:**
+
    ```sh
    npm install
    # or
@@ -70,6 +72,7 @@ index.css         # Tailwind CSS entry
    ```
 
 3. **Start the development server:**
+
    ```sh
    npm run dev
    # or
