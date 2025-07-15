@@ -94,7 +94,7 @@ export const FloatingSocialSidebar: React.FC = () => {
     },
     {
       icon: WhatsAppIcon,
-      href: "https://wa.me/919876543210",
+      href: "https://api.whatsapp.com/send/?phone=919942644999&text&type=phone_number&app_absent=0",
       label: "WhatsApp",
       hoverColor: "hover:shadow-green-500/25 dark:hover:shadow-green-400/25",
     },

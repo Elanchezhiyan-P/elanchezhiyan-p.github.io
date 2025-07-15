@@ -109,7 +109,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     },
     {
       icon: WhatsAppIcon,
-      href: "https://wa.me/919876543210",
+      href: "https://api.whatsapp.com/send/?phone=919942644999&text&type=phone_number&app_absent=0",
       label: "WhatsApp",
       color:
         "bg-white dark:bg-gray-900 text-green-600 dark:text-green-400 border border-green-300 dark:border-green-700 hover:bg-green-100 dark:hover:bg-green-800",
