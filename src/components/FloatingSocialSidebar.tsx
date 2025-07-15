@@ -1,4 +1,55 @@
 import React, { useState, useEffect } from "react";
+// Official WhatsApp SVG icon
+const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="white"
+    width="24px"
+    height="24px"
+    className="w-5 h-5"
+  >
+    <svg viewBox="0 0 496 497">
+      <defs>
+        <linearGradient
+          id="a"
+          x1="247.32"
+          x2="247.32"
+          y1="446.09"
+          y2="39.9"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stop-color="#20b038"></stop>
+          <stop offset="1" stop-color="#60d66a"></stop>
+        </linearGradient>
+        <linearGradient
+          id="b"
+          x1="247.32"
+          x2="247.32"
+          y1="453.37"
+          y2="32.61"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stop-color="#f9f9f9"></stop>
+          <stop offset="1" stop-color="#fff"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M37.88 453.37l29.59-108A208 208 0 0 1 39.63 241.1c0-115 93.6-208.49 208.56-208.49a208.57 208.57 0 0 1 208.57 208.66c-.05 115-93.62 208.49-208.57 208.49h-.08a208.41 208.41 0 0 1-99.67-25.38zm115.68-66.73l6.34 3.75a173.18 173.18 0 0 0 88.23 24.16h.06c95.55 0 173.31-77.75 173.35-173.3A173.34 173.34 0 0 0 248.26 67.83c-95.62 0-173.38 77.73-173.42 173.28a172.94 172.94 0 0 0 26.5 92.23l4.13 6.55L88 403.84z"></path>
+      <path
+        fill="#20b038"
+        d="M45.13 446.09l28.57-104.3a200.82 200.82 0 0 1-26.88-100.62c0-111 90.36-201.27 201.34-201.27A201.35 201.35 0 0 1 449.5 241.32c0 111-90.37 201.28-201.33 201.28h-.09a201.31 201.31 0 0 1-96.21-24.49z"
+      ></path>
+      <path
+        fill="url(#b)"
+        d="M37.88 453.37l29.59-108A208 208 0 0 1 39.63 241.1c0-115 93.6-208.49 208.56-208.49a208.57 208.57 0 0 1 208.57 208.66c-.05 115-93.62 208.49-208.57 208.49h-.08a208.41 208.41 0 0 1-99.67-25.38zm115.68-66.73l6.34 3.75a173.18 173.18 0 0 0 88.23 24.16h.06c95.55 0 173.31-77.75 173.35-173.3A173.34 173.34 0 0 0 248.26 67.83c-95.62 0-173.38 77.73-173.42 173.28a172.94 172.94 0 0 0 26.5 92.23l4.13 6.55L88 403.84z"
+      ></path>
+      <path
+        fill="#fff"
+        d="M196.07 153.94c-3.91-8.68-8-8.85-11.73-9-3-.14-6.51-.13-10-.13a19.15 19.15 0 0 0-13.89 6.52c-4.78 5.22-18.24 17.82-18.24 43.46s18.67 50.42 21.28 53.9 36.05 57.77 89 78.66c44 17.36 53 13.91 62.53 13s30.83-12.61 35.18-24.78 4.34-22.59 3-24.77-4.78-3.48-10-6.08-30.83-15.22-35.61-16.95-8.25-2.61-11.73 2.61-13.45 16.94-16.5 20.42-6.08 3.92-11.29 1.31-22-8.11-41.9-25.86c-15.5-13.82-26-30.87-29-36.09s-.32-8 2.29-10.63c2.34-2.34 5.21-6.09 7.82-9.13s3.47-5.21 5.21-8.69.87-6.52-.44-9.13-11.35-28.34-15.98-38.64z"
+      ></path>
+    </svg>
+  </svg>
+);
+
 import {
   Github,
   Linkedin,
@@ -17,36 +68,51 @@ export const FloatingSocialSidebar: React.FC = () => {
 
   const socialLinks = [
     {
-      icon: Github,
+      icon: (props: any) => (
+        <Github className="w-4 h-4" {...props} style={{ color: "#181717" }} />
+      ),
       href: "https://github.com/elanchezhiyan-p",
       label: "GitHub",
-      hoverColor:
-        "hover:bg-gray-800 hover:shadow-gray-500/25 dark:hover:bg-gray-700 dark:hover:shadow-gray-400/25",
+      hoverColor: "hover:shadow-gray-500/25 dark:hover:shadow-gray-400/25",
     },
     {
-      icon: Linkedin,
+      icon: (props: any) => (
+        <Linkedin className="w-4 h-4" {...props} style={{ color: "#0077B5" }} />
+      ),
       href: "https://linkedin.com/in/elanchezhiyan-p",
       label: "LinkedIn",
       hoverColor:
-        "hover:bg-blue-700 hover:shadow-blue-500/25 dark:hover:bg-blue-600 dark:hover:shadow-blue-400/25 theme-green:hover:bg-green-700 theme-green:hover:shadow-green-500/25 theme-green:dark:hover:bg-green-600 theme-green:dark:hover:shadow-green-400/25",
+        "hover:shadow-blue-500/25 dark:hover:shadow-blue-400/25 theme-green:hover:shadow-green-500/25 theme-green:dark:hover:shadow-green-400/25",
     },
     {
-      icon: Mail,
+      icon: (props: any) => (
+        <Mail className="w-4 h-4" {...props} style={{ color: "#EA4335" }} />
+      ),
       href: "mailto:elanche97@gmail.com",
       label: "Email",
-      hoverColor:
-        "hover:bg-red-600 hover:shadow-red-500/25 dark:hover:bg-red-500 dark:hover:shadow-red-400/25",
+      hoverColor: "hover:shadow-red-500/25 dark:hover:shadow-red-400/25",
     },
     {
-      icon: () => (
-        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+      icon: WhatsAppIcon,
+      href: "https://wa.me/919876543210",
+      label: "WhatsApp",
+      hoverColor: "hover:shadow-green-500/25 dark:hover:shadow-green-400/25",
+    },
+    {
+      icon: (props: any) => (
+        <svg
+          className="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="#00ab6c"
+          aria-label="Medium"
+          {...props}
+        >
           <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z" />
         </svg>
       ),
       href: "https://medium.com/@elanchezhiyan-p",
       label: "Medium",
-      hoverColor:
-        "hover:bg-green-600 hover:shadow-green-500/25 dark:hover:bg-green-500 dark:hover:shadow-green-400/25",
+      hoverColor: "hover:shadow-green-500/25 dark:hover:shadow-green-400/25",
     },
   ];
 
@@ -120,7 +186,7 @@ export const FloatingSocialSidebar: React.FC = () => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`w-8 h-8 rounded-lg border border-blue-300/40 dark:border-blue-800/40 theme-green:border-green-300/40 theme-green:dark:border-green-800/40 bg-gradient-to-br from-blue-100/60 to-blue-200/60 dark:from-blue-900/40 dark:to-blue-800/40 theme-green:from-green-100/60 theme-green:to-green-200/60 theme-green:dark:from-green-900/40 theme-green:dark:to-green-800/40 text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 transition-all duration-300 hover:scale-110 hover:shadow-lg flex items-center justify-center ${hoverColor} backdrop-blur-lg shadow`}
+              className={`w-8 h-8 rounded-lg border border-blue-300/40 dark:border-blue-800/40 theme-green:border-green-300/40 theme-green:dark:border-green-800/40 bg-gradient-to-br from-blue-100/60 to-blue-200/60 dark:from-blue-900/40 dark:to-blue-800/40 theme-green:from-green-100/60 theme-green:to-green-200/60 theme-green:dark:from-green-900/40 theme-green:dark:to-green-800/40 transition-all duration-300 hover:scale-110 hover:shadow-lg flex items-center justify-center ${hoverColor} backdrop-blur-lg shadow`}
               aria-label={label}
               onClick={(e) => e.stopPropagation()}
             >

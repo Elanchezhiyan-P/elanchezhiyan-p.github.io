@@ -1,4 +1,97 @@
 import React, { useState, useEffect } from "react";
+
+interface SkillCardProps {
+  title: string;
+  skills: any[];
+  icon: any;
+  gradient: string;
+  description: string;
+  isCrm?: boolean;
+}
+
+const SkillCard: React.FC<SkillCardProps> = ({
+  title,
+  skills,
+  icon: Icon,
+  gradient,
+  description,
+  isCrm = false,
+}) => (
+  <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
+    <CardContent className="p-6">
+      <div className="flex items-center gap-4 mb-6">
+        <div
+          className={`p-4 rounded-2xl bg-gradient-to-br ${gradient} shadow-lg`}
+        >
+          <Icon className="w-8 h-8 text-white" />
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            {title}
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
+            {description}
+          </p>
+        </div>
+      </div>
+      {isCrm ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {skills.map((crm, index) => (
+            <div
+              key={index}
+              className="group relative rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-2xl">{crm.icon}</div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 text-base md:text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {crm.name}
+                  </h4>
+                  {crm.description && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {crm.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <Badge variant="secondary" className="text-xs">
+                  {crm.category}
+                </Badge>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {skills.map((skill, index) => (
+            <div
+              key={index}
+              className="rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+            >
+              <span className="text-gray-800 dark:text-gray-200 text-base md:text-lg font-medium leading-relaxed group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                {typeof skill === "string" ? (
+                  skill
+                ) : (
+                  <>
+                    {skill.icon && <span className="mr-2">{skill.icon}</span>}
+                    {skill.name}
+                    {skill.description && (
+                      <span className="block text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        {skill.description}
+                      </span>
+                    )}
+                  </>
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </CardContent>
+  </Card>
+);
 import {
   Calendar,
   MapPin,
@@ -603,84 +696,6 @@ const About = () => {
     document.body.removeChild(link);
   };
 
-  const SkillCard = ({
-    title,
-    skills,
-    icon: Icon,
-    gradient,
-    description,
-    isCrm = false,
-  }: {
-    title: string;
-    skills: any[];
-    icon: any;
-    gradient: string;
-    description: string;
-    isCrm?: boolean;
-  }) => (
-    <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
-      <CardContent className="p-6">
-        <div className="flex items-center gap-4 mb-6">
-          <div
-            className={`p-4 rounded-2xl bg-gradient-to-br ${gradient} shadow-lg`}
-          >
-            <Icon className="w-8 h-8 text-white" />
-          </div>
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              {title}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
-              {description}
-            </p>
-          </div>
-        </div>
-
-        {isCrm ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {skills.map((crm, index) => (
-              <div
-                key={index}
-                className="group relative rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="text-2xl">{crm.icon}</div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {crm.name}
-                    </h4>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {crm.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <Badge variant="secondary" className="text-xs">
-                    {crm.category}
-                  </Badge>
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {skills.map((skill, index) => (
-              <div
-                key={index}
-                className="rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
-              >
-                <span className="text-gray-800 dark:text-gray-200 text-sm font-medium leading-relaxed group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {skill}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-
   return (
     <>
       <Helmet>
@@ -713,13 +728,27 @@ const About = () => {
           </h1>
           <div className="rounded-2xl p-6 max-w-3xl mx-auto bg-white dark:bg-gray-900 shadow border border-blue-100 dark:border-blue-900">
             <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              I'm a seasoned software developer with{" "}
+              I'm a{" "}
               <span className="font-bold text-blue-600 theme-green:text-green-600">
+                seasoned software developer
+              </span>{" "}
+              with
+              <span className="font-bold text-blue-600 theme-green:text-green-600">
+                {" "}
                 {yearsOfExperience}+ years
               </span>{" "}
-              of experience in building scalable, secure cloud applications. My
-              expertise spans .NET technologies, Azure cloud services, CRM
-              integrations, and modern web development frameworks.
+              of experience building scalable, secure cloud applications. My
+              expertise includes .NET technologies,{" "}
+              <span className="font-bold text-indigo-600 theme-green:text-emerald-600">
+                Azure cloud services
+              </span>
+              , CRM integrations, and modern web development frameworks. I'm
+              passionate about continuous learning and currently expanding my
+              skills in{" "}
+              <span className="font-bold text-purple-600 theme-green:text-green-600">
+                AI and machine learning
+              </span>
+              .
             </p>
           </div>
         </section>

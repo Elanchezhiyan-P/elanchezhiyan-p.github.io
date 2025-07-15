@@ -48,7 +48,7 @@ export const FloatingChatbot: React.FC = () => {
               loading="lazy"
             />
             <div className="flex flex-col">
-              <span className="font-bold text-lg">Elan Chatbot</span>
+              <span className="font-bold text-lg">Elan's Chatbot</span>
               <span className="text-xs text-blue-100/80 dark:text-blue-200/80">
                 Always here to help, even when offline!
               </span>
