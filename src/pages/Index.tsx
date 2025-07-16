@@ -44,10 +44,18 @@ import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
 
 const Index = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // Infinite carousel logic
+  const [currentSlide, setCurrentSlide] = useState(1); // Start at 1 (first real slide)
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const featuredProjects = projectsData.filter((project) => project.featured);
+  // For infinite loop, clone first and last
+  const extendedProjects = [
+    featuredProjects[featuredProjects.length - 1],
+    ...featuredProjects,
+    featuredProjects[0],
+  ];
   const yearsOfExperience = calculateYearsOfExperience();
 
   const imageMap = {
@@ -73,24 +81,112 @@ const Index = () => {
     ghl: GoHighLevelImage,
   };
 
+  // Detect mobile device
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   useEffect(() => {
-    if (!isHovered) {
+    if (isMobile || !isHovered) {
       const interval = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % featuredProjects.length);
+        nextSlide();
       }, 4000);
       return () => clearInterval(interval);
     }
-  }, [isHovered, featuredProjects.length]);
+  }, [isHovered, featuredProjects.length, isMobile]);
+
+  // Swipe/drag gesture support
+  const carouselRef = React.useRef(null);
+  const dragState = React.useRef({
+    startX: 0,
+    isDragging: false,
+    lastX: 0,
+  });
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const handleTouchStart = (e) => {
+      dragState.current.isDragging = true;
+      dragState.current.startX = e.touches[0].clientX;
+    };
+    const handleTouchMove = (e) => {
+      if (!dragState.current.isDragging) return;
+      dragState.current.lastX = e.touches[0].clientX;
+    };
+    const handleTouchEnd = () => {
+      if (!dragState.current.isDragging) return;
+      const deltaX = dragState.current.lastX - dragState.current.startX;
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX < 0) nextSlide();
+        else prevSlide();
+      }
+      dragState.current.isDragging = false;
+      dragState.current.startX = 0;
+      dragState.current.lastX = 0;
+    };
+
+    // Mouse drag for desktop
+    const handleMouseDown = (e) => {
+      dragState.current.isDragging = true;
+      dragState.current.startX = e.clientX;
+    };
+    const handleMouseMove = (e) => {
+      if (!dragState.current.isDragging) return;
+      dragState.current.lastX = e.clientX;
+    };
+    const handleMouseUp = () => {
+      if (!dragState.current.isDragging) return;
+      const deltaX = dragState.current.lastX - dragState.current.startX;
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX < 0) nextSlide();
+        else prevSlide();
+      }
+      dragState.current.isDragging = false;
+      dragState.current.startX = 0;
+      dragState.current.lastX = 0;
+    };
+
+    carousel.addEventListener("touchstart", handleTouchStart);
+    carousel.addEventListener("touchmove", handleTouchMove);
+    carousel.addEventListener("touchend", handleTouchEnd);
+    carousel.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      carousel.removeEventListener("touchstart", handleTouchStart);
+      carousel.removeEventListener("touchmove", handleTouchMove);
+      carousel.removeEventListener("touchend", handleTouchEnd);
+      carousel.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [featuredProjects.length]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % featuredProjects.length);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev + 1);
   };
 
   const prevSlide = () => {
-    setCurrentSlide(
-      (prev) => (prev - 1 + featuredProjects.length) % featuredProjects.length
-    );
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev - 1);
   };
+
+  // Handle transition end for infinite loop
+  useEffect(() => {
+    if (!isTransitioning) return;
+    const handle = setTimeout(() => {
+      setIsTransitioning(false);
+      if (currentSlide === 0) {
+        setCurrentSlide(featuredProjects.length);
+      } else if (currentSlide === featuredProjects.length + 1) {
+        setCurrentSlide(1);
+      }
+    }, 500); // match transition duration
+    return () => clearTimeout(handle);
+  }, [currentSlide, isTransitioning, featuredProjects.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 overflow-x-hidden">
@@ -168,16 +264,21 @@ const Index = () => {
           </p>
         </div>
         <div
-          className="relative overflow-hidden rounded-2xl shadow-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 transition-all duration-500"
+          ref={carouselRef}
+          className="relative overflow-hidden rounded-2xl shadow-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 transition-all duration-500 select-none"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           <div
-            className="flex transition-transform duration-500 ease-in-out"
+            className={`flex ${
+              isTransitioning
+                ? "transition-transform duration-500 ease-in-out"
+                : ""
+            }`}
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
-            {featuredProjects.map((project) => (
-              <div key={project.id} className="w-full flex-shrink-0">
+            {extendedProjects.map((project, idx) => (
+              <div key={idx} className="w-full flex-shrink-0">
                 <Card className="group flex flex-col lg:flex-row overflow-hidden border-none bg-transparent shadow-none">
                   {/* Image Side */}
                   <div className="lg:w-1/2 flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6 lg:p-10">
@@ -247,7 +348,7 @@ const Index = () => {
               </div>
             ))}
           </div>
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons - always visible */}
           <button
             onClick={prevSlide}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
@@ -267,9 +368,9 @@ const Index = () => {
             {featuredProjects.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentSlide(index)}
+                onClick={() => setCurrentSlide(index + 1)}
                 className={`w-3 h-3 rounded-full border-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
-                  index === currentSlide
+                  index + 1 === currentSlide
                     ? "bg-blue-600 border-blue-600 theme-green:bg-green-600 theme-green:border-green-600"
                     : "bg-gray-200 border-gray-300 dark:bg-gray-700 dark:border-gray-600 hover:bg-blue-200 dark:hover:bg-blue-800/40 theme-green:hover:bg-green-200 theme-green:dark:hover:bg-green-800/40"
                 }`}

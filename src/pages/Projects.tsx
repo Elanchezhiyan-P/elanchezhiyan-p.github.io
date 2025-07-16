@@ -60,8 +60,16 @@ const Projects = () => {
   // Filter projects by selected technology or show all
   const filteredProjects =
     filter === "all"
-      ? projects
-      : projects.filter((p) => p.projectType.includes(filter));
+      ? projects.map((p) => ({
+          ...p,
+          links: { ...p.links, live: null },
+        }))
+      : projects
+          .filter((p) => p.projectType.includes(filter))
+          .map((p) => ({
+            ...p,
+            links: { ...p.links, live: null },
+          }));
 
   return (
     <div className="container mx-auto px-4 py-20">
