@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
+import Book from "./pages/Book";
 
 const queryClient = new QueryClient();
 
@@ -130,6 +131,7 @@ const App = () => {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/testimonials" element={<Testimonials />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/book" element={<Book />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>

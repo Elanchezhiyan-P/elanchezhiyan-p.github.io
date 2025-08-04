@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 // Official WhatsApp SVG icon
-const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
+export const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 24 24"
     fill="white"
     width="24px"
     height="24px"
     className="w-5 h-5"
+    {...props}
   >
     <svg viewBox="0 0 496 497">
       <defs>

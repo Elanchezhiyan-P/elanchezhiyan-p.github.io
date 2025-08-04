@@ -446,9 +446,11 @@ const Index = () => {
             Let's turn your ideas into reality with robust, scalable, and
             beautiful software solutions.
           </p>
-          <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-md transition-all duration-300 hover:scale-105">
-            Let's Connect
-          </Button>
+          <Link to="/contact">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-md transition-all duration-300 hover:scale-105">
+              Let's Connect
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

@@ -358,20 +358,20 @@ const Blog: React.FC = () => {
                 </a>
               </Button>
             </div>
-            <div className="flex flex-col md:flex-row gap-3 md:gap-6 justify-center">
+            {/* <div className="flex flex-col md:flex-row gap-3 md:gap-6 justify-center">
               <Button
-                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold px-6 py-3 md:px-8 md:py-3 rounded-xl shadow-lg transition duration-200 text-base md:text-lg"
                 asChild
+                className="inline-block mt-1 px-6 py-2 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors font-semibold text-white shadow"
               >
                 <a href="/contact">Get In Touch</a>
               </Button>
               <Button
-                className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold px-6 py-3 md:px-8 md:py-3 rounded-xl shadow-lg transition duration-200 text-base md:text-lg"
                 asChild
+                className="inline-block mt-2 px-6 py-2 bg-white text-blue-600 theme-green:text-green-600 rounded-lg border border-blue-200 theme-green:border-green-200 hover:bg-blue-50 theme-green:hover:bg-green-50 font-semibold shadow"
               >
                 <a href="/projects">View My Work</a>
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

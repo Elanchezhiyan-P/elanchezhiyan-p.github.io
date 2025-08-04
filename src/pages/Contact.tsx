@@ -550,30 +550,46 @@ const Contact = () => {
 
         {/* Call to Action */}
         <section className="mt-12 text-center">
-          <div className="rounded-2xl p-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 shadow border border-blue-100 dark:border-blue-900">
-            <h2 className="text-xl font-bold mb-2">
+          <div className="rounded-xl p-8 bg-white dark:bg-gray-900 border border-blue-200 dark:border-purple-700 shadow max-w-2xl mx-auto">
+            <h2 className="text-xl md:text-2xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Ready to Start Your Project?
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 text-base mb-5 max-w-xl mx-auto">
-              Let's discuss your ideas and turn them into reality. I'm here to
-              help you build something amazing.
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-5 max-w-xl mx-auto">
+              Let's discuss your ideas and turn them into reality. I'm here to help you build something amazing.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-1">
               <Button
-                onClick={() => document.getElementById("name")?.focus()}
-                className="h-10 px-6 text-base font-semibold bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+                onClick={() => document.getElementById('name')?.focus()}
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white font-semibold rounded-lg shadow transition-colors duration-300 text-base transform hover:scale-105"
               >
-                Start a Project
+                <span className="flex items-center gap-2">
+                  <Users className="h-5 w-5 text-white" />
+                  <span className="ml-1">Start a Project</span>
+                </span>
               </Button>
               <Button
                 variant="outline"
-                onClick={() =>
-                  window.open("mailto:elanche97@gmail.com", "_blank")
-                }
-                className="h-10 px-6 text-base font-semibold"
+                onClick={() => window.open('mailto:elanche97@gmail.com', '_blank')}
+                className="px-6 py-2 border border-blue-200 theme-green:border-green-200 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 font-semibold rounded-lg shadow transition-colors duration-300 text-base transform hover:scale-105"
               >
-                Send Email
+                <span className="flex items-center gap-2">
+                  <Mail className="h-5 w-5 text-blue-600 theme-green:text-green-600" />
+                  <span className="ml-1">Send Email</span>
+                </span>
               </Button>
+              <Button
+                variant="default"
+                onClick={() => window.location.hash = '#/book'}
+                className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg shadow transition-colors duration-300 text-base transform hover:scale-105"
+              >
+                <span className="flex items-center gap-2">
+                  <Star className="h-5 w-5 text-white" />
+                  <span className="ml-1">Book Me</span>
+                </span>
+              </Button>
+            </div>
+            <div className="w-full flex justify-center mt-5">
+              <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
             </div>
           </div>
         </section>
