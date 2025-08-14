@@ -119,6 +119,7 @@ import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { MobileTimeline } from "@/components/MobileTimeline";
 import { Helmet } from "react-helmet-async";
 import { Badge } from "@/components/ui/badge";
+import { topmateServices } from "@/data/topmateServices";
 
 const About = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -1033,6 +1034,127 @@ const About = () => {
                 {certifications.length} Professional Certifications
               </span>
             </div>
+          </div>
+        </section>
+
+        {/* Professional Services Section */}
+        <section className="mt-16">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+            Professional Services & Mentorship
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+            Beyond development, I offer personalized guidance and support to
+            help you grow in your career and projects
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {topmateServices.slice(0, 6).map((service) => (
+              <Card
+                key={service.id}
+                className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-3">
+                        {service.description}
+                      </p>
+                    </div>
+                    {service.badge && (
+                      <Badge
+                        className={`ml-2 text-xs px-2 py-1 ${
+                          service.badge === "Free"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
+                            : service.badge === "Popular"
+                            ? "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400"
+                            : service.badge === "Best Deal"
+                            ? "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400"
+                            : "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400"
+                        }`}
+                      >
+                        {service.badge}
+                      </Badge>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {service.type}
+                      </span>
+                      {service.duration && (
+                        <>
+                          <span className="text-gray-300 dark:text-gray-600">
+                            •
+                          </span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {service.duration}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      {service.discountPrice ? (
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                            ${service.discountPrice}
+                          </span>
+                          <span className="text-sm text-gray-500 line-through">
+                            ${service.price}
+                          </span>
+                        </div>
+                      ) : (
+                        <span
+                          className={`text-lg font-bold ${
+                            service.price === 0
+                              ? "text-green-600 dark:text-green-400"
+                              : "text-gray-900 dark:text-white"
+                          }`}
+                        >
+                          {service.price === 0 ? "Free" : `$${service.price}`}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <Button
+                    asChild
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white transition-all duration-300 hover:scale-105"
+                  >
+                    <a
+                      href={service.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <Brain className="w-4 h-4" />
+                      Book Now
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Button
+              asChild
+              variant="outline"
+              className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-6 py-2 text-base font-semibold rounded-xl transition-all duration-300 hover:scale-105"
+            >
+              <a
+                href="https://topmate.io/elanchezhiyan_poosamani"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2"
+              >
+                View All Services
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </Button>
           </div>
         </section>
 

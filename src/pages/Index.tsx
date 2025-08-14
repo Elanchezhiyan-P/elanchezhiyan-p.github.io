@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import projectsData from "@/data/projects.json";
+import { topmateServices } from "@/data/topmateServices";
 import {
   Card,
   CardHeader,
@@ -42,6 +43,7 @@ import ArcticCodeImage from "@/assets/project/arctic-code.png";
 import TeleMedixImage from "@/assets/project/telemedix.png";
 import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
+import AnjaneyasAssociatesImage from "@/assets/project/anjaneyasassociates.png";
 
 const Index = () => {
   // Infinite carousel logic
@@ -79,6 +81,7 @@ const Index = () => {
     telemedix: TeleMedixImage,
     "invoice-pilot": InvoicePilotImage,
     ghl: GoHighLevelImage,
+    "anjaneyas-associates": AnjaneyasAssociatesImage,
   };
 
   // Detect mobile device
@@ -206,7 +209,7 @@ const Index = () => {
           <div className="flex flex-row gap-3 mb-4">
             <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow border border-blue-100 dark:border-blue-800 py-3 px-4 min-w-[90px]">
               <span className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
-                5.9+
+                {yearsOfExperience}+
               </span>
               <span className="text-xs text-gray-700 dark:text-gray-300 mt-1">
                 Years
@@ -297,6 +300,11 @@ const Index = () => {
                       <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300 px-3 py-1 rounded-full text-xs font-semibold tracking-wide border border-blue-100 dark:border-blue-800">
                         Featured
                       </Badge>
+                      {project.status && (
+                        <Badge className="bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300 px-3 py-1 rounded-full text-xs font-semibold tracking-wide border border-orange-100 dark:border-orange-800">
+                          {project.status}
+                        </Badge>
+                      )}
                     </div>
                     <h3 className="text-2xl lg:text-3xl font-extrabold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
                       {project.title}
@@ -436,6 +444,127 @@ const Index = () => {
           </Card>
         </div>
       </section>
+
+      {/* Topmate Services Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4">Professional Services</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            Get personalized guidance and support for your career and projects
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          {topmateServices.slice(0, 6).map((service) => (
+            <Card
+              key={service.id}
+              className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500"
+            >
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors line-clamp-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-3">
+                      {service.description}
+                    </p>
+                  </div>
+                  {service.badge && (
+                    <Badge
+                      className={`ml-2 text-xs px-2 py-1 ${
+                        service.badge === "Free"
+                          ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
+                          : service.badge === "Popular"
+                          ? "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400"
+                          : service.badge === "Best Deal"
+                          ? "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400"
+                          : "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400"
+                      }`}
+                    >
+                      {service.badge}
+                    </Badge>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {service.type}
+                    </span>
+                    {service.duration && (
+                      <>
+                        <span className="text-gray-300 dark:text-gray-600">
+                          •
+                        </span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          {service.duration}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div className="text-right">
+                    {service.discountPrice ? (
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                          ${service.discountPrice}
+                        </span>
+                        <span className="text-sm text-gray-500 line-through">
+                          ${service.price}
+                        </span>
+                      </div>
+                    ) : (
+                      <span
+                        className={`text-lg font-bold ${
+                          service.price === 0
+                            ? "text-green-600 dark:text-green-400"
+                            : "text-gray-900 dark:text-white"
+                        }`}
+                      >
+                        {service.price === 0 ? "Free" : `$${service.price}`}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <Button
+                  asChild
+                  className="w-full bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white transition-all duration-300 hover:scale-105"
+                >
+                  <a
+                    href={service.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Book Now
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <div className="text-center mt-8">
+          <Button
+            asChild
+            variant="outline"
+            className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950/20 theme-green:border-green-600 theme-green:text-green-600 theme-green:hover:bg-green-50 theme-green:dark:border-green-400 theme-green:dark:text-green-400 theme-green:dark:hover:bg-green-950/20"
+          >
+            <a
+              href="https://topmate.io/elanchezhiyan_poosamani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 mx-auto"
+            >
+              View All Services
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </Button>
+        </div>
+      </section>
+
       {/* Call to Action */}
       <section className="text-center my-16">
         <div className="mx-auto max-w-2xl rounded-2xl border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 bg-white dark:bg-gray-900 shadow-lg p-10 md:p-14 flex flex-col items-center">

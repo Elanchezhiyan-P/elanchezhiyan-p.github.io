@@ -22,6 +22,7 @@ import ArcticCodeImage from "@/assets/project/arctic-code.png";
 import TeleMedixImage from "@/assets/project/telemedix.png";
 import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
+import AnjaneyasAssociatesImage from "@/assets/project/anjaneyasassociates.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -47,6 +48,7 @@ const Projects = () => {
     telemedix: TeleMedixImage,
     "invoice-pilot": InvoicePilotImage,
     ghl: GoHighLevelImage,
+    "anjaneyas-associates": AnjaneyasAssociatesImage,
   };
 
   const [filter, setFilter] = useState("all");
@@ -60,16 +62,8 @@ const Projects = () => {
   // Filter projects by selected technology or show all
   const filteredProjects =
     filter === "all"
-      ? projects.map((p) => ({
-          ...p,
-          links: { ...p.links, live: null },
-        }))
-      : projects
-          .filter((p) => p.projectType.includes(filter))
-          .map((p) => ({
-            ...p,
-            links: { ...p.links, live: null },
-          }));
+      ? projects
+      : projects.filter((p) => p.projectType.includes(filter));
 
   return (
     <div className="container mx-auto px-4 py-20">
@@ -156,14 +150,24 @@ const Projects = () => {
                 <Badge variant="secondary" className="text-xs">
                   {project.projectType[0]}
                 </Badge>
-                {project.featured && (
-                  <Badge
-                    variant="default"
-                    className="text-xs bg-blue-500 hover:bg-blue-600 theme-green:bg-green-500 theme-green:hover:bg-green-600"
-                  >
-                    Featured
-                  </Badge>
-                )}
+                <div className="flex gap-2">
+                  {project.status && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs border-orange-500 text-orange-600 dark:border-orange-400 dark:text-orange-400"
+                    >
+                      {project.status}
+                    </Badge>
+                  )}
+                  {project.featured && (
+                    <Badge
+                      variant="default"
+                      className="text-xs bg-blue-500 hover:bg-blue-600 theme-green:bg-green-500 theme-green:hover:bg-green-600"
+                    >
+                      Featured
+                    </Badge>
+                  )}
+                </div>
               </div>
 
               <h3 className="font-bold mb-3 group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors line-clamp-2">

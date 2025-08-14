@@ -9,6 +9,11 @@ export type TopmateService = {
   discountPrice?: number;
   badge?: string;
   link: string;
+  packageDetails?: Array<{
+    title: string;
+    duration: string;
+    price: number;
+  }>;
 };
 
 export const topmateServices: TopmateService[] = [
@@ -116,9 +121,10 @@ export const topmateServices: TopmateService[] = [
   {
     id: "career-kickstart-pack",
     title: "Career Kickstart Pack",
-    description: "Kickstart your career with a comprehensive package designed for aspiring tech professionals. Includes a Discovery Call, Resume & Portfolio Review, and 1:1 Dev Mentor Chat.",
+    description:
+      "Kickstart your career with a comprehensive package designed for aspiring tech professionals. Includes a Discovery Call, Resume & Portfolio Review, and 1:1 Dev Mentor Chat.",
     type: "Package",
-    products: [
+    packageDetails: [
       { title: "Discovery Call", duration: "15 min", price: 0 },
       { title: "Resume & Portfolio Review", duration: "30 min", price: 150 },
       { title: "1:1 Dev Mentor Chat", duration: "30 min", price: 300 }

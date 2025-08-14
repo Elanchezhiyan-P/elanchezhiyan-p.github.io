@@ -127,7 +127,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <ParticleBackground />
 
       {/* Desktop Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-gray-700 shadow-sm hidden md:block">
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-gray-700 shadow-sm hidden lg:block">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link
@@ -183,23 +183,76 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       </header>
 
+      {/* Tablet Header */}
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-gray-700 shadow-sm hidden md:block lg:hidden">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          {/* Logo */}
+          <Link
+            to="/"
+            className="text-xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide"
+          >
+            Elanchezhiyan P
+          </Link>
+
+          {/* Compact Nav Links */}
+          <nav className="flex items-center space-x-3">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`flex items-center gap-1 text-xs font-medium transition-colors duration-300 ${
+                  isActive(item.href)
+                    ? "text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
+                    : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
+                }`}
+              >
+                <item.icon className="w-4 h-4" />
+                <span className="hidden sm:inline">{item.name}</span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Controls */}
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleDarkMode}
+              className="rounded-full p-1.5 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+        </div>
+      </header>
+
       {/* Mobile Header */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-gray-200 dark:border-gray-700 shadow-md md:hidden">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center w-full">
-            <Link
-              to="/"
-              className="text-lg font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide dark:text-white"
-              style={{
-                WebkitTextStroke: "0.5px #222",
-                textShadow: "0 1px 8px rgba(0,0,0,0.25)",
-              }}
-            >
-              Elanchezhiyan P
-            </Link>
+            <div className="flex flex-col">
+              <Link
+                to="/"
+                className="text-lg font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide dark:text-white whitespace-nowrap"
+                style={{
+                  WebkitTextStroke: "0.5px #222",
+                  textShadow: "0 1px 8px rgba(0,0,0,0.25)",
+                }}
+              >
+                Elanchezhiyan P
+              </Link>
+              <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">
+                Full Stack Developer
+              </span>
+            </div>
             <div className="flex-1" />
             {/* Social Icons flush right */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, href, label, color }) => (
                 <a
                   key={label}

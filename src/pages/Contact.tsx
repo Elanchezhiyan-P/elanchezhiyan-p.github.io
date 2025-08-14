@@ -15,6 +15,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "emailjs-com"; // Added EmailJS import
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { topmateServices } from "@/data/topmateServices";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -503,6 +506,126 @@ const Contact = () => {
           </div>
         </section>
 
+        {/* Professional Services Section */}
+        <section className="mt-16 max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Professional Services</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              Get personalized guidance and support for your career and projects
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {topmateServices.slice(0, 6).map((service) => (
+              <Card
+                key={service.id}
+                className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors line-clamp-2">
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-3">
+                        {service.description}
+                      </p>
+                    </div>
+                    {service.badge && (
+                      <Badge
+                        className={`ml-2 text-xs px-2 py-1 ${
+                          service.badge === "Free"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
+                            : service.badge === "Popular"
+                            ? "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400"
+                            : service.badge === "Best Deal"
+                            ? "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400"
+                            : "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400"
+                        }`}
+                      >
+                        {service.badge}
+                      </Badge>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {service.type}
+                      </span>
+                      {service.duration && (
+                        <>
+                          <span className="text-gray-300 dark:text-gray-600">
+                            •
+                          </span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {service.duration}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      {service.discountPrice ? (
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                            ${service.discountPrice}
+                          </span>
+                          <span className="text-sm text-gray-500 line-through">
+                            ${service.price}
+                          </span>
+                        </div>
+                      ) : (
+                        <span
+                          className={`text-lg font-bold ${
+                            service.price === 0
+                              ? "text-green-600 dark:text-green-400"
+                              : "text-gray-900 dark:text-white"
+                          }`}
+                        >
+                          {service.price === 0 ? "Free" : `$${service.price}`}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <Button
+                    asChild
+                    className="w-full bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white transition-all duration-300 hover:scale-105"
+                  >
+                    <a
+                      href={service.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <MessageSquare className="w-4 h-4" />
+                      Book Now
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Button
+              asChild
+              variant="outline"
+              className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950/20 theme-green:border-green-600 theme-green:text-green-600 theme-green:hover:bg-green-50 theme-green:dark:border-green-400 theme-green:dark:text-green-400 theme-green:dark:hover:bg-green-950/20"
+            >
+              <a
+                href="https://topmate.io/elanchezhiyan_poosamani"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2"
+              >
+                View All Services
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </Button>
+          </div>
+        </section>
+
         {/* FAQ Section */}
         <section className="mt-12 max-w-3xl mx-auto">
           <h2 className="text-xl font-bold mb-6 text-center">
@@ -555,11 +678,12 @@ const Contact = () => {
               Ready to Start Your Project?
             </h2>
             <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-5 max-w-xl mx-auto">
-              Let's discuss your ideas and turn them into reality. I'm here to help you build something amazing.
+              Let's discuss your ideas and turn them into reality. I'm here to
+              help you build something amazing.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center mt-1">
               <Button
-                onClick={() => document.getElementById('name')?.focus()}
+                onClick={() => document.getElementById("name")?.focus()}
                 className="px-6 py-2 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white font-semibold rounded-lg shadow transition-colors duration-300 text-base transform hover:scale-105"
               >
                 <span className="flex items-center gap-2">
@@ -569,7 +693,9 @@ const Contact = () => {
               </Button>
               <Button
                 variant="outline"
-                onClick={() => window.open('mailto:elanche97@gmail.com', '_blank')}
+                onClick={() =>
+                  window.open("mailto:elanche97@gmail.com", "_blank")
+                }
                 className="px-6 py-2 border border-blue-200 theme-green:border-green-200 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 font-semibold rounded-lg shadow transition-colors duration-300 text-base transform hover:scale-105"
               >
                 <span className="flex items-center gap-2">
@@ -579,7 +705,7 @@ const Contact = () => {
               </Button>
               <Button
                 variant="default"
-                onClick={() => window.location.hash = '#/book'}
+                onClick={() => (window.location.hash = "#/book")}
                 className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg shadow transition-colors duration-300 text-base transform hover:scale-105"
               >
                 <span className="flex items-center gap-2">

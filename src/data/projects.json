@@ -425,5 +425,33 @@
     ],
     "technicalImplementation": "Createad a Web API using .NET Core to handle backend operations, including user authentication, data management, and integration with external services. The frontend is built with Next.js, providing a responsive and interactive for the form submission",
     "projectType": "Web API Application"
+  },
+  {
+    "id": "anjaneyas-associates",
+    "title": "Anjaneyas Associates",
+    "description": "A comprehensive insurance and tax services website built with PHP, offering professional consultation and services for individuals and businesses. Currently under active development to provide seamless user experience and comprehensive service offerings.",
+    "image": "anjaneyasassociatesImage",
+    "technologies": [
+      "PHP",
+      "HTML/CSS",
+      "JavaScript",
+      "MySQL",
+      "Responsive Design"
+    ],
+    "links": {
+      "live": "https://anjaneyasassociates.com"
+    },
+    "type": "outsourcing",
+    "featured": false,
+    "status": "Under Development",
+    "keyFeatures": [
+      "Insurance services consultation",
+      "Tax planning and preparation",
+      "Professional advisory services",
+      "Responsive web design",
+      "Client portal and management"
+    ],
+    "technicalImplementation": "Developed using PHP for backend logic and MySQL for data management. The frontend is built with modern HTML5, CSS3, and JavaScript to ensure responsive design across all devices. The system is designed to handle client inquiries, service requests, and provide comprehensive information about insurance and tax services.",
+    "projectType": "Web Application"
   }
 ]
