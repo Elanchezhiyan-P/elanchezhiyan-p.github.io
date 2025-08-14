@@ -1,21 +1,79 @@
 {
-  "name": "Elanchezhiyan Portfolio",
+  "name": "Elanchezhiyan P - Senior .NET & Azure Developer Portfolio",
   "short_name": "Elan's Portfolio",
-  "start_url": ".",
+  "description": "Personal portfolio of Elanchezhiyan P, a Senior .NET & Azure Developer with 5.8+ years of experience in cloud architecture, DevOps, and modern web technologies. Expert in building scalable applications and providing tech mentorship.",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#000000",
   "theme_color": "#000000",
-  "description": "My personal developer portfolio",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["productivity", "business", "developer tools"],
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/Elan.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Elanchezhiyan P Portfolio - Desktop View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "View my latest projects and work",
+      "url": "/#/projects",
+      "icons": [
+        {
+          "src": "/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch for collaboration",
+      "url": "/#/contact",
+      "icons": [
+        {
+          "src": "/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Book Consultation",
+      "short_name": "Book",
+      "description": "Book a consultation or mentorship session",
+      "url": "/#/book",
+      "icons": [
+        {
+          "src": "/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

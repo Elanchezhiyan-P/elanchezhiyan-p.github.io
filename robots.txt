@@ -1,14 +1,55 @@
+# Robots.txt for Elanchezhiyan P Portfolio
+# https://elanchezhiyan-p.is-a.dev
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Specific crawler directives
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+# Social media crawlers
 User-agent: Twitterbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: facebookexternalhit
 Allow: /
+Crawl-delay: 1
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+Crawl-delay: 1
+
+# Block specific paths (if needed)
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://elanchezhiyan-p.is-a.dev/sitemap.xml
+
+# Host directive
+Host: https://elanchezhiyan-p.is-a.dev
