@@ -111,11 +111,22 @@ const Blog: React.FC = () => {
   const latestPost = blogPosts.find((post) => post.isLatest);
 
   return (
-    <div className="pt-14 md:pt-20 pb-10">
+    <div
+      className="pt-14 md:pt-20 pb-10 relative z-10"
+      role="main"
+      aria-label="Elanchezhiyan's Blog - Technical Articles and Insights"
+    >
       <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
         {/* Header */}
-        <section className="text-center mb-10 md:mb-16">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4">
+        <section
+          className="text-center mb-10 md:mb-16"
+          aria-labelledby="blog-heading"
+          role="region"
+        >
+          <h1
+            id="blog-heading"
+            className="text-3xl md:text-4xl font-bold mb-3 md:mb-4"
+          >
             Blog & Articles
           </h1>
           <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -127,7 +138,7 @@ const Blog: React.FC = () => {
         {/* Stats */}
         <section className="mb-8 md:mb-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            <Card className="text-center">
+            <Card data-particle-mask className="text-center">
               <CardContent className="p-3 md:p-4">
                 <div className="text-xl md:text-2xl font-bold text-blue-600 mb-1">
                   {blogPosts.length}+
@@ -137,7 +148,7 @@ const Blog: React.FC = () => {
                 </p>
               </CardContent>
             </Card>
-            <Card className="text-center">
+            <Card data-particle-mask className="text-center">
               <CardContent className="p-3 md:p-4">
                 <div className="text-xl md:text-2xl font-bold text-green-600 mb-1">
                   ~15k+
@@ -147,7 +158,7 @@ const Blog: React.FC = () => {
                 </p>
               </CardContent>
             </Card>
-            <Card className="text-center">
+            <Card data-particle-mask className="text-center">
               <CardContent className="p-3 md:p-4">
                 <div className="text-xl md:text-2xl font-bold text-purple-600 mb-1">
                   10+
@@ -157,7 +168,7 @@ const Blog: React.FC = () => {
                 </p>
               </CardContent>
             </Card>
-            <Card className="text-center">
+            <Card data-particle-mask className="text-center">
               <CardContent className="p-3 md:p-4">
                 <div className="text-xl md:text-2xl font-bold text-orange-600 mb-1">
                   1
@@ -176,7 +187,10 @@ const Blog: React.FC = () => {
             <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
               Latest Article
             </h2>
-            <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-500 relative">
+            <Card
+              data-particle-mask
+              className="group overflow-hidden hover:shadow-2xl transition-all duration-500 relative"
+            >
               <div className="absolute top-4 right-4 z-10">
                 <Badge className="bg-red-500 text-white shadow-lg">
                   Latest
@@ -264,6 +278,7 @@ const Blog: React.FC = () => {
               .filter((post) => !post.isLatest)
               .map((post, index) => (
                 <Card
+                  data-particle-mask
                   key={post.id}
                   className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative rounded-xl"
                   style={{ animationDelay: `${index * 100}ms` }}

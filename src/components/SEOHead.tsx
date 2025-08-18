@@ -1,6 +1,6 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { calculateYearsOfExperience } from '@/utils/dateUtils';
+import React from "react";
+import { Helmet } from "react-helmet-async";
+import { calculateYearsOfExperience } from "@/utils/dateUtils";
 
 interface SEOHeadProps {
   title?: string;
@@ -8,7 +8,7 @@ interface SEOHeadProps {
   keywords?: string;
   image?: string;
   url?: string;
-  type?: 'website' | 'article' | 'profile';
+  type?: "website" | "article" | "profile";
   author?: string;
   publishedTime?: string;
   modifiedTime?: string;
@@ -21,49 +21,50 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   title,
   description,
   keywords,
-  image = '/Elan.jpg',
+  image = "/Elan.jpg",
   url,
-  type = 'website',
-  author = 'Elanchezhiyan P',
+  type = "website",
+  author = "Elanchezhiyan P",
   publishedTime,
   modifiedTime,
   section,
   tags = [],
-  structuredData
+  structuredData,
 }) => {
   const yearsOfExperience = calculateYearsOfExperience();
-  const baseUrl = 'https://elanchezhiyan-p.is-a.dev';
-  
+  const baseUrl = "https://codebyelan.in";
+
   // Default values
   const defaultTitle = `Elanchezhiyan P - Senior .NET & Azure Developer | ${yearsOfExperience}+ Years Experience`;
   const defaultDescription = `Elanchezhiyan P - Seasoned Software Developer with ${yearsOfExperience}+ years experience in .NET, Azure, CRM integrations, and cloud architecture. Expert in building scalable applications and providing tech mentorship.`;
-  const defaultKeywords = 'Elanchezhiyan P, .NET Developer, Azure Developer, Cloud Solutions, DevOps Engineer, Full Stack Developer, React Developer, Software Architect, C# Developer, Microsoft Azure, Cloud Architecture, CRM Integration, API Development, Database Design, Microservices, Docker, Kubernetes, CI/CD, Software Consulting, Tech Mentor';
-  
+  const defaultKeywords =
+    "Elanchezhiyan P, .NET Developer, Azure Developer, Cloud Solutions, DevOps Engineer, Full Stack Developer, React Developer, Software Architect, C# Developer, Microsoft Azure, Cloud Architecture, CRM Integration, API Development, Database Design, Microservices, Docker, Kubernetes, CI/CD, Software Consulting, Tech Mentor";
+
   const finalTitle = title || defaultTitle;
   const finalDescription = description || defaultDescription;
   const finalKeywords = keywords || defaultKeywords;
   const finalUrl = url || baseUrl;
-  const finalImage = image.startsWith('http') ? image : `${baseUrl}${image}`;
+  const finalImage = image.startsWith("http") ? image : `${baseUrl}${image}`;
 
   // Default structured data
   const defaultStructuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Elanchezhiyan P",
-    "jobTitle": "Senior .NET & Azure Developer",
-    "description": `Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience in cloud architecture, DevOps, and modern web technologies.`,
-    "url": baseUrl,
-    "image": `${baseUrl}/Elan.jpg`,
-    "sameAs": [
+    name: "Elanchezhiyan P",
+    jobTitle: "Senior .NET & Azure Developer",
+    description: `Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience in cloud architecture, DevOps, and modern web technologies.`,
+    url: baseUrl,
+    image: `${baseUrl}/Elan.jpg`,
+    sameAs: [
       "https://github.com/elanchezhiyan",
       "https://linkedin.com/in/elanchezhiyan",
-      "https://twitter.com/always_elan_p"
+      "https://twitter.com/always_elan_p",
     ],
-    "worksFor": {
+    worksFor: {
       "@type": "Organization",
-      "name": "Freelance/Consultant"
+      name: "Freelance/Consultant",
     },
-    "knowsAbout": [
+    knowsAbout: [
       ".NET Development",
       "Microsoft Azure",
       "Cloud Architecture",
@@ -74,16 +75,16 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       "Database Design",
       "Microservices",
       "Docker",
-      "Kubernetes"
+      "Kubernetes",
     ],
-    "hasOccupation": {
+    hasOccupation: {
       "@type": "Occupation",
-      "name": "Software Developer",
-      "occupationLocation": {
+      name: "Software Developer",
+      occupationLocation: {
         "@type": "Place",
-        "name": "Remote/Worldwide"
-      }
-    }
+        name: "Remote/Worldwide",
+      },
+    },
   };
 
   const finalStructuredData = structuredData || defaultStructuredData;
@@ -96,13 +97,16 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="description" content={finalDescription} />
       <meta name="keywords" content={finalKeywords} />
       <meta name="author" content={author} />
-      <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      <meta
+        name="robots"
+        content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+      />
       <meta name="googlebot" content="index, follow" />
       <meta name="bingbot" content="index, follow" />
-      
+
       {/* Canonical URL */}
       <link rel="canonical" href={finalUrl} />
-      
+
       {/* Open Graph Meta Tags */}
       <meta property="og:title" content={finalTitle} />
       <meta property="og:description" content={finalDescription} />
@@ -110,24 +114,25 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta property="og:image" content={finalImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Elanchezhiyan P - Senior .NET & Azure Developer" />
+      <meta
+        property="og:image:alt"
+        content="Elanchezhiyan P - Senior .NET & Azure Developer"
+      />
       <meta property="og:url" content={finalUrl} />
       <meta property="og:site_name" content="Elanchezhiyan P Portfolio" />
       <meta property="og:locale" content="en_US" />
-      
+
       {publishedTime && (
         <meta property="article:published_time" content={publishedTime} />
       )}
       {modifiedTime && (
         <meta property="article:modified_time" content={modifiedTime} />
       )}
-      {section && (
-        <meta property="article:section" content={section} />
-      )}
+      {section && <meta property="article:section" content={section} />}
       {tags.map((tag, index) => (
         <meta key={index} property="article:tag" content={tag} />
       ))}
-      
+
       {/* Twitter Card Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@always_elan_p" />
@@ -135,37 +140,44 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDescription} />
       <meta name="twitter:image" content={finalImage} />
-      <meta name="twitter:image:alt" content="Elanchezhiyan P - Senior .NET & Azure Developer" />
-      
+      <meta
+        name="twitter:image:alt"
+        content="Elanchezhiyan P - Senior .NET & Azure Developer"
+      />
+
       {/* Additional Meta Tags */}
       <meta name="theme-color" content="#000000" />
       <meta name="msapplication-TileColor" content="#000000" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+      />
       <meta name="apple-mobile-web-app-title" content="Elanchezhiyan P" />
-      
+
       {/* Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify(finalStructuredData)}
       </script>
-      
+
       {/* Additional WebSite Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebSite",
-          "name": "Elanchezhiyan P Portfolio",
-          "url": baseUrl,
-          "description": "Personal portfolio of Elanchezhiyan P, Senior .NET & Azure Developer",
-          "author": {
+          name: "Elanchezhiyan P Portfolio",
+          url: baseUrl,
+          description:
+            "Personal portfolio of Elanchezhiyan P, Senior .NET & Azure Developer",
+          author: {
             "@type": "Person",
-            "name": "Elanchezhiyan P"
+            name: "Elanchezhiyan P",
           },
-          "potentialAction": {
+          potentialAction: {
             "@type": "SearchAction",
-            "target": `${baseUrl}/search?q={search_term_string}`,
-            "query-input": "required name=search_term_string"
-          }
+            target: `${baseUrl}/search?q={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
         })}
       </script>
     </Helmet>

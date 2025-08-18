@@ -9,7 +9,11 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-yellow-50 px-4">
+    <div
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-yellow-50 px-4 relative z-10"
+      role="main"
+      aria-label="Page Not Found - 404 Error"
+    >
       <div className="bg-white shadow-2xl rounded-3xl p-10 max-w-sm w-full text-center animate-slide-up">
         <img
           src="https://cdn.pixabay.com/photo/2024/09/06/06/24/monkey-9026690_1280.jpg"

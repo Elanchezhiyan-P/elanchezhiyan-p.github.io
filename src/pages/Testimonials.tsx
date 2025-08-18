@@ -46,16 +46,27 @@ const Testimonials = () => {
   const carouselTestimonials = testimonialsData.slice(1);
 
   return (
-    <div className="container mx-auto px-2 py-8 font-sans">
+    <div
+      className="container mx-auto px-2 py-8 font-sans relative z-10"
+      role="main"
+      aria-label="Client Testimonials and Reviews"
+    >
       {/* Header Section */}
-      <div className="text-center mb-8">
+      <div
+        className="text-center mb-8"
+        aria-labelledby="testimonials-heading"
+        role="region"
+      >
         <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full mb-2">
           <Award className="h-4 w-4 text-blue-600" />
           <span className="text-xs font-semibold tracking-wide text-blue-700 dark:text-blue-400">
             Client Testimonials
           </span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent tracking-tight">
+        <h1
+          id="testimonials-heading"
+          className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent tracking-tight"
+        >
           What People Say
         </h1>
         <p className="text-sm md:text-base text-gray-700 dark:text-gray-200 max-w-xl mx-auto leading-relaxed font-medium">
@@ -66,7 +77,10 @@ const Testimonials = () => {
 
       {/* Featured Testimonial Card */}
       <div className="mb-10 flex justify-center">
-        <div className="max-w-lg w-full bg-white dark:bg-gray-900 border border-blue-200 dark:border-purple-700 rounded-xl shadow p-7 flex flex-col items-center text-center transition-transform duration-300 hover:scale-105">
+        <div
+          data-particle-mask
+          className="max-w-lg w-full bg-white dark:bg-gray-900 border border-blue-200 dark:border-purple-700 rounded-xl shadow p-7 flex flex-col items-center text-center transition-transform duration-300 hover:scale-105"
+        >
           <img
             src={featuredTestimonial.avatar}
             alt={featuredTestimonial.name}
@@ -105,7 +119,10 @@ const Testimonials = () => {
                 key={testimonial.id}
                 className="pl-1 md:pl-2 md:basis-1/2 lg:basis-1/3"
               >
-                <div className="bg-white dark:bg-gray-900 rounded-xl shadow flex flex-col items-center justify-center max-w-xs mx-auto py-7 px-5 text-center transition-transform duration-300 hover:scale-105 hover:shadow-lg border border-blue-100 dark:border-purple-700">
+                <div
+                  data-particle-mask
+                  className="bg-white dark:bg-gray-900 rounded-xl shadow flex flex-col items-center justify-center max-w-xs mx-auto py-7 px-5 text-center transition-transform duration-300 hover:scale-105 hover:shadow-lg border border-blue-100 dark:border-purple-700"
+                >
                   <img
                     src={testimonial.avatar}
                     alt={testimonial.name}
@@ -183,4 +200,3 @@ const Testimonials = () => {
 };
 
 export default Testimonials;
-  

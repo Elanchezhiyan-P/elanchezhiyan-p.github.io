@@ -17,7 +17,10 @@ const SkillCard: React.FC<SkillCardProps> = ({
   description,
   isCrm = false,
 }) => (
-  <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
+  <Card
+    data-particle-mask
+    className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80"
+  >
     <CardContent className="p-6">
       <div className="flex items-center gap-4 mb-6">
         <div
@@ -721,7 +724,7 @@ const About = () => {
         <link rel="canonical" href="https://elanchezhiyan.dev/about" />
       </Helmet>
 
-      <div className="container mx-auto px-2 py-8 space-y-16">
+      <div className="container mx-auto px-2 py-8 space-y-16 relative z-10">
         {/* Hero Section */}
         <section className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
@@ -980,6 +983,7 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {certifications.map((cert, index) => (
               <Card
+                data-particle-mask
                 key={cert.name}
                 className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative"
                 style={{ animationDelay: `${index * 100}ms` }}
@@ -1050,6 +1054,7 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {topmateServices.slice(0, 6).map((service) => (
               <Card
+                data-particle-mask
                 key={service.id}
                 className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80"
               >

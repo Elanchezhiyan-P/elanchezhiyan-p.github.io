@@ -323,11 +323,22 @@ const Contact = () => {
     isValidEmail(formData.email);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10">
+    <div
+      className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 relative z-10"
+      role="main"
+      aria-label="Contact Elanchezhiyan - Get in Touch"
+    >
       <div className="container mx-auto px-2 py-12">
         {/* Hero Section */}
-        <section className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <section
+          className="text-center mb-10"
+          aria-labelledby="contact-heading"
+          role="region"
+        >
+          <h1
+            id="contact-heading"
+            className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          >
             Contact Me
           </h1>
           <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
@@ -336,10 +347,20 @@ const Contact = () => {
           </p>
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <section
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+          aria-labelledby="contact-form-heading"
+          role="region"
+        >
           {/* Contact Form */}
-          <div className="rounded-2xl p-6 bg-white dark:bg-gray-900 shadow border border-blue-100 dark:border-blue-900">
-            <h2 className="text-xl font-bold mb-4">Send me a message</h2>
+          <div
+            className="rounded-2xl p-6 bg-white dark:bg-gray-900 shadow border border-blue-100 dark:border-blue-900"
+            role="form"
+            aria-labelledby="contact-form-heading"
+          >
+            <h2 id="contact-form-heading" className="text-xl font-bold mb-4">
+              Send me a message
+            </h2>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -358,6 +379,10 @@ const Contact = () => {
                     required
                     className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors text-sm"
                     placeholder="John Doe"
+                    aria-describedby="name-error"
+                    aria-invalid={
+                      formData.name.trim() === "" && formData.name !== ""
+                    }
                   />
                 </div>
                 <div>
@@ -376,6 +401,10 @@ const Contact = () => {
                     required
                     className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors text-sm"
                     placeholder="john@example.com"
+                    aria-describedby="email-error"
+                    aria-invalid={
+                      !isValidEmail(formData.email) && formData.email !== ""
+                    }
                   />
                 </div>
               </div>
@@ -518,6 +547,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {topmateServices.slice(0, 6).map((service) => (
               <Card
+                data-particle-mask
                 key={service.id}
                 className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500"
               >

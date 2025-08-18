@@ -127,18 +127,27 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <ParticleBackground />
 
       {/* Desktop Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-gray-700 shadow-sm hidden lg:block">
+      <header
+        className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-gray-700 shadow-sm hidden lg:block"
+        role="banner"
+        aria-label="Main navigation"
+      >
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link
             to="/"
             className="text-2xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide"
+            aria-label="Elanchezhiyan P - Home"
           >
             Elanchezhiyan P
           </Link>
 
           {/* Nav Links */}
-          <nav className="flex items-center space-x-8">
+          <nav
+            className="flex items-center space-x-8"
+            role="navigation"
+            aria-label="Main navigation"
+          >
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -148,8 +157,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     ? "text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
                     : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
                 }`}
+                aria-current={isActive(item.href) ? "page" : undefined}
               >
-                <item.icon className="w-5 h-5" />
+                <item.icon className="w-5 h-5" aria-hidden="true" />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -161,13 +171,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
-              aria-label="Toggle dark mode"
+              className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
+              aria-label={
+                isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+              }
+              aria-pressed={isDarkMode}
             >
               {isDarkMode ? (
-                <Sun className="w-5 h-5" />
+                <Sun className="w-5 h-5" aria-hidden="true" />
               ) : (
-                <Moon className="w-5 h-5" />
+                <Moon className="w-5 h-5" aria-hidden="true" />
               )}
             </Button>
             <Button

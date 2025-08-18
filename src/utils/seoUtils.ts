@@ -28,7 +28,7 @@ export interface StructuredDataConfig {
   additionalData?: Record<string, any>;
 }
 
-const BASE_URL = 'https://elanchezhiyan-p.is-a.dev';
+const BASE_URL = 'https://codebyelan.in';
 const YEARS_OF_EXPERIENCE = calculateYearsOfExperience();
 
 export const generateStructuredData = (config: StructuredDataConfig) => {

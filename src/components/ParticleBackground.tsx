@@ -24,11 +24,35 @@ export const ParticleBackground: React.FC = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Resize canvas to full window size
+    // Respect reduced motion and page visibility
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    let isVisible = document.visibilityState === "visible";
+
+    const handleVisibility = () => {
+      isVisible = document.visibilityState === "visible";
+      if (!isVisible && animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      } else if (isVisible && !prefersReducedMotion) {
+        animate();
+      }
+    };
+
+    // Use CSS pixel space and scale canvas for devicePixelRatio
+    let viewWidth = window.innerWidth;
+    let viewHeight = window.innerHeight;
+
     const resizeCanvas = () => {
-      if (!canvas) return;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      viewWidth = window.innerWidth;
+      viewHeight = window.innerHeight;
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      canvas.width = Math.floor(viewWidth * dpr);
+      canvas.height = Math.floor(viewHeight * dpr);
+      canvas.style.width = "100vw";
+      canvas.style.height = "100vh";
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
     };
 
     // Get theme-aware colors
@@ -55,13 +79,17 @@ export const ParticleBackground: React.FC = () => {
     };
 
     const createParticles = () => {
-      const particleCount = window.innerWidth < 768 ? 50 : 120;
+      const particleCount = prefersReducedMotion
+        ? 0
+        : viewWidth < 768
+        ? 40
+        : 110;
       const colors = getThemeColors();
       particlesRef.current = [];
       for (let i = 0; i < particleCount; i++) {
         particlesRef.current.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: Math.random() * viewWidth,
+          y: Math.random() * viewHeight,
           vx: (Math.random() - 0.5) * 3,
           vy: (Math.random() - 0.5) * 3,
           size: Math.random() * 3 + 1,
@@ -122,15 +150,15 @@ export const ParticleBackground: React.FC = () => {
         if (particle.x <= 0) {
           particle.x = 0;
           particle.vx *= -1;
-        } else if (particle.x >= canvas.width) {
-          particle.x = canvas.width;
+        } else if (particle.x >= viewWidth) {
+          particle.x = viewWidth;
           particle.vx *= -1;
         }
         if (particle.y <= 0) {
           particle.y = 0;
           particle.vy *= -1;
-        } else if (particle.y >= canvas.height) {
-          particle.y = canvas.height;
+        } else if (particle.y >= viewHeight) {
+          particle.y = viewHeight;
           particle.vy *= -1;
         }
 
@@ -169,11 +197,58 @@ export const ParticleBackground: React.FC = () => {
       });
     };
 
+    const drawRoundedRect = (
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      radius: number
+    ) => {
+      const r = Math.max(0, Math.min(radius, Math.min(width, height) / 2));
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + width - r, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+      ctx.lineTo(x + width, y + height - r);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+      ctx.lineTo(x + r, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      ctx.fill();
+    };
+
+    const maskParticlesOverCards = () => {
+      const masked = document.querySelectorAll<HTMLElement>(
+        "[data-particle-mask]"
+      );
+      if (!masked.length) return;
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      masked.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const computed = window.getComputedStyle(el);
+        const radius = parseFloat((computed.borderRadius as string) || "16");
+        drawRoundedRect(
+          rect.left,
+          rect.top,
+          rect.width,
+          rect.height,
+          radius || 16
+        );
+      });
+      ctx.restore();
+    };
+
     const animate = () => {
+      if (!isVisible || prefersReducedMotion) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       updateParticles();
       drawConnections();
       particlesRef.current.forEach(drawParticle);
+      // After drawing, erase particles that fall underneath masked elements (cards)
+      maskParticlesOverCards();
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -205,6 +280,7 @@ export const ParticleBackground: React.FC = () => {
     animate();
 
     window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleVisibility);
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
 
@@ -213,6 +289,7 @@ export const ParticleBackground: React.FC = () => {
         cancelAnimationFrame(animationRef.current);
       }
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
       if (resizeTimeout.current) {
@@ -224,7 +301,7 @@ export const ParticleBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[-1]"
+      className="fixed inset-0 pointer-events-none"
       style={{
         position: "fixed",
         top: 0,

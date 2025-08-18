@@ -1,9 +1,6 @@
-
 # 🚀 Elanchezhiyan P's Portfolio
 
 A modern portfolio and project showcase web application for Elanchezhiyan P, a seasoned software developer specializing in .NET, Azure, CRM integrations, and cloud-native solutions.
-
-
 
 ## ✨ Features
 
@@ -17,7 +14,6 @@ A modern portfolio and project showcase web application for Elanchezhiyan P, a s
 - <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/code.svg" width="18" style="vertical-align:middle;"/> **Modern Stack:** Built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
 - <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/search.svg" width="18" style="vertical-align:middle;"/> **SEO Optimized:** Uses `react-helmet-async` for meta tags and social sharing.
 
-
 ## 🛠️ Tech Stack
 
 - **Frontend:** React, TypeScript, Vite
@@ -26,7 +22,6 @@ A modern portfolio and project showcase web application for Elanchezhiyan P, a s
 - **State & Data:** React Hooks, Context API
 - **Assets:** Local images for project thumbnails
 - **Utilities:** Lucide React Icons, custom hooks
-
 
 ## 📁 Project Structure
 
@@ -54,7 +49,6 @@ src/
 App.tsx           # Main app entry
 index.css         # Tailwind CSS entry
 ```
-
 
 ## ⚡ Getting Started
 
@@ -108,7 +102,6 @@ npm run lint
 npm run format
 ```
 
-
 ## 🎨 Customization
 
 - <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/file-text.svg" width="16" style="vertical-align:middle;"/> **Resume:** Place your PDF at `public/resume-elanchezhiyan.pdf` for the download button to work.
@@ -116,14 +109,12 @@ npm run format
 - <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/calendar.svg" width="16" style="vertical-align:middle;"/> **Booking Services:** Edit `src/data/topmateServices.ts` to manage available services for booking.
 - <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/paintbrush.svg" width="16" style="vertical-align:middle;"/> **Theme & UI:** Tailwind and shadcn/ui are fully customizable via `tailwind.config.ts` and `components.json`. Button/icon/CTA styles are unified for consistency.
 
-
 ## 📄 License
 
 This project is for personal/portfolio use. For commercial use or reuse, please contact the author.
 
 ---
 
-
 <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/user.svg" width="18" style="vertical-align:middle;"/> **Developed by Elanchezhiyan P**
 
-[Portfolio](https://elanchezhiyan-p.is-a.dev)
+[Portfolio](https://codebyelan.in)

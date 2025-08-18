@@ -66,9 +66,22 @@ const Projects = () => {
       : projects.filter((p) => p.projectType.includes(filter));
 
   return (
-    <div className="container mx-auto px-4 py-20">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl lg:text-5xl font-bold mb-6">Projects</h1>
+    <div
+      className="container mx-auto px-4 py-20 relative z-10"
+      role="main"
+      aria-label="Elanchezhiyan's Projects Portfolio"
+    >
+      <div
+        className="text-center mb-16"
+        aria-labelledby="projects-heading"
+        role="region"
+      >
+        <h1
+          id="projects-heading"
+          className="text-4xl lg:text-5xl font-bold mb-6"
+        >
+          Projects
+        </h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Explore a portfolio of enterprise-grade applications built for
           scalability, performance, and impact.
@@ -76,7 +89,7 @@ const Projects = () => {
       </div>
 
       {/* Filter Controls */}
-      <div className="mb-8">
+      <div className="mb-8" role="region" aria-label="Project filter controls">
         <div className="flex flex-wrap gap-2 justify-center">
           <div className="group relative">
             <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300 rounded-md" />
@@ -121,6 +134,7 @@ const Projects = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProjects.map((project, index) => (
           <Card
+            data-particle-mask
             key={project.id}
             className={`group overflow-hidden hover:shadow-xl transition-all duration-500 relative ${
               project.featured

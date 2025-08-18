@@ -9,6 +9,12 @@ import {
   ChevronRight,
   Github,
   ExternalLink,
+  User,
+  Briefcase,
+  MessageSquare,
+  Star,
+  Award,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
@@ -47,12 +53,11 @@ import AnjaneyasAssociatesImage from "@/assets/project/anjaneyasassociates.png";
 
 const Index = () => {
   // Infinite carousel logic
-  const [currentSlide, setCurrentSlide] = useState(1); // Start at 1 (first real slide)
+  const [currentSlide, setCurrentSlide] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const featuredProjects = projectsData.filter((project) => project.featured);
-  // For infinite loop, clone first and last
   const extendedProjects = [
     featuredProjects[featuredProjects.length - 1],
     ...featuredProjects,
@@ -86,6 +91,7 @@ const Index = () => {
 
   // Detect mobile device
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   useEffect(() => {
     if (isMobile || !isHovered) {
       const interval = setInterval(() => {
@@ -187,90 +193,255 @@ const Index = () => {
       } else if (currentSlide === featuredProjects.length + 1) {
         setCurrentSlide(1);
       }
-    }, 500); // match transition duration
+    }, 500);
     return () => clearTimeout(handle);
   }, [currentSlide, isTransitioning, featuredProjects.length]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-10 pb-16 flex flex-col md:flex-row items-center gap-10">
-        <div className="w-full md:w-1/2 flex flex-col justify-center text-left">
-          <h1 className="text-3xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
-            Hi, I'm Elanchezhiyan
-          </h1>
-          <h2 className="text-lg md:text-2xl font-semibold mb-2 text-blue-700 dark:text-blue-300 theme-green:text-green-600">
-            Seasoned Software Developer
-          </h2>
-          <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-3 max-w-xl">
-            I build scalable, high-performance software for startups and
-            enterprises. Let's turn your ideas into reality.
-          </p>
-          <div className="flex flex-row gap-3 mb-4">
-            <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow border border-blue-100 dark:border-blue-800 py-3 px-4 min-w-[90px]">
-              <span className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
-                {yearsOfExperience}+
-              </span>
-              <span className="text-xs text-gray-700 dark:text-gray-300 mt-1">
-                Years
-              </span>
+    <div
+      className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 overflow-x-hidden relative z-10"
+      role="main"
+      aria-label="Elanchezhiyan's Portfolio - Software Developer"
+    >
+      {/* Z-PATTERN SECTION 1: Top-left to Top-right - Header & Key Stats */}
+      <section
+        className="container mx-auto px-4 pt-10 pb-8"
+        aria-labelledby="hero-heading"
+        role="region"
+      >
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
+          {/* Left side - Main heading and intro */}
+          <div className="w-full lg:w-2/3 space-y-6">
+            <header className="space-y-4">
+              <h1
+                id="hero-heading"
+                className="text-4xl md:text-6xl font-extrabold leading-tight bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent"
+              >
+                Hi, I'm Elanchezhiyan
+              </h1>
+              <h2 className="text-xl md:text-2xl font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-600">
+                Seasoned Software Developer
+              </h2>
+              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed">
+                I build scalable, high-performance software for startups and
+                enterprises. Let's turn your ideas into reality with robust,
+                scalable, and beautiful solutions.
+              </p>
+            </header>
+
+            {/* Key stats - positioned for Z-pattern flow */}
+            <div className="grid grid-cols-3 gap-4 max-w-md">
+              <div
+                className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow-lg border-2 border-blue-200 dark:border-blue-800 py-4 px-3 min-h-[100px]"
+                role="region"
+                aria-label="Years of Experience"
+              >
+                <Award
+                  className="w-6 h-6 text-blue-600 dark:text-blue-400 theme-green:text-green-600 mb-2"
+                  aria-hidden="true"
+                />
+                <span className="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                  {yearsOfExperience}+
+                </span>
+                <span className="text-sm text-gray-700 dark:text-gray-300 mt-1 text-center">
+                  Years
+                </span>
+              </div>
+              <div
+                className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow-lg border-2 border-blue-200 dark:border-blue-800 py-4 px-3 min-h-[100px]"
+                role="region"
+                aria-label="Projects Completed"
+              >
+                <Briefcase
+                  className="w-6 h-6 text-blue-600 dark:text-blue-400 theme-green:text-green-600 mb-2"
+                  aria-hidden="true"
+                />
+                <span className="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                  30+
+                </span>
+                <span className="text-sm text-gray-700 dark:text-gray-300 mt-1 text-center">
+                  Projects
+                </span>
+              </div>
+              <div
+                className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow-lg border-2 border-blue-200 dark:border-blue-800 py-4 px-3 min-h-[100px]"
+                role="region"
+                aria-label="Performance Improvement"
+              >
+                <TrendingUp
+                  className="w-6 h-6 text-blue-600 dark:text-blue-400 theme-green:text-green-600 mb-2"
+                  aria-hidden="true"
+                />
+                <span className="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                  40%
+                </span>
+                <span className="text-sm text-gray-700 dark:text-gray-300 mt-1 text-center">
+                  Improvement
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow border border-blue-100 dark:border-blue-800 py-3 px-4 min-w-[90px]">
-              <span className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
-                30+
-              </span>
-              <span className="text-xs text-gray-700 dark:text-gray-300 mt-1">
-                Projects
-              </span>
-            </div>
-            <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-900 rounded-xl shadow border border-blue-100 dark:border-blue-800 py-3 px-4 min-w-[90px]">
-              <span className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600">
-                40%
-              </span>
-              <span className="text-xs text-gray-700 dark:text-gray-300 mt-1">
-                Improvement
-              </span>
+
+            {/* Call-to-action buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Button
+                asChild
+                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-lg transition-all duration-300 hover:scale-105 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
+                aria-label="View my portfolio projects"
+              >
+                <Link to="/projects">View My Work</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="px-8 py-3 text-lg font-semibold rounded-xl border-2 border-blue-200 dark:border-blue-800 shadow-lg transition duration-200 hover:border-blue-500 theme-green:hover:border-green-500 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
+                aria-label="Contact me for collaboration"
+              >
+                <Link to="/contact">Get in Touch</Link>
+              </Button>
             </div>
           </div>
-          <div className="flex gap-3 mt-2">
-            <Button
-              asChild
-              className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-5 py-2 text-base font-semibold rounded-xl shadow-md transition-all duration-300 hover:scale-105"
-            >
-              <Link to="/projects">View My Work</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="px-5 py-2 text-base font-semibold rounded-xl border-blue-200 dark:border-blue-800 shadow-sm transition duration-200 hover:border-blue-500 theme-green:hover:border-green-500"
-            >
-              <Link to="/contact">Get in Touch</Link>
-            </Button>
-          </div>
-        </div>
-        <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end mt-6 md:mt-0">
-          <div className="group relative flex items-center justify-center p-0 md:p-2">
-            <img
-              src="/Elan.jpg"
-              alt="Elanchezhiyan"
-              className="w-40 h-40 md:w-64 md:h-64 object-cover rounded-full shadow-lg border-4 border-blue-200 dark:border-blue-800 transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105"
-            />
+
+          {/* Right side - Profile image */}
+          <div className="w-full lg:w-1/3 flex items-center justify-center lg:justify-end">
+            <div className="group relative flex items-center justify-center p-4">
+              <img
+                src="/Elan.jpg"
+                alt="Elanchezhiyan - Professional headshot"
+                className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full shadow-2xl border-4 border-blue-200 dark:border-blue-800 transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105"
+              />
+            </div>
           </div>
         </div>
       </section>
-      {/* Featured Projects Carousel */}
-      <section className="container mx-auto px-4">
+
+      {/* Z-PATTERN SECTION 2: Diagonal down-left - Services & Skills */}
+      <section
+        className="container mx-auto px-4 py-16"
+        aria-labelledby="services-heading"
+        role="region"
+      >
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Featured Projects</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
+          <h2
+            id="services-heading"
+            className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white"
+          >
+            What I Do
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Specialized in modern cloud-native development with expertise across
+            the full technology stack
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Full-Stack Development Card */}
+          <Card
+            data-particle-mask
+            className="group relative overflow-hidden border-2 border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500 focus-within:ring-4 focus-within:ring-blue-300 dark:focus-within:ring-blue-600"
+            role="article"
+            aria-labelledby="fullstack-title"
+          >
+            <div className="flex flex-col items-center p-8 text-center">
+              <div className="flex items-center justify-center w-20 h-20 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
+                <Code
+                  className="w-10 h-10 text-blue-600 theme-green:text-green-600"
+                  aria-hidden="true"
+                />
+              </div>
+              <h3
+                id="fullstack-title"
+                className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors"
+              >
+                Full-Stack Development
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+                Building scalable applications with .NET Core, React, and modern
+                JavaScript frameworks.
+              </p>
+            </div>
+          </Card>
+
+          {/* Cloud Solutions Card */}
+          <Card
+            data-particle-mask
+            className="group relative overflow-hidden border-2 border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500 focus-within:ring-4 focus-within:ring-blue-300 dark:focus-within:ring-blue-600"
+            role="article"
+            aria-labelledby="cloud-title"
+          >
+            <div className="flex flex-col items-center p-8 text-center">
+              <div className="flex items-center justify-center w-20 h-20 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
+                <Cloud
+                  className="w-10 h-10 text-blue-600 theme-green:text-green-600"
+                  aria-hidden="true"
+                />
+              </div>
+              <h3
+                id="cloud-title"
+                className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors"
+              >
+                Cloud Solutions
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+                Azure expertise in App Services, SQL Database, Blob Storage, and
+                serverless architectures.
+              </p>
+            </div>
+          </Card>
+
+          {/* DevOps & Automation Card */}
+          <Card
+            data-particle-mask
+            className="group relative overflow-hidden border-2 border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500 focus-within:ring-4 focus-within:ring-blue-300 dark:focus-within:ring-blue-600"
+            role="article"
+            aria-labelledby="devops-title"
+          >
+            <div className="flex flex-col items-center p-8 text-center">
+              <div className="flex items-center justify-center w-20 h-20 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
+                <Zap
+                  className="w-10 h-10 text-blue-600 theme-green:text-green-600"
+                  aria-hidden="true"
+                />
+              </div>
+              <h3
+                id="devops-title"
+                className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors"
+              >
+                DevOps & Automation
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+                CI/CD pipelines, Infrastructure as Code, and automated
+                deployment strategies.
+              </p>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* Z-PATTERN SECTION 3: Bottom-left to Bottom-right - Featured Projects */}
+      <section
+        className="container mx-auto px-4 py-16"
+        aria-labelledby="projects-heading"
+        role="region"
+      >
+        <div className="text-center mb-12">
+          <h2
+            id="projects-heading"
+            className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white"
+          >
+            Featured Projects
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Showcasing scalable solutions and innovative architectures
           </p>
         </div>
+
         <div
           ref={carouselRef}
-          className="relative overflow-hidden rounded-2xl shadow-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 transition-all duration-500 select-none"
+          className="relative overflow-hidden rounded-2xl shadow-2xl bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 transition-all duration-500 select-none"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          role="region"
+          aria-label="Featured projects carousel"
         >
           <div
             className={`flex ${
@@ -282,14 +453,17 @@ const Index = () => {
           >
             {extendedProjects.map((project, idx) => (
               <div key={idx} className="w-full flex-shrink-0">
-                <Card className="group flex flex-col lg:flex-row overflow-hidden border-none bg-transparent shadow-none">
+                <Card
+                  data-particle-mask
+                  className="group flex flex-col lg:flex-row overflow-hidden border-none bg-transparent shadow-none"
+                >
                   {/* Image Side */}
                   <div className="lg:w-1/2 flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6 lg:p-10">
                     <div className="relative w-full h-64 lg:h-80 flex items-center justify-center">
                       <img
                         src={imageMap[project.id]}
-                        alt={project.title}
-                        className="w-full h-full object-cover rounded-2xl shadow-md transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105"
+                        alt={`${project.title} - Project screenshot`}
+                        className="w-full h-full object-cover rounded-2xl shadow-lg transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105"
                       />
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
                     </div>
@@ -325,28 +499,33 @@ const Index = () => {
                     <div className="flex gap-4 mt-2">
                       <Button
                         variant="outline"
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold border-blue-200 dark:border-blue-800 shadow-sm transition duration-200 hover:border-blue-500 theme-green:hover:border-green-500"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold border-2 border-blue-200 dark:border-blue-800 shadow-md transition duration-200 hover:border-blue-500 theme-green:hover:border-green-500 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
                         asChild
                       >
                         <a
                           href={project.links?.github}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`View source code for ${project.title}`}
                         >
-                          <Github className="h-4 w-4" />
+                          <Github className="h-4 w-4" aria-hidden="true" />
                           View Code
                         </a>
                       </Button>
                       <Button
-                        className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-5 py-2.5 rounded-lg font-semibold shadow-md transition duration-200 inline-flex items-center gap-2"
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-5 py-2.5 rounded-lg font-semibold shadow-md transition duration-200 inline-flex items-center gap-2 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
                         asChild
                       >
                         <a
                           href={project.links?.live}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`View live demo of ${project.title}`}
                         >
-                          <ExternalLink className="h-4 w-4" />
+                          <ExternalLink
+                            className="h-4 w-4"
+                            aria-hidden="true"
+                          />
                           Live Demo
                         </a>
                       </Button>
@@ -356,100 +535,58 @@ const Index = () => {
               </div>
             ))}
           </div>
+
           {/* Navigation Buttons - always visible */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
             aria-label="Previous project"
+            tabIndex={0}
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6" aria-hidden="true" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-800/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-800/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
             aria-label="Next project"
+            tabIndex={0}
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6" aria-hidden="true" />
           </button>
+
           {/* Dots Indicator */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
             {featuredProjects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index + 1)}
-                className={`w-3 h-3 rounded-full border-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
+                className={`w-4 h-4 rounded-full border-2 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
                   index + 1 === currentSlide
                     ? "bg-blue-600 border-blue-600 theme-green:bg-green-600 theme-green:border-green-600"
                     : "bg-gray-200 border-gray-300 dark:bg-gray-700 dark:border-gray-600 hover:bg-blue-200 dark:hover:bg-blue-800/40 theme-green:hover:bg-green-200 theme-green:dark:hover:bg-green-800/40"
                 }`}
                 aria-label={`Go to project ${index + 1}`}
+                tabIndex={0}
               />
             ))}
           </div>
         </div>
       </section>
-      {/* Services/Skills Preview */}
-      <section className="container mx-auto px-4">
-        <div className="text-center mt-10 mb-12">
-          <h2 className="text-4xl font-bold mb-4">What I Do</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Specialized in modern cloud-native development
-          </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Full-Stack Development Card */}
-          <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
-            <div className="flex flex-col items-center p-8">
-              <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
-                <Code className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
-                Full-Stack Development
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
-                Building scalable applications with .NET Core, React, and modern
-                JavaScript frameworks.
-              </p>
-            </div>
-          </Card>
-          {/* Cloud Solutions Card */}
-          <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
-            <div className="flex flex-col items-center p-8">
-              <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
-                <Cloud className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
-                Cloud Solutions
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
-                Azure expertise in App Services, SQL Database, Blob Storage, and
-                serverless architectures.
-              </p>
-            </div>
-          </Card>
-          {/* DevOps & Automation Card */}
-          <Card className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500">
-            <div className="flex flex-col items-center p-8">
-              <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full border-2 border-blue-100 dark:border-blue-900/30 theme-green:border-green-100 theme-green:dark:border-green-900/30 bg-blue-50 dark:bg-blue-900/10 theme-green:bg-green-50 theme-green:dark:bg-green-900/10 transition-colors">
-                <Zap className="w-8 h-8 text-blue-600 theme-green:text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
-                DevOps & Automation
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm text-center leading-relaxed">
-                CI/CD pipelines, Infrastructure as Code, and automated
-                deployment strategies.
-              </p>
-            </div>
-          </Card>
-        </div>
-      </section>
 
-      {/* Topmate Services Section */}
-      <section className="container mx-auto px-4 py-16">
+      {/* Z-PATTERN SECTION 4: Bottom-right - Professional Services */}
+      <section
+        className="container mx-auto px-4 py-16"
+        aria-labelledby="services-professional-heading"
+        role="region"
+      >
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Professional Services</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
+          <h2
+            id="services-professional-heading"
+            className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white"
+          >
+            Professional Services
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Get personalized guidance and support for your career and projects
           </p>
         </div>
@@ -457,13 +594,20 @@ const Index = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {topmateServices.slice(0, 6).map((service) => (
             <Card
+              data-particle-mask
               key={service.id}
-              className="group relative overflow-hidden border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500"
+              className="group relative overflow-hidden border-2 border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 theme-green:hover:border-green-500 focus-within:ring-4 focus-within:ring-blue-300 dark:focus-within:ring-blue-600"
+              tabIndex={0}
+              role="article"
+              aria-labelledby={`service-${service.id}-title`}
             >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors line-clamp-2">
+                    <h3
+                      id={`service-${service.id}-title`}
+                      className="font-bold text-lg mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors line-clamp-2"
+                    >
                       {service.title}
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-3">
@@ -529,15 +673,16 @@ const Index = () => {
 
                 <Button
                   asChild
-                  className="w-full bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white transition-all duration-300 hover:scale-105"
+                  className="w-full bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 text-white transition-all duration-300 hover:scale-105 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
                 >
                   <a
                     href={service.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2"
+                    aria-label={`Book ${service.title} service`}
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-4 h-4" aria-hidden="true" />
                     Book Now
                   </a>
                 </Button>
@@ -550,33 +695,47 @@ const Index = () => {
           <Button
             asChild
             variant="outline"
-            className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950/20 theme-green:border-green-600 theme-green:text-green-600 theme-green:hover:bg-green-50 theme-green:dark:border-green-400 theme-green:dark:text-green-400 theme-green:dark:hover:bg-green-950/20"
+            className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950/20 theme-green:border-green-600 theme-green:text-green-600 theme-green:hover:bg-green-50 theme-green:dark:border-green-400 theme-green:dark:text-green-400 theme-green:dark:hover:bg-green-950/20 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
           >
             <a
               href="https://topmate.io/elanchezhiyan_poosamani"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 mx-auto"
+              className="flex items-center gap-2 mx-auto px-8 py-3 text-lg font-semibold rounded-xl"
+              aria-label="View all professional services"
             >
               View All Services
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
             </a>
           </Button>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="text-center my-16">
-        <div className="mx-auto max-w-2xl rounded-2xl border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 bg-white dark:bg-gray-900 shadow-lg p-10 md:p-14 flex flex-col items-center">
-          <h3 className="text-3xl md:text-4xl font-extrabold mb-4 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
-            🚀 Ready to Build Something Amazing?
+      {/* Z-PATTERN FINAL: Bottom Call to Action */}
+      <section
+        className="text-center my-16"
+        aria-labelledby="cta-heading"
+        role="region"
+      >
+        <div className="mx-auto max-w-3xl rounded-2xl border-2 border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 bg-white dark:bg-gray-900 shadow-2xl p-10 md:p-14 flex flex-col items-center">
+          <h3
+            id="cta-heading"
+            className="text-3xl md:text-4xl font-extrabold mb-6 flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent"
+          >
+            <span role="img" aria-label="rocket" className="text-4xl">
+              🚀
+            </span>
+            Ready to Build Something Amazing?
           </h3>
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 mt-2">
+          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 mt-2 max-w-2xl">
             Let's turn your ideas into reality with robust, scalable, and
             beautiful software solutions.
           </p>
           <Link to="/contact">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-md transition-all duration-300 hover:scale-105">
+            <Button
+              className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-10 py-4 text-xl font-semibold rounded-xl shadow-lg transition-all duration-300 hover:scale-105 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
+              aria-label="Contact me to start your project"
+            >
               Let's Connect
             </Button>
           </Link>
