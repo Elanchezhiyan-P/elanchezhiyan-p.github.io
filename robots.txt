@@ -1,5 +1,5 @@
 # Robots.txt for Elanchezhiyan P Portfolio
-# https://elanchezhiyan-p.is-a.dev
+# https://codebyelan.in
 
 # Allow all crawlers
 User-agent: *
@@ -49,7 +49,7 @@ Disallow: /admin/
 Disallow: /private/
 
 # Sitemap location
-Sitemap: https://elanchezhiyan-p.is-a.dev/sitemap.xml
+Sitemap: https://codebyelan.in/sitemap.xml
 
 # Host directive
-Host: https://elanchezhiyan-p.is-a.dev
+Host: https://codebyelan.in
