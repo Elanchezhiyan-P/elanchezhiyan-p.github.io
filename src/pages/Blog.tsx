@@ -212,6 +212,8 @@ const Blog: React.FC = () => {
                         ? "h-48 md:h-full"
                         : "h-64"
                     }`}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 border-4 border-transparent group-hover:border-t-red-500 group-hover:border-l-red-500 transition-colors duration-300" />
                 </div>
@@ -290,6 +292,8 @@ const Blog: React.FC = () => {
                       src={post.image}
                       alt={post.title}
                       className="w-full h-40 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div
                       className={`absolute inset-0 border-2 border-transparent transition-all duration-300 ${

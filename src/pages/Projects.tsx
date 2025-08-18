@@ -155,6 +155,8 @@ const Projects = () => {
                 src={imageMap[project.id]}
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300" />
             </div>

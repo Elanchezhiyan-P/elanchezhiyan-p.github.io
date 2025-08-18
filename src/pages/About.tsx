@@ -1155,6 +1155,7 @@ const About = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2"
+                aria-label="View all services on Topmate"
               >
                 View All Services
                 <ExternalLink className="w-4 h-4" />

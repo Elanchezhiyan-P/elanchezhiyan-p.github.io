@@ -308,6 +308,9 @@ const Index = () => {
                 src="/Elan.jpg"
                 alt="Elanchezhiyan - Professional headshot"
                 className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full shadow-2xl border-4 border-blue-200 dark:border-blue-800 transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
               />
             </div>
           </div>
@@ -319,6 +322,10 @@ const Index = () => {
         className="container mx-auto px-4 py-16"
         aria-labelledby="services-heading"
         role="region"
+        style={{
+          contentVisibility: "auto",
+          containIntrinsicSize: "1200px" as any,
+        }}
       >
         <div className="text-center mb-12">
           <h2
@@ -422,6 +429,10 @@ const Index = () => {
         className="container mx-auto px-4 py-16"
         aria-labelledby="projects-heading"
         role="region"
+        style={{
+          contentVisibility: "auto",
+          containIntrinsicSize: "1200px" as any,
+        }}
       >
         <div className="text-center mb-12">
           <h2
@@ -578,6 +589,10 @@ const Index = () => {
         className="container mx-auto px-4 py-16"
         aria-labelledby="services-professional-heading"
         role="region"
+        style={{
+          contentVisibility: "auto",
+          containIntrinsicSize: "1200px" as any,
+        }}
       >
         <div className="text-center mb-12">
           <h2
@@ -702,7 +717,7 @@ const Index = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 mx-auto px-8 py-3 text-lg font-semibold rounded-xl"
-              aria-label="View all professional services"
+              aria-label="View all services on Topmate"
             >
               View All Services
               <ExternalLink className="w-4 h-4" aria-hidden="true" />
@@ -716,6 +731,10 @@ const Index = () => {
         className="text-center my-16"
         aria-labelledby="cta-heading"
         role="region"
+        style={{
+          contentVisibility: "auto",
+          containIntrinsicSize: "800px" as any,
+        }}
       >
         <div className="mx-auto max-w-3xl rounded-2xl border-2 border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 bg-white dark:bg-gray-900 shadow-2xl p-10 md:p-14 flex flex-col items-center">
           <h3

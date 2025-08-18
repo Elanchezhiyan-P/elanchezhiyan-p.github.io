@@ -85,6 +85,8 @@ const Testimonials = () => {
             src={featuredTestimonial.avatar}
             alt={featuredTestimonial.name}
             className="w-20 h-20 rounded-full object-cover mb-4 border-2 border-blue-400 dark:border-purple-500 shadow"
+            loading="lazy"
+            decoding="async"
           />
           <blockquote className="text-base md:text-lg font-medium mb-3 leading-relaxed text-gray-800 dark:text-gray-100 italic">
             "{featuredTestimonial.quote}"
@@ -127,6 +129,8 @@ const Testimonials = () => {
                     src={testimonial.avatar}
                     alt={testimonial.name}
                     className="w-16 h-16 rounded-full object-cover border-2 border-blue-400 dark:border-purple-500 shadow mb-3"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="font-bold text-base text-gray-900 dark:text-white mb-1">
                     {testimonial.name}

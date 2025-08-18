@@ -648,6 +648,7 @@ const Contact = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2"
+                aria-label="View all services on Topmate"
               >
                 View All Services
                 <ArrowRight className="w-4 h-4" />
@@ -735,13 +736,15 @@ const Contact = () => {
               </Button>
               <Button
                 variant="default"
-                onClick={() => (window.location.hash = "#/book")}
+                asChild
                 className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg shadow transition-colors duration-300 text-base transform hover:scale-105"
               >
-                <span className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-white" />
-                  <span className="ml-1">Book Me</span>
-                </span>
+                <a href="#/book">
+                  <span className="flex items-center gap-2">
+                    <Star className="h-5 w-5 text-white" />
+                    <span className="ml-1">Book Me</span>
+                  </span>
+                </a>
               </Button>
             </div>
             <div className="w-full flex justify-center mt-5">

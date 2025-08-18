@@ -19,6 +19,8 @@ const NotFound = () => {
           src="https://cdn.pixabay.com/photo/2024/09/06/06/24/monkey-9026690_1280.jpg"
           alt="Monkey stuck on stump with bananas"
           className="w-56 h-auto mx-auto mb-6"
+          loading="lazy"
+          decoding="async"
         />
         <h1 className="text-5xl font-extrabold text-green-700 mb-2">404</h1>
         <p className="text-md text-gray-700 mb-6">

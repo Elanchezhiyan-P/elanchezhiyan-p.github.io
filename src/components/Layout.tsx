@@ -35,6 +35,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showParticles, setShowParticles] = useState(false);
   const location = useLocation();
 
   const socialLinks = [
@@ -90,6 +91,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
 
     const timer = setTimeout(() => setIsLoading(false), 1800);
+    // Defer particle background until after initial paint to improve FCP/LCP
+    const scheduleParticles = () => setShowParticles(true);
+    if ("requestIdleCallback" in window) {
+      (window as any).requestIdleCallback(scheduleParticles, { timeout: 2000 });
+    } else {
+      setTimeout(scheduleParticles, 1200);
+    }
 
     return () => {
       clearTimeout(timer);
@@ -124,7 +132,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 theme-green:from-green-50 theme-green:via-emerald-50 theme-green:to-teal-100 theme-green:dark:from-green-900 theme-green:dark:via-emerald-800 theme-green:dark:to-teal-900 transition-colors duration-500">
-      <ParticleBackground />
+      {showParticles && <ParticleBackground />}
 
       {/* Desktop Header */}
       <header
