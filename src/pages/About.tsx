@@ -141,19 +141,51 @@ const About = () => {
 
   const experiences = [
     {
-      year: "2018 May",
-      title: "Android Developer (Internship)",
-      company: "LepoCube Technologies",
-      location: "Erode, Tamilnadu, India",
+      year: "2024 May",
+      startDate: "May 2024",
+      endDate: "Present",
+      title: "Senior Software Developer",
+      company: "App Innovation Technologies",
+      location: "Coimbatore, Tamil Nadu, India",
+      type: "promotion" as const,
+      intro:
+        "Elevated to a senior role, specializing in cloud architecture, performance optimization, and DevOps practices.",
+      description:
+        "Currently leading technical architecture decisions and driving innovation in cloud-native applications.",
+      companyWebsite: "https://aitechindia.com",
+    },
+    {
+      year: "2022 Sept",
+      startDate: "Sept 2022",
+      endDate: "May 2024",
+      title: "Technical Lead",
+      company: "App Innovation Technologies",
+      location: "Coimbatore, Tamil Nadu, India",
+      type: "promotion" as const,
+      intro:
+        "Took on leadership responsibilities including code reviews, technical mentoring, and architecture decisions.",
+      description:
+        "Led technical architecture decisions and drove innovation in cloud-native applications, mentoring junior developers and ensuring code quality standards.",
+      companyWebsite: "https://aitechindia.com",
+    },
+    {
+      year: "2021 Apr",
+      startDate: "Apr 2021",
+      endDate: "Sept 2022",
+      title: "Software Developer",
+      company: "App Innovation Technologies",
+      location: "Coimbatore, Tamil Nadu, India",
       type: "job" as const,
       intro:
-        "Built real-world Android apps as part of a hands-on internship, focusing on code quality and performance.",
+        "Focused on .NET Core and Azure to develop scalable web applications and REST APIs for business clients.",
       description:
-        "Designed and optimized Android applications across diverse domains, enhancing performance, compatibility, and user experience through efficient coding, third-party integrations, and data-driven improvements.",
-      companyWebsite: "https://lepocube-assistech.in",
+        "Developed scalable cloud solutions and contributed to architectural decisions, working with .NET Core, Azure services, and modern web technologies.",
+      companyWebsite: "https://aitechindia.com",
     },
     {
       year: "2019 Aug",
+      startDate: "Aug 2019",
+      endDate: "Apr 2021",
       title: "Technical Associate",
       company: "ThemePro Technologies (Unicia)",
       location: "Chennai, India",
@@ -165,40 +197,18 @@ const About = () => {
       companyWebsite: "https://uncia.ai",
     },
     {
-      year: "2021 Apr",
-      title: "Software Developer",
-      company: "App Innovation Technologies",
-      location: "Coimbatore, Tamil Nadu, India",
+      year: "2018 May",
+      startDate: "May 2018",
+      endDate: "Jan 2019",
+      title: "Android Developer (Internship)",
+      company: "LepoCube Technologies",
+      location: "Erode, Tamilnadu, India",
       type: "job" as const,
       intro:
-        "Focused on .NET Core and Azure to develop scalable web applications and REST APIs for business clients.",
+        "Built real-world Android apps as part of a hands-on internship, focusing on code quality and performance.",
       description:
-        "Advanced to Senior Developer role, architecting scalable cloud solutions and mentoring junior developers.",
-      companyWebsite: "https://aitechindia.com",
-    },
-    {
-      year: "2022 Jun",
-      title: "Technical Lead",
-      company: "App Innovation Technologies",
-      location: "Coimbatore, Tamil Nadu, India",
-      type: "promotion" as const,
-      intro:
-        "Took on leadership responsibilities including code reviews, technical mentoring, and architecture decisions.",
-      description:
-        "Currently leading technical architecture decisions and driving innovation in cloud-native applications.",
-      companyWebsite: "https://aitechindia.com",
-    },
-    {
-      year: "2024 Jun",
-      title: "Senior Software Developer",
-      company: "App Innovation Technologies",
-      location: "Coimbatore, Tamil Nadu, India",
-      type: "promotion" as const,
-      intro:
-        "Elevated to a senior role, specializing in cloud architecture, performance optimization, and DevOps practices.",
-      description:
-        "Currently leading technical architecture decisions and driving innovation in cloud-native applications.",
-      companyWebsite: "https://aitechindia.com",
+        "Designed and optimized Android applications across diverse domains, enhancing performance, compatibility, and user experience through efficient coding, third-party integrations, and data-driven improvements.",
+      companyWebsite: "https://lepocube-assistech.in",
     },
   ];
 
@@ -813,7 +823,7 @@ const About = () => {
                   >
                     <div
                       className={`absolute left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full flex items-center justify-center text-white font-bold shadow-lg z-10 border-4 border-white dark:border-gray-900 bg-gradient-to-br ${
-                        index === experiences.length - 1
+                        index === 0
                           ? "from-green-500 via-emerald-500 to-teal-600 animate-pulse"
                           : "from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600"
                       }`}
@@ -825,7 +835,7 @@ const About = () => {
                         <div className="text-xs opacity-90">
                           {exp.year.split(" ")[1]}
                         </div>
-                        {index === experiences.length - 1 && (
+                        {index === 0 && (
                           <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
                             <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
                           </div>
@@ -845,7 +855,7 @@ const About = () => {
                           {exp.type === "promotion" && (
                             <Trophy className="w-5 h-5 text-yellow-500 animate-pulse" />
                           )}
-                          {index === experiences.length - 1 && (
+                          {index === 0 && (
                             <span className="px-2 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full">
                               Current
                             </span>
@@ -869,6 +879,12 @@ const About = () => {
                             </a>
                           </div>
                         )}
+                        <div className="flex items-center gap-2 mb-2">
+                          <Calendar className="w-4 h-4 text-gray-500" />
+                          <span className="text-gray-500 text-xs">
+                            {exp.startDate} - {exp.endDate}
+                          </span>
+                        </div>
                         <div className="flex items-center gap-2 mb-2">
                           <MapPin className="w-4 h-4 text-gray-500" />
                           <span className="text-gray-500 text-xs">

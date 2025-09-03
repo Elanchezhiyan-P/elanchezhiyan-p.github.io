@@ -3,6 +3,8 @@ import { Calendar, MapPin, Trophy, Building2 } from "lucide-react";
 
 interface TimelineItem {
   year: string;
+  startDate: string;
+  endDate: string;
   title: string;
   company: string;
   location: string;
@@ -38,7 +40,7 @@ export const MobileTimeline: React.FC<MobileTimelineProps> = ({
                   <div className="flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-blue-600 theme-green:text-green-600" />
                     <span className="text-sm font-bold text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300">
-                      {item.year}
+                      {item.startDate} - {item.endDate}
                     </span>
                   </div>
                   {item.type === "promotion" && (
