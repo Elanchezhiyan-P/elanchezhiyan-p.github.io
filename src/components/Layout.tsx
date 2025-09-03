@@ -19,6 +19,9 @@ import {
   MessageSquare,
   Phone,
   Users,
+  Loader2,
+  Zap,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FloatingSocialSidebar } from "./FloatingSocialSidebar";
@@ -36,6 +39,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [showSettings, setShowSettings] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showParticles, setShowParticles] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   const location = useLocation();
 
   const socialLinks = [
@@ -104,6 +108,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     };
   }, []);
 
+  // Detect route changes for navigation loading state
+  useEffect(() => {
+    setIsNavigating(true);
+    const timer = setTimeout(() => setIsNavigating(false), 300);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     if (!isDarkMode) {
@@ -126,12 +137,49 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  // Loading indicator component with different icons
+  const LoadingIndicator = ({ size = "w-4 h-4" }: { size?: string }) => {
+    const [iconIndex, setIconIndex] = useState(0);
+    const icons = [Loader2, Zap, Sparkles];
+    const animations = [
+      "loading-icon-rotate",
+      "loading-icon-bounce",
+      "loading-icon-pulse",
+    ];
+
+    useEffect(() => {
+      if (isNavigating) {
+        const interval = setInterval(() => {
+          setIconIndex((prev) => (prev + 1) % icons.length);
+        }, 600);
+        return () => clearInterval(interval);
+      }
+    }, [isNavigating, icons.length]);
+
+    if (!isNavigating) return null;
+
+    const IconComponent = icons[iconIndex];
+    const animationClass = animations[iconIndex];
+
+    return (
+      <IconComponent
+        className={`${size} text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400 ${animationClass}`}
+      />
+    );
+  };
+
   if (isLoading) {
     return <Loader />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 theme-green:from-green-50 theme-green:via-emerald-50 theme-green:to-teal-100 theme-green:dark:from-green-900 theme-green:dark:via-emerald-800 theme-green:dark:to-teal-900 transition-colors duration-500">
+      {/* Navigation progress bar */}
+      {isNavigating && (
+        <div className="fixed top-0 left-0 right-0 z-50 h-0.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-500">
+          <div className="h-full bg-gradient-to-r from-transparent via-white to-transparent animate-pulse opacity-50"></div>
+        </div>
+      )}
       {showParticles && <ParticleBackground />}
 
       {/* Desktop Header */}
@@ -160,7 +208,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex items-center gap-1 text-sm font-medium transition-colors duration-300 ${
+                className={`nav-link flex items-center gap-1 text-sm font-medium transition-colors duration-300 relative ${
                   isActive(item.href)
                     ? "text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
                     : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
@@ -169,17 +217,23 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               >
                 <item.icon className="w-5 h-5" aria-hidden="true" />
                 <span>{item.name}</span>
+                {/* Active indicator */}
+                {isActive(item.href) && (
+                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 theme-green:bg-green-600 theme-green:dark:bg-green-400 rounded-full" />
+                )}
               </Link>
             ))}
           </nav>
 
           {/* Controls */}
           <div className="flex items-center space-x-3">
+            {/* Navigation loading indicator */}
+            <LoadingIndicator size="w-4 h-4" />
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
+              className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition focus:ring-4 focus:ring-blue-400 dark:focus:ring-blue-600"
               aria-label={
                 isDarkMode ? "Switch to light mode" : "Switch to dark mode"
               }
@@ -221,7 +275,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex items-center gap-1 text-xs font-medium transition-colors duration-300 ${
+                className={`nav-link flex items-center gap-1 text-xs font-medium transition-colors duration-300 relative ${
                   isActive(item.href)
                     ? "text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
                     : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
@@ -229,12 +283,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               >
                 <item.icon className="w-4 h-4" />
                 <span className="hidden sm:inline">{item.name}</span>
+                {/* Active indicator */}
+                {isActive(item.href) && (
+                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 dark:bg-blue-400 theme-green:bg-green-600 theme-green:dark:bg-green-400 rounded-full" />
+                )}
               </Link>
             ))}
           </nav>
 
           {/* Controls */}
           <div className="flex items-center space-x-2">
+            {/* Navigation loading indicator */}
+            <LoadingIndicator size="w-3 h-3" />
             <Button
               variant="ghost"
               size="sm"
@@ -289,6 +349,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               ))}
             </div>
             <div className="flex items-center gap-2 ml-2">
+              {/* Navigation loading indicator */}
+              <LoadingIndicator size="w-4 h-4" />
               <Button
                 variant="ghost"
                 size="sm"
@@ -317,7 +379,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       </header>
 
       {/* Main Content */}
-      <main className="pt-12 pb-2 px-4 md:pt-0 md:pb-2 md:px-8 md:max-w-6xl md:mx-auto">
+      <main className="page-container pt-12 pb-2 px-4 md:pt-0 md:pb-2 md:px-8 md:max-w-6xl md:mx-auto min-h-[calc(100vh-200px)] transition-all duration-300 ease-in-out">
         {children}
       </main>
 
@@ -327,7 +389,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Link
             key={item.name}
             to={item.href}
-            className={`flex flex-col items-center text-xs font-semibold transition-colors duration-300 ${
+            className={`nav-link flex flex-col items-center text-xs font-semibold transition-colors duration-300 ${
               isActive(item.href)
                 ? "text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
                 : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
@@ -336,8 +398,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           >
             <item.icon className="w-6 h-6 mb-1" />
             {item.name}
+            {/* Active indicator */}
+            {isActive(item.href) && (
+              <div className="w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 theme-green:bg-green-600 theme-green:dark:bg-green-400 rounded-full mt-1" />
+            )}
           </Link>
         ))}
+        {/* Navigation loading indicator */}
+        {isNavigating && (
+          <div className="absolute -top-2 right-4">
+            <LoadingIndicator size="w-3 h-3" />
+          </div>
+        )}
       </nav>
 
       {/* Footer */}

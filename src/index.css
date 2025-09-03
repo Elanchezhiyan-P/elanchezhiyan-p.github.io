@@ -287,6 +287,113 @@ All colors MUST be HSL.
   transition-duration: 0s !important;
 }
 
+/* Page transition animations */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+/* Smooth route transitions */
+.route-transition {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.route-transition.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.route-transition.fade-out {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Prevent layout shift during page transitions */
+.page-container {
+  min-height: calc(100vh - 200px);
+  will-change: opacity, transform;
+}
+
+/* Smooth navigation link transitions */
+.nav-link {
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  transform: translateY(-1px);
+}
+
+/* Preload images to prevent flicker */
+.preload-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.preload-image.loaded {
+  opacity: 1;
+}
+
+/* Enhanced loading animations */
+@keyframes iconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes iconBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes iconRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-icon-pulse {
+  animation: iconPulse 1.5s ease-in-out infinite;
+}
+
+.loading-icon-bounce {
+  animation: iconBounce 1s ease-in-out infinite;
+}
+
+.loading-icon-rotate {
+  animation: iconRotate 2s linear infinite;
+}
+
 /* Remove these overrides to prevent blue buttons turning green in green theme */
 /*
 .theme-green .bg-blue-600 {

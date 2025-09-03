@@ -448,7 +448,7 @@ const Index = () => {
 
         <div
           ref={carouselRef}
-          className="relative overflow-hidden rounded-2xl shadow-2xl bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 transition-all duration-500 select-none"
+          className="relative overflow-hidden rounded-2xl shadow-2xl bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 transition-all duration-500 select-none mx-2 md:mx-0"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           role="region"
@@ -469,8 +469,8 @@ const Index = () => {
                   className="group flex flex-col lg:flex-row overflow-hidden border-none bg-transparent shadow-none"
                 >
                   {/* Image Side */}
-                  <div className="lg:w-1/2 flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6 lg:p-10">
-                    <div className="relative w-full h-64 lg:h-80 flex items-center justify-center">
+                  <div className="lg:w-1/2 flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-4 md:p-6 lg:p-10">
+                    <div className="relative w-full h-48 md:h-64 lg:h-80 flex items-center justify-center">
                       <img
                         src={imageMap[project.id]}
                         alt={`${project.title} - Project screenshot`}
@@ -480,7 +480,7 @@ const Index = () => {
                     </div>
                   </div>
                   {/* Content Side */}
-                  <div className="lg:w-1/2 flex flex-col justify-center p-8 lg:p-12">
+                  <div className="lg:w-1/2 flex flex-col justify-center p-6 md:p-8 lg:p-12">
                     <div className="flex items-center gap-2 mb-3">
                       <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300 px-3 py-1 rounded-full text-xs font-semibold tracking-wide border border-blue-100 dark:border-blue-800">
                         Featured
@@ -491,10 +491,10 @@ const Index = () => {
                         </Badge>
                       )}
                     </div>
-                    <h3 className="text-2xl lg:text-3xl font-extrabold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 theme-green:group-hover:text-green-600 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-5 text-base lg:text-lg leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-300 mb-5 text-sm md:text-base lg:text-lg leading-relaxed">
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -547,31 +547,34 @@ const Index = () => {
             ))}
           </div>
 
-          {/* Navigation Buttons - always visible */}
+          {/* Navigation Buttons - responsive positioning for mobile */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
+            className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 p-2 md:p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600 z-10"
             aria-label="Previous project"
             tabIndex={0}
           >
-            <ChevronLeft className="w-6 h-6" aria-hidden="true" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-800/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-800/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600"
+            className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 p-2 md:p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-800/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-800/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600 z-10"
             aria-label="Next project"
             tabIndex={0}
           >
-            <ChevronRight className="w-6 h-6" aria-hidden="true" />
+            <ChevronRight
+              className="w-5 h-5 md:w-6 md:h-6"
+              aria-hidden="true"
+            />
           </button>
 
           {/* Dots Indicator */}
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
+          <div className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-3">
             {featuredProjects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index + 1)}
-                className={`w-4 h-4 rounded-full border-2 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
+                className={`w-3 h-3 md:w-4 md:h-4 rounded-full border-2 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
                   index + 1 === currentSlide
                     ? "bg-blue-600 border-blue-600 theme-green:bg-green-600 theme-green:border-green-600"
                     : "bg-gray-200 border-gray-300 dark:bg-gray-700 dark:border-gray-600 hover:bg-blue-200 dark:hover:bg-blue-800/40 theme-green:hover:bg-green-200 theme-green:dark:hover:bg-green-800/40"

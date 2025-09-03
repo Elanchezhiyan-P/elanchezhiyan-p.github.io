@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/Layout";
+import { PageTransition } from "./components/PageTransition";
+import { RouteLoader } from "./components/RouteLoader";
 import { lazy, Suspense } from "react";
 const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
@@ -241,17 +243,19 @@ const App = () => {
             <DynamicMeta />
             <ScrollToTop />
             <Layout>
-              <Suspense fallback={<div style={{ padding: 24 }}>Loading…</div>}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/testimonials" element={<Testimonials />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/book" element={<Book />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+              <Suspense fallback={<RouteLoader />}>
+                <PageTransition>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/projects" element={<Projects />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/testimonials" element={<Testimonials />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/book" element={<Book />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </PageTransition>
               </Suspense>
             </Layout>
           </HashRouter>

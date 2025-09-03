@@ -11,6 +11,7 @@ import {
   Clock,
   Users,
   Zap,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -27,6 +28,7 @@ const Contact = () => {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { toast } = useToast();
 
   const handleChange = (
@@ -516,21 +518,183 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Embedded Map */}
-        <section className="mt-12 max-w-4xl mx-auto">
-          <div className="rounded-2xl overflow-hidden shadow border border-blue-100 dark:border-blue-900">
-            <div className="aspect-video bg-gray-200 dark:bg-gray-700 relative">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d159370.4936359196!2d76.8703483!3d11.0168449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1642092741015!5m2!1sen!2sus"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Coimbatore Location"
-                className="rounded-lg"
-              />
+        {/* Privacy-Focused Interactive Map */}
+        <section
+          className="mt-12 max-w-4xl mx-auto"
+          aria-labelledby="map-heading"
+        >
+          <div className="text-center mb-6">
+            <h2
+              id="map-heading"
+              className="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            >
+              Find Me Here
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              Located in Coimbatore, Tamil Nadu • Available Worldwide
+            </p>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden shadow-2xl border border-blue-100 dark:border-blue-900 bg-white dark:bg-gray-900">
+            {/* Map Header with Location Info */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 border-b border-blue-100 dark:border-blue-800">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                    <MapPin className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                      Coimbatore, Tamil Nadu
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      South India • GMT+5:30
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-green-600 dark:text-green-400">
+                    Available for Remote Work
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Enhanced Map Container */}
+            <div className="relative">
+              <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden">
+                {/* Loading State */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 z-10">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Loading interactive map...
+                    </p>
+                  </div>
+                </div>
+
+                {/* Privacy-Focused Google Maps Embed - Shows Coimbatore city (general area) */}
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125331.39440412345!2d76.8703483!3d11.0168449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8582b0a3a3a3a%3A0x3ba8582b0a3a3a3a!2sCoimbatore%2C%20Tamil%20Nadu%2C%20India!5e0!3m2!1sen!2sus!4v1642092741015!5m2!1sen!2sus"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Interactive Map - Coimbatore, Tamil Nadu, India"
+                  className="rounded-lg transition-opacity duration-500 hover:opacity-95"
+                  onLoad={() => {
+                    // Hide loading state when map loads
+                    const loadingElement = document.querySelector(
+                      ".absolute.inset-0.flex.items-center.justify-center"
+                    );
+                    if (
+                      loadingElement &&
+                      loadingElement instanceof HTMLElement
+                    ) {
+                      loadingElement.style.display = "none";
+                    }
+                  }}
+                />
+
+                {/* Map Overlay with Quick Actions */}
+                <div className="absolute top-4 right-4 flex flex-col gap-2">
+                  <button
+                    onClick={() =>
+                      window.open(
+                        "https://maps.google.com/?q=Coimbatore,Tamil+Nadu,India",
+                        "_blank"
+                      )
+                    }
+                    className="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700"
+                    aria-label="Open in Google Maps"
+                  >
+                    <ExternalLink className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </button>
+                  <button
+                    onClick={() =>
+                      window.open(
+                        "https://www.google.com/maps/dir//Coimbatore,Tamil+Nadu,India",
+                        "_blank"
+                      )
+                    }
+                    className="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700"
+                    aria-label="Get Directions"
+                  >
+                    <ArrowRight className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </button>
+                </div>
+
+                {/* Coimbatore City Marker (General area, not exact location) */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-blue-600/15 rounded-full border-4 border-blue-600/30 shadow-lg animate-pulse"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-blue-600 rounded-full border-2 border-white flex items-center justify-center">
+                      <MapPin className="w-3 h-3 text-white" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Map Footer with Additional Info */}
+            <div className="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900/20 p-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div className="flex items-center justify-center gap-2">
+                  <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    GMT+5:30
+                  </span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <Users className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    Remote Available
+                  </span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <Zap className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    Quick Response
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Privacy Notice */}
+          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span className="text-sm text-blue-700 dark:text-blue-300">
+                <strong>Privacy Note:</strong> Map shows Coimbatore city for
+                reference. Exact location within city not disclosed for privacy.
+              </span>
+            </div>
+          </div>
+
+          {/* Additional Location Information */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-xl p-4 bg-white dark:bg-gray-900 shadow border border-blue-100 dark:border-blue-900">
+              <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">
+                Timezone
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Indian Standard Time (IST) • GMT+5:30
+              </p>
+            </div>
+            <div className="rounded-xl p-4 bg-white dark:bg-gray-900 shadow border border-blue-100 dark:border-blue-900">
+              <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">
+                Best Time to Contact
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                9:00 AM - 6:00 PM IST (Monday - Friday)
+              </p>
             </div>
           </div>
         </section>

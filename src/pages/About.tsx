@@ -19,7 +19,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
 }) => (
   <Card
     data-particle-mask
-    className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80"
+    className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 shadow-lg"
   >
     <CardContent className="p-6">
       <div className="flex items-center gap-4 mb-6">
@@ -1072,7 +1072,7 @@ const About = () => {
               <Card
                 data-particle-mask
                 key={service.id}
-                className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80"
+                className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative hover:scale-105 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 shadow-lg"
               >
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
