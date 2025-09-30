@@ -19,7 +19,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
 }) => (
   <Card
     data-particle-mask
-    className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 shadow-lg"
+    className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-shadow duration-500 relative bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 shadow-lg"
   >
     <CardContent className="p-6">
       <div className="flex items-center gap-4 mb-6">
@@ -42,7 +42,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
           {skills.map((crm, index) => (
             <div
               key={index}
-              className="group relative rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+              className="group relative rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-transform duration-300 ease-out md:hover:scale-105 transform-gpu will-change-transform shadow-sm hover:shadow-md"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="text-2xl">{crm.icon}</div>
@@ -71,7 +71,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
           {skills.map((skill, index) => (
             <div
               key={index}
-              className="rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+              className="rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-transform duration-300 ease-out md:hover:scale-105 transform-gpu will-change-transform shadow-sm hover:shadow-md"
             >
               <span className="text-gray-800 dark:text-gray-200 text-base md:text-lg font-medium leading-relaxed group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 {typeof skill === "string" ? (
@@ -123,6 +123,13 @@ import { MobileTimeline } from "@/components/MobileTimeline";
 import { Helmet } from "react-helmet-async";
 import { Badge } from "@/components/ui/badge";
 import { topmateServices } from "@/data/topmateServices";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const About = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -420,6 +427,12 @@ const About = () => {
       icon: "❄️",
       category: "Enterprise",
     },
+    {
+      name: "Android & iOS Development",
+      description: "Cross-platform mobile collaboration",
+      icon: "📱",
+      category: "Mobile",
+    },
   ];
 
   const tools = [
@@ -531,6 +544,108 @@ const About = () => {
       icon: "📱",
       category: "Mobile",
     },
+    {
+      name: "Technical Documentation",
+      description: "Code documentation & guides",
+      icon: "📝",
+      category: "Documentation",
+    },
+  ];
+
+  const projectManagementTools = [
+    {
+      name: "Jira (Kanban/Scrum)",
+      description: "Agile boards, sprints, backlog management",
+      icon: "📋",
+      category: "Project Management",
+    },
+    {
+      name: "Azure Boards",
+      description: "Work items, sprints, dashboards",
+      icon: "🗂️",
+      category: "Project Management",
+    },
+    {
+      name: "ClickUp",
+      description: "Tasks, docs, whiteboards",
+      icon: "✅",
+      category: "Project Management",
+    },
+    {
+      name: "Basecamp",
+      description: "Projects, messages, schedules",
+      icon: "🏕️",
+      category: "Project Management",
+    },
+    {
+      name: "Asana",
+      description: "Task flows, timelines, goals",
+      icon: "🧭",
+      category: "Project Management",
+    },
+    {
+      name: "GitLab",
+      description: "Issues, boards, CI/CD integration",
+      icon: "🛠️",
+      category: "Project Management",
+    },
+    {
+      name: "Monday.com",
+      description: "Customizable project boards & automations",
+      icon: "📌",
+      category: "Project Management",
+    },
+  ];
+
+  const aiSkills = [
+    {
+      name: "Python",
+      description: "Core language for AI tooling & data scripts",
+      icon: "🐍",
+      category: "Language",
+    },
+    {
+      name: "Flask API",
+      description: "Serve AI models via lightweight REST APIs",
+      icon: "🧪",
+      category: "API",
+    },
+    {
+      name: "RAG Method",
+      description: "Retrieval-Augmented Generation pipelines",
+      icon: "📚",
+      category: "RAG",
+    },
+    {
+      name: "LangChain",
+      description: "LLM orchestration & tool chaining",
+      icon: "⛓️",
+      category: "Framework",
+    },
+    {
+      name: "Vector DB (FAISS)",
+      description: "Embeddings search & semantic retrieval",
+      icon: "🧭",
+      category: "Search",
+    },
+    {
+      name: "OpenAI / Azure OpenAI",
+      description: "GPT-based reasoning & assistants",
+      icon: "🧠",
+      category: "LLM",
+    },
+    {
+      name: "Groq",
+      description: "Low-latency LLM inference",
+      icon: "⚡",
+      category: "Inference",
+    },
+    {
+      name: "Prompt Engineering",
+      description: "Structured prompting & system design",
+      icon: "📝",
+      category: "Design",
+    },
   ];
 
   const databases = [
@@ -610,12 +725,6 @@ const About = () => {
 
   const collaborationAndOtherSkills = [
     {
-      name: "Android & iOS Development",
-      description: "Cross-platform mobile collaboration",
-      icon: "📱",
-      category: "Mobile",
-    },
-    {
       name: "Client Interaction",
       description: "Requirement gathering & communication",
       icon: "🤝",
@@ -632,18 +741,6 @@ const About = () => {
       description: "Adaptability & skill development",
       icon: "📚",
       category: "Growth",
-    },
-    {
-      name: "Open Source Contributions",
-      description: "Community involvement & sharing",
-      icon: "🌟",
-      category: "Community",
-    },
-    {
-      name: "Technical Documentation",
-      description: "Code documentation & guides",
-      icon: "📝",
-      category: "Documentation",
     },
     {
       name: "Agile/Scrum Methodologies",
@@ -698,6 +795,14 @@ const About = () => {
       icon: "⚙️",
       category: "System Administration",
     },
+    {
+      name: "Open Source Contributions",
+      issuer: "Community",
+      date: "",
+      link: "https://github.com/Elanchezhiyan-P",
+      icon: "🌟",
+      category: "Achievement",
+    },
   ];
 
   const handleResumeDownload = () => {
@@ -713,22 +818,22 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>{`About Elanchezhiyan P - Senior .NET & Azure Developer | ${yearsOfExperience}+ Years Experience`}</title>
+        <title>{`About Elanchezhiyan P - .NET & AI Developer | ${yearsOfExperience}+ Years Experience`}</title>
         <meta
           name="description"
-          content={`Learn about Elanchezhiyan P, a seasoned software developer with ${yearsOfExperience}+ years of experience in .NET Core, Azure Cloud, CRM integrations, and modern web technologies. Expert in building scalable, secure applications.`}
+          content={`Learn about Elanchezhiyan P, a .NET + AI developer with ${yearsOfExperience}+ years of experience in .NET Core, Azure Cloud, CRM integrations, and building intelligent AI solutions with .NET.`}
         />
         <meta
           name="keywords"
-          content="Elanchezhiyan P, .NET Developer, Azure Expert, CRM Integration, Full Stack Developer, Software Developer, Tamil Nadu, India"
+          content="Elanchezhiyan P, .NET Developer, AI Developer, Azure, CRM Integration, Full Stack Developer, Software Developer, Tamil Nadu, India"
         />
         <meta
           property="og:title"
-          content="About Elanchezhiyan P - Senior .NET & Azure Developer"
+          content="About Elanchezhiyan P - .NET & AI Developer"
         />
         <meta
           property="og:description"
-          content="Seasoned software developer with expertise in .NET, Azure, CRM integrations, and modern web development."
+          content=".NET + AI developer with expertise in .NET, Azure, CRM integrations, and intelligent application development."
         />
         <meta property="og:type" content="profile" />
         <link rel="canonical" href="https://elanchezhiyan.dev/about" />
@@ -915,50 +1020,191 @@ const About = () => {
 
         {/* Technical Expertise Section */}
         <section>
-          <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-blue-300 to-purple-600 theme-green:from-green-300 theme-green:to-emerald-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-300 to-purple-600 theme-green:from-green-300 theme-green:to-emerald-300 bg-clip-text text-transparent">
             Technical Expertise
           </h2>
-          <div className="space-y-8">
-            <SkillCard
-              title="CRM Integrations"
-              description="Seamless integration with leading CRM platforms across industries"
-              skills={crmIntegrations}
-              icon={Zap}
-              gradient="from-orange-500 to-red-600"
-              isCrm={true}
-            />
-            <SkillCard
-              title=".NET Applications"
-              description="Comprehensive .NET ecosystem development across platforms"
-              skills={dotnetSkills}
-              icon={Code}
-              gradient="from-blue-500 to-purple-600"
-              isCrm={true}
-            />
-            <SkillCard
-              title="Tools & Technologies"
-              description="Modern development and integration tools ecosystem"
-              skills={tools}
-              icon={Wrench}
-              gradient="from-green-500 to-teal-600"
-              isCrm={true}
-            />
-            <SkillCard
-              title="Databases"
-              description="Multi-database expertise and management across platforms"
-              skills={databases}
-              icon={Database}
-              gradient="from-yellow-500 to-orange-600"
-              isCrm={true}
-            />
-            <SkillCard
-              title="Collaboration & Soft Skills"
-              description="Effective communication, leadership, and team collaboration"
-              skills={collaborationAndOtherSkills}
-              icon={Brain}
-              gradient="from-pink-500 to-purple-600"
-              isCrm={true}
-            />
+
+          {/* Mobile: Accordion for compactness */}
+          <div className="md:hidden">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="ai">
+                <AccordionTrigger>AI</AccordionTrigger>
+                <AccordionContent>
+                  <SkillCard
+                    title="AI"
+                    description="AI development and orchestration with Python and .NET"
+                    skills={aiSkills}
+                    icon={Brain}
+                    gradient="from-indigo-500 to-purple-600"
+                    isCrm={true}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="dotnet">
+                <AccordionTrigger>Software Development</AccordionTrigger>
+                <AccordionContent>
+                  <SkillCard
+                    title="Software Development"
+                    description="End-to-end application development across platforms and stacks"
+                    skills={dotnetSkills}
+                    icon={Code}
+                    gradient="from-blue-500 to-purple-600"
+                    isCrm={true}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="databases">
+                <AccordionTrigger>Databases</AccordionTrigger>
+                <AccordionContent>
+                  <SkillCard
+                    title="Databases"
+                    description="Multi-database expertise and management across platforms"
+                    skills={databases}
+                    icon={Database}
+                    gradient="from-yellow-500 to-orange-600"
+                    isCrm={true}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="tools">
+                <AccordionTrigger>Tools & Technologies</AccordionTrigger>
+                <AccordionContent>
+                  <SkillCard
+                    title="Tools & Technologies"
+                    description="Modern development and integration tools ecosystem"
+                    skills={tools}
+                    icon={Wrench}
+                    gradient="from-green-500 to-teal-600"
+                    isCrm={true}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="pmtools">
+                <AccordionTrigger>Project Management Tools</AccordionTrigger>
+                <AccordionContent>
+                  <SkillCard
+                    title="Project Management Tools"
+                    description="Agile boards and collaboration platforms"
+                    skills={projectManagementTools}
+                    icon={Server}
+                    gradient="from-sky-500 to-blue-600"
+                    isCrm={true}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="crm">
+                <AccordionTrigger>CRM Integrations</AccordionTrigger>
+                <AccordionContent>
+                  <SkillCard
+                    title="CRM Integrations"
+                    description="Seamless integration with leading CRM platforms across industries"
+                    skills={crmIntegrations}
+                    icon={Zap}
+                    gradient="from-orange-500 to-red-600"
+                    isCrm={true}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="softskills">
+                <AccordionTrigger>Collaboration & Soft Skills</AccordionTrigger>
+                <AccordionContent>
+                  <SkillCard
+                    title="Collaboration & Soft Skills"
+                    description="Effective communication, leadership, and team collaboration"
+                    skills={collaborationAndOtherSkills}
+                    icon={Brain}
+                    gradient="from-pink-500 to-purple-600"
+                    isCrm={true}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          {/* Desktop: Tabs for focused browsing */}
+          <div className="hidden md:block">
+            <Tabs defaultValue="ai" className="w-full">
+              <TabsList className="mx-auto mb-6">
+                <TabsTrigger value="ai">AI</TabsTrigger>
+                <TabsTrigger value="dotnet">Software Development</TabsTrigger>
+                <TabsTrigger value="databases">Databases</TabsTrigger>
+                <TabsTrigger value="tools">Tools</TabsTrigger>
+                <TabsTrigger value="pmtools">PM Tools</TabsTrigger>
+                <TabsTrigger value="crm">CRM</TabsTrigger>
+                <TabsTrigger value="softskills">Soft Skills</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="ai">
+                <SkillCard
+                  title="AI"
+                  description="AI development and orchestration with Python and .NET"
+                  skills={aiSkills}
+                  icon={Brain}
+                  gradient="from-indigo-500 to-purple-600"
+                  isCrm={true}
+                />
+              </TabsContent>
+              <TabsContent value="dotnet">
+                <SkillCard
+                  title="Software Development"
+                  description="End-to-end application development across platforms and stacks"
+                  skills={dotnetSkills}
+                  icon={Code}
+                  gradient="from-blue-500 to-purple-600"
+                  isCrm={true}
+                />
+              </TabsContent>
+              <TabsContent value="databases">
+                <SkillCard
+                  title="Databases"
+                  description="Multi-database expertise and management across platforms"
+                  skills={databases}
+                  icon={Database}
+                  gradient="from-yellow-500 to-orange-600"
+                  isCrm={true}
+                />
+              </TabsContent>
+              <TabsContent value="tools">
+                <SkillCard
+                  title="Tools & Technologies"
+                  description="Modern development and integration tools ecosystem"
+                  skills={tools}
+                  icon={Wrench}
+                  gradient="from-green-500 to-teal-600"
+                  isCrm={true}
+                />
+              </TabsContent>
+              <TabsContent value="pmtools">
+                <SkillCard
+                  title="Project Management Tools"
+                  description="Agile boards and collaboration platforms"
+                  skills={projectManagementTools}
+                  icon={Server}
+                  gradient="from-sky-500 to-blue-600"
+                  isCrm={true}
+                />
+              </TabsContent>
+              <TabsContent value="crm">
+                <SkillCard
+                  title="CRM Integrations"
+                  description="Seamless integration with leading CRM platforms across industries"
+                  skills={crmIntegrations}
+                  icon={Zap}
+                  gradient="from-orange-500 to-red-600"
+                  isCrm={true}
+                />
+              </TabsContent>
+              <TabsContent value="softskills">
+                <SkillCard
+                  title="Collaboration & Soft Skills"
+                  description="Effective communication, leadership, and team collaboration"
+                  skills={collaborationAndOtherSkills}
+                  icon={Brain}
+                  gradient="from-pink-500 to-purple-600"
+                  isCrm={true}
+                />
+              </TabsContent>
+            </Tabs>
           </div>
         </section>
 

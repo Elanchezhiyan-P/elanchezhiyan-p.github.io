@@ -50,6 +50,7 @@ import TeleMedixImage from "@/assets/project/telemedix.png";
 import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
 import AnjaneyasAssociatesImage from "@/assets/project/anjaneyasassociates.png";
+import ChatbotPdfImage from "@/assets/project/chatbot-pdf.png";
 
 const Index = () => {
   // Infinite carousel logic
@@ -87,6 +88,7 @@ const Index = () => {
     "invoice-pilot": InvoicePilotImage,
     ghl: GoHighLevelImage,
     "anjaneyas-associates": AnjaneyasAssociatesImage,
+    "chatbot-pdf": ChatbotPdfImage,
   };
 
   // Detect mobile device
@@ -201,7 +203,7 @@ const Index = () => {
     <div
       className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10 overflow-x-hidden relative z-10"
       role="main"
-      aria-label="Elanchezhiyan's Portfolio - Software Developer"
+      aria-label="Elanchezhiyan's Portfolio - .NET and AI Developer"
     >
       {/* Z-PATTERN SECTION 1: Top-left to Top-right - Header & Key Stats */}
       <section
@@ -223,9 +225,9 @@ const Index = () => {
                 Seasoned Software Developer
               </h2>
               <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed">
-                I build scalable, high-performance software for startups and
-                enterprises. Let's turn your ideas into reality with robust,
-                scalable, and beautiful solutions.
+                I build scalable, high-performance software and intelligent AI
+                solutions using .NET, Azure, and modern web technologies. Let's
+                turn your ideas into production-ready apps and AI experiences.
               </p>
             </header>
 
@@ -549,7 +551,14 @@ const Index = () => {
 
           {/* Navigation Buttons - responsive positioning for mobile */}
           <button
-            onClick={prevSlide}
+            onClick={(e) => {
+              setIsHovered(true);
+              prevSlide();
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onFocus={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onBlur={() => setIsHovered(false)}
             className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 p-2 md:p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600 z-10"
             aria-label="Previous project"
             tabIndex={0}
@@ -557,7 +566,14 @@ const Index = () => {
             <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
           </button>
           <button
-            onClick={nextSlide}
+            onClick={(e) => {
+              setIsHovered(true);
+              nextSlide();
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onFocus={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onBlur={() => setIsHovered(false)}
             className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 p-2 md:p-3 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-100 dark:hover:bg-blue-800/30 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-800/30 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-600 z-10"
             aria-label="Next project"
             tabIndex={0}

@@ -35,6 +35,7 @@ const Blog: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [mediumLink, setMediumLink] = useState<string>();
   const [latestImageRatio, setLatestImageRatio] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -85,10 +86,11 @@ const Blog: React.FC = () => {
             };
           }
         );
-
         setBlogPosts(mappedPosts);
       } catch (error) {
         console.error("Failed to fetch blog posts:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -182,7 +184,30 @@ const Blog: React.FC = () => {
         </section>
 
         {/* Featured Post */}
-        {latestPost && (
+        {isLoading ? (
+          <section className="mb-10 md:mb-16">
+            <div className="animate-pulse">
+              <div className="h-6 w-40 bg-gray-200 dark:bg-gray-800 rounded mb-5 md:mb-8"></div>
+              <Card data-particle-mask className="overflow-hidden relative">
+                <div className="flex flex-col md:flex-row">
+                  <div className="w-full md:w-1/2">
+                    <div className="w-full h-64 md:h-80 bg-gray-200 dark:bg-gray-800" />
+                  </div>
+                  <CardContent className="w-full md:w-1/2 p-5 md:p-8 space-y-4">
+                    <div className="h-4 w-24 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                    <div className="h-6 md:h-8 w-3/4 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                    <div className="space-y-2">
+                      <div className="h-3 w-full bg-gray-200 dark:bg-gray-800 rounded"></div>
+                      <div className="h-3 w-5/6 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                      <div className="h-3 w-2/3 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                    </div>
+                    <div className="h-9 w-32 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                  </CardContent>
+                </div>
+              </Card>
+            </div>
+          </section>
+        ) : latestPost ? (
           <section className="mb-10 md:mb-16">
             <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
               Latest Article
@@ -268,7 +293,7 @@ const Blog: React.FC = () => {
               </div>
             </Card>
           </section>
-        )}
+        ) : null}
 
         {/* Articles Grid */}
         <section>
@@ -276,83 +301,108 @@ const Blog: React.FC = () => {
             All Articles
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-            {blogPosts
-              .filter((post) => !post.isLatest)
-              .map((post, index) => (
-                <Card
-                  data-particle-mask
-                  key={post.id}
-                  className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative rounded-xl"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                  onMouseEnter={() => setHoveredPost(post.id)}
-                  onMouseLeave={() => setHoveredPost(null)}
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-40 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <div
-                      className={`absolute inset-0 border-2 border-transparent transition-all duration-300 ${
-                        hoveredPost === post.id
-                          ? "border-t-blue-500 border-l-blue-500 shadow-md shadow-blue-500/20"
-                          : ""
-                      }`}
-                    />
-                  </div>
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex items-center justify-between mb-2 md:mb-3">
-                      <Badge className={getSourceBadgeColor(post.source)}>
-                        {post.source}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">
-                        {post.views} views
-                      </span>
+            {isLoading
+              ? Array.from({ length: 6 }).map((_, index) => (
+                  <Card
+                    data-particle-mask
+                    key={index}
+                    className="rounded-xl overflow-hidden"
+                  >
+                    <div className="animate-pulse">
+                      <div className="w-full h-40 md:h-48 bg-gray-200 dark:bg-gray-800" />
+                      <CardContent className="p-4 md:p-6 space-y-3">
+                        <div className="h-4 w-20 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                        <div className="h-5 w-5/6 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                        <div className="space-y-2">
+                          <div className="h-3 w-full bg-gray-200 dark:bg-gray-800 rounded"></div>
+                          <div className="h-3 w-4/5 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                        </div>
+                        <div className="h-8 w-24 bg-gray-200 dark:bg-gray-800 rounded"></div>
+                      </CardContent>
                     </div>
-                    <h3 className="font-bold mb-2 md:mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 text-base md:text-lg">
-                      {post.title}
-                    </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center text-xs text-muted-foreground mb-3 md:mb-4">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {new Date(post.date).toLocaleDateString()}
-                      <span className="mx-2">•</span>
-                      <Clock className="h-3 w-3 mr-1" />
-                      {post.readTime}
-                    </div>
-                    <div className="flex flex-wrap gap-1 mb-3 md:mb-4">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                      {post.tags.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{post.tags.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                    <Button
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-5 md:py-2 rounded-md font-semibold shadow-sm transition duration-200 inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-sm md:text-base"
-                      asChild
+                  </Card>
+                ))
+              : blogPosts
+                  .filter((post) => !post.isLatest)
+                  .map((post, index) => (
+                    <Card
+                      data-particle-mask
+                      key={post.id}
+                      className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative rounded-xl"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                      onMouseEnter={() => setHoveredPost(post.id)}
+                      onMouseLeave={() => setHoveredPost(null)}
                     >
-                      <a
-                        href={post.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Read Article
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-40 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <div
+                          className={`absolute inset-0 border-2 border-transparent transition-all duration-300 ${
+                            hoveredPost === post.id
+                              ? "border-t-blue-500 border-l-blue-500 shadow-md shadow-blue-500/20"
+                              : ""
+                          }`}
+                        />
+                      </div>
+                      <CardContent className="p-4 md:p-6">
+                        <div className="flex items-center justify-between mb-2 md:mb-3">
+                          <Badge className={getSourceBadgeColor(post.source)}>
+                            {post.source}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">
+                            {post.views} views
+                          </span>
+                        </div>
+                        <h3 className="font-bold mb-2 md:mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 text-base md:text-lg">
+                          {post.title}
+                        </h3>
+                        <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-3">
+                          {post.excerpt}
+                        </p>
+                        <div className="flex items-center text-xs text-muted-foreground mb-3 md:mb-4">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {new Date(post.date).toLocaleDateString()}
+                          <span className="mx-2">•</span>
+                          <Clock className="h-3 w-3 mr-1" />
+                          {post.readTime}
+                        </div>
+                        <div className="flex flex-wrap gap-1 mb-3 md:mb-4">
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <Badge
+                              key={tag}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                          {post.tags.length > 3 && (
+                            <Badge variant="outline" className="text-xs">
+                              +{post.tags.length - 3}
+                            </Badge>
+                          )}
+                        </div>
+                        <Button
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-5 md:py-2 rounded-md font-semibold shadow-sm transition duration-200 inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-sm md:text-base"
+                          asChild
+                        >
+                          <a
+                            href={post.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Read Article
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
           </div>
         </section>
 

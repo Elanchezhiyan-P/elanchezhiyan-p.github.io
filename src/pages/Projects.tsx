@@ -23,6 +23,7 @@ import TeleMedixImage from "@/assets/project/telemedix.png";
 import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
 import AnjaneyasAssociatesImage from "@/assets/project/anjaneyasassociates.png";
+import ChatbotPdfImage from "@/assets/project/chatbot-pdf.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -49,6 +50,7 @@ const Projects = () => {
     "invoice-pilot": InvoicePilotImage,
     ghl: GoHighLevelImage,
     "anjaneyas-associates": AnjaneyasAssociatesImage,
+    "chatbot-pdf": ChatbotPdfImage,
   };
 
   const [filter, setFilter] = useState("all");
@@ -69,7 +71,7 @@ const Projects = () => {
     <div
       className="container mx-auto px-4 py-20 relative z-10"
       role="main"
-      aria-label="Elanchezhiyan's Projects Portfolio"
+      aria-label="Elanchezhiyan's .NET and AI Projects Portfolio"
     >
       <div
         className="text-center mb-16"
@@ -80,11 +82,11 @@ const Projects = () => {
           id="projects-heading"
           className="text-4xl lg:text-5xl font-bold mb-6"
         >
-          Projects
+          .NET + AI Projects
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Explore a portfolio of enterprise-grade applications built for
-          scalability, performance, and impact.
+          Explore enterprise-grade solutions built with .NET and intelligent AI,
+          focused on scalability, performance, and real-world impact.
         </p>
       </div>
 
