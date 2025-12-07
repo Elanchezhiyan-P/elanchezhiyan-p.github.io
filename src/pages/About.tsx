@@ -58,7 +58,7 @@ const About = () => {
     {
       year: "2019 Aug",
       title: "Technical Associate",
-      company: "ThemePro Technologies (Unicia)",
+      company: "ThemePro Technologies (Uncia)",
       location: "Chennai, India",
       type: "job" as const,
       intro:

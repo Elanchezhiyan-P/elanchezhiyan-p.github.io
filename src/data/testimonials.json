@@ -1,20 +1,20 @@
 [
   {
     "id": 1,
-    "name": "Arun Prasadh",
-    "role": "Project Manager",
-    "company": "Lean Six Sigma Green Belt",
-    "quote": "I recommend Elanchezhiyan for his exceptional skills in .NET development. His proficiency in coding, problem-solving, and dedication to delivering high-quality solutions make them an asset to any team.",
-    "avatar": "https://media.licdn.com/dms/image/v2/D5603AQF8w4f_Suz0MA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1701147321636?e=1756944000&v=beta&t=ssiPSA2PwKNamoJI97GJtgrrZRITNl0-qFnWlcSzyJQ",
+    "name": "Senthil Kumar D",
+    "role": "Founder of Anjaneyas Associates",
+    "company": "Anjaneyas Associates",
+    "quote": "We are extremely delighted with our newly launched website for Anjaneyas Associates – HR & Tax Consultancy. The design, layout, and overall presentation are truly wonderful and highly professional. The website is user-friendly, informative, and perfectly reflects the nature of our services. We sincerely appreciate the hard work, creativity, and dedication of the software developer Mr. Elanchezhiyan. Thank you for delivering such an impressive and outstanding website.",
+    "avatar": "https://anjaneyasassociates.com/assets/Owner/ProfilePic1.jpeg",
     "rating": 5
   },
   {
     "id": 2,
-    "name": "Vinay",
-    "role": "Software Developer",
-    "company": "Freelance",
-    "quote": "He consistently delivers high-quality results and drives impact through effective collaboration and strategic foresight, demonstrating strong leadership and a commitment to continuous improvement.",
-    "avatar": "https://images.unsplash.com/photo-1589279715734-6631a314dfa2?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "name": "Arun Prasadh",
+    "role": "Project Manager",
+    "company": "Lean Six Sigma Green Belt",
+    "quote": "I recommend Elanchezhiyan for his exceptional skills in .NET development. His proficiency in coding, problem-solving, and dedication to delivering high-quality solutions make them an asset to any team.",
+    "avatar": "https://media.licdn.com/dms/image/v2/D5603AQF8w4f_Suz0MA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1701147321636?e=2147483647&v=beta&t=7UBP5lDqggajOfwo0T6mlST8zruANiukqMsQYBxXUwg",
     "rating": 5
   },
   {
@@ -24,6 +24,15 @@
     "company": "App Innovation technologies",
     "quote": "Elanchezhiyan's ability to architect scalable solutions is remarkable. Our real-time analytics platform handles millions of events daily thanks to his innovative approach.",
     "avatar": "https://plus.unsplash.com/premium_photo-1677363682086-c8493a6dae52?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "rating": 5
+  },
+  {
+    "id": 4,
+    "name": "Santhosh",
+    "role": "Tech Lead",
+    "company": "Freelance",
+    "quote": "Working with Elanchezhiyan was a game-changer for our project. His ability to turn complex requirements into elegant solutions in .NET was invaluable. He consistently exceeded our expectations and delivered on time.",
+    "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7",
     "rating": 5
   }
 ]
