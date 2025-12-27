@@ -1,98 +1,56 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, ExternalLink, Clock } from "lucide-react";
-
-const mediumUsername = "elanchezhiyan-p";
-
-type BlogPost = {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  author: string;
-  tags: string[];
-  image: string;
-  isLatest: boolean;
-  source: string;
-  url: string;
-  views: string;
-};
-
-const fallbackImages = [
-  "https://plus.unsplash.com/premium_photo-1678566111481-8e275550b700?q=80&w=687&auto=format&fit=crop",
-  "https://plus.unsplash.com/premium_photo-1723849222657-e1e48a0a306e?q=80&w=1121&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1542373285-a85124c4f3e6?q=80&w=1170&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1555066931-bf19f8fd1085?q=80&w=1171&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1619410283995-43d9134e7656?q=80&w=1170&auto=format&fit=crop",
-];
+import {
+  getCachedBlogData,
+  fetchBlogPosts,
+  type BlogPost,
+} from "@/utils/blogService";
 
 const Blog: React.FC = () => {
   const [hoveredPost, setHoveredPost] = useState<number | null>(null);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [mediumLink, setMediumLink] = useState<string>();
   const [latestImageRatio, setLatestImageRatio] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await axios.get(
-          `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${mediumUsername}`
-        );
-        const items = res.data.items;
-        setMediumLink(res.data.feed.link);
-
-        const sortedItems = items.sort(
-          (a: any, b: any) =>
-            new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
-        );
-
-        const mappedPosts: BlogPost[] = sortedItems.map(
-          (item: any, index: number) => {
-            const plainText = item.description.replace(/<\/?[^>]+(>|$)/g, "");
-            const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/);
-            const extractedImg = imgMatch?.[1];
-            const isTrackingImage = extractedImg?.includes("post.clientViewed");
-
-            const imageUrl =
-              !isTrackingImage && extractedImg
-                ? extractedImg
-                : fallbackImages[
-                    Math.floor(Math.random() * fallbackImages.length)
-                  ];
-
-            const readTimeEstimate = Math.max(
-              2,
-              Math.ceil(plainText.split(" ").length / 200)
-            );
-
-            return {
-              id: index + 1,
-              title: item.title,
-              excerpt: plainText.slice(0, 180) + "…",
-              date: item.pubDate,
-              readTime: `${readTimeEstimate} min read`,
-              author: item.author || "Elanchezhiyan P",
-              tags: item.categories || [],
-              image: imageUrl,
-              isLatest: index === 0,
-              source: "Medium",
-              url: item.link,
-              views: `${(Math.random() * (5 - 1) + 1).toFixed(1)}k`,
-            };
-          }
-        );
-
-        setBlogPosts(mappedPosts);
-      } catch (error) {
-        console.error("Failed to fetch blog posts:", error);
+    const loadBlogPosts = async () => {
+      setIsLoading(true);
+      
+      // First, try to load from cache for instant display
+      const cached = getCachedBlogData();
+      if (cached) {
+        setBlogPosts(cached.posts);
+        setMediumLink(cached.mediumLink);
+        setIsLoading(false);
+        
+        // Fetch fresh data in the background
+        try {
+          const { posts, mediumLink: link } = await fetchBlogPosts();
+          setBlogPosts(posts);
+          setMediumLink(link);
+        } catch (error) {
+          // If fetch fails, keep using cached data
+          console.error("Failed to refresh blog posts:", error);
+        }
+      } else {
+        // No cache available, fetch fresh data
+        try {
+          const { posts, mediumLink: link } = await fetchBlogPosts();
+          setBlogPosts(posts);
+          setMediumLink(link);
+        } catch (error) {
+          console.error("Failed to fetch blog posts:", error);
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
 
-    fetchPosts();
+    loadBlogPosts();
   }, []);
 
   const getSourceBadgeColor = (source: string) => {
@@ -109,6 +67,20 @@ const Blog: React.FC = () => {
   };
 
   const latestPost = blogPosts.find((post) => post.isLatest);
+
+  // Show loading state only if no cache and still loading
+  if (isLoading && blogPosts.length === 0) {
+    return (
+      <div className="pt-14 md:pt-20 pb-10">
+        <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="text-center py-20">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading blog posts...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-14 md:pt-20 pb-10">

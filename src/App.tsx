@@ -13,6 +13,7 @@ import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
+import { preloadBlogData } from "./utils/blogService";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,9 @@ const App = () => {
     metaAuthor.name = "author";
     metaAuthor.content = "Elanchezhiyan P";
     document.head.appendChild(metaAuthor);
+
+    // Preload blog data in the background
+    preloadBlogData();
   }, []);
 
   return (
