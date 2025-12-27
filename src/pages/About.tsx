@@ -618,7 +618,7 @@ const About = () => {
     description: string;
     isCrm?: boolean;
   }) => (
-    <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
+    <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border-2 border-blue-400/60 dark:border-blue-500/60 theme-green:border-green-400/60 theme-green:dark:border-green-500/60 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80 shadow-lg">
       <CardContent className="p-6">
         <div className="flex items-center gap-4 mb-6">
           <div
@@ -641,7 +641,7 @@ const About = () => {
             {skills.map((crm, index) => (
               <div
                 key={index}
-                className="group relative rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+                className="group relative rounded-xl p-4 border-2 border-blue-300/70 dark:border-blue-500/70 hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="text-2xl">{crm.icon}</div>
@@ -668,7 +668,7 @@ const About = () => {
             {skills.map((skill, index) => (
               <div
                 key={index}
-                className="rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
+                className="rounded-xl p-4 border-2 border-blue-300/70 dark:border-blue-500/70 hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
               >
                 <span className="text-gray-800 dark:text-gray-200 text-sm font-medium leading-relaxed group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {skill}
@@ -708,9 +708,9 @@ const About = () => {
         <link rel="canonical" href="https://elanchezhiyan.dev/about" />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-12 space-y-20">
+      <div className="container mx-auto px-4 py-12">
         {/* Hero Section */}
-        <section className="text-center">
+        <section className="text-center mb-6">
           <h1 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             About Me
           </h1>
@@ -728,7 +728,7 @@ const About = () => {
         </section>
 
         {/* Resume Download Section */}
-        <section className="text-center">
+        <section className="text-center mb-12">
           <div className="glass rounded-3xl p-8 max-w-2xl mx-auto backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20">
             <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Resume
@@ -763,8 +763,8 @@ const About = () => {
         </section>
 
         {/* Experience Timeline */}
-        <section>
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+        <section className="mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             Professional Journey
           </h2>
 
@@ -773,9 +773,11 @@ const About = () => {
           ) : (
             <div className="relative max-w-6xl mx-auto">
               <div className="relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-200 via-blue-500 to-blue-800 theme-green:from-green-200 theme-green:via-green-500 theme-green:to-green-800 rounded-full shadow-lg"></div>
+                {/* Enhanced Timeline Line */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full bg-gradient-to-b from-blue-200 via-blue-400 via-purple-500 to-indigo-700 theme-green:from-green-200 theme-green:via-green-400 theme-green:via-emerald-500 theme-green:to-teal-700 rounded-full shadow-xl"></div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-300/50 via-purple-400/50 to-indigo-600/50 theme-green:from-green-300/50 theme-green:via-emerald-400/50 theme-green:to-teal-600/50 rounded-full blur-sm"></div>
 
-                <div className="space-y-16">
+                <div className="space-y-20">
                   {experiences.map((exp, index) => (
                     <div
                       key={index}
@@ -783,87 +785,113 @@ const About = () => {
                         index % 2 === 0 ? "flex-row" : "flex-row-reverse"
                       } relative`}
                     >
+                      {/* Enhanced Timeline Node */}
                       <div
-                        className={`absolute left-1/2 transform -translate-x-1/2 w-28 h-28 rounded-full flex items-center justify-center text-white font-bold shadow-2xl z-10 border-4 border-white dark:border-gray-900 backdrop-blur-sm transition-all duration-500 hover:scale-110 ${
+                        className={`absolute left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full flex items-center justify-center text-white font-bold shadow-2xl z-10 border-4 border-white dark:border-gray-900 backdrop-blur-md transition-all duration-500 hover:scale-110 hover:rotate-3 ${
                           index === experiences.length - 1
-                            ? "bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 animate-pulse shadow-green-200 dark:shadow-green-400"
-                            : "bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600"
+                            ? "bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 animate-pulse shadow-green-300 dark:shadow-green-500 ring-4 ring-green-200 dark:ring-green-800"
+                            : "bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600 ring-2 ring-blue-200 dark:ring-blue-800 theme-green:ring-green-200 theme-green:dark:ring-green-800"
                         }`}
                       >
-                        <div className="text-center">
-                          <div className="text-sm font-bold">
+                        <div className="text-center relative z-10">
+                          <div className="text-base font-bold">
                             {exp.year.split(" ")[0]}
                           </div>
-                          <div className="text-xs opacity-90">
+                          <div className="text-xs opacity-95 font-medium">
                             {exp.year.split(" ")[1]}
                           </div>
-                          {index === experiences.length - 1 && (
-                            <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                              <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
-                            </div>
-                          )}
                         </div>
+                        {index === experiences.length - 1 && (
+                          <div className="absolute top-0 right-0 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center shadow-lg z-20 border-2 border-white transform translate-x-1 -translate-y-1">
+                            <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
+                            <div className="absolute w-1.5 h-1.5 bg-white rounded-full"></div>
+                          </div>
+                        )}
+                        {/* Glow effect */}
+                        <div className={`absolute inset-0 rounded-full blur-xl opacity-50 ${
+                          index === experiences.length - 1
+                            ? "bg-green-400"
+                            : "bg-blue-400 theme-green:bg-green-400"
+                        }`}></div>
                       </div>
 
                       <div
                         className={`w-5/12 ${
-                          index % 2 === 0 ? "pr-24" : "pl-24"
+                          index % 2 === 0 ? "pr-28" : "pl-28"
                         }`}
                       >
-                        <div className="glass rounded-3xl p-8 transition-all duration-500 hover:scale-105 backdrop-blur-xl border border-white/20 shadow-lg hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80">
-                          <div className="flex items-center gap-3 mb-6">
-                            <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
-                              {exp.title}
-                            </h3>
-                            {exp.type === "promotion" && (
-                              <Trophy className="w-6 h-6 text-yellow-500 animate-pulse" />
-                            )}
-                            {index === experiences.length - 1 && (
-                              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full">
-                                <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
-                                Current
+                        <div className="group relative glass rounded-3xl p-8 transition-all duration-500 hover:scale-[1.02] backdrop-blur-xl border-2 border-blue-400/60 dark:border-blue-500/60 theme-green:border-green-400/60 theme-green:dark:border-green-500/60 shadow-xl hover:shadow-2xl hover:shadow-blue-300/50 dark:hover:shadow-blue-500/50 bg-gradient-to-br from-white/90 to-gray-50/90 dark:from-gray-900/90 dark:to-gray-800/90 overflow-hidden">
+                          {/* Animated background gradient on hover */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:via-emerald-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-3xl"></div>
+                          
+                          <div className="relative z-10">
+                            <div className="flex items-center gap-3 mb-6 flex-wrap">
+                              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+                                {exp.title}
+                              </h3>
+                              {exp.type === "promotion" && (
+                                <div className="flex items-center gap-1">
+                                  <Trophy className="w-6 h-6 text-yellow-500 animate-pulse" />
+                                  <span className="text-xs font-semibold text-yellow-600 dark:text-yellow-400">Promoted</span>
+                                </div>
+                              )}
+                              {index === experiences.length - 1 && (
+                                <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full shadow-lg">
+                                  <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                                  <div className="w-2 h-2 bg-white rounded-full absolute"></div>
+                                  <span>Current</span>
+                                </div>
+                              )}
+                            </div>
+
+                            {exp.companyWebsite && (
+                              <div className="mb-6">
+                                <a
+                                  href={exp.companyWebsite}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-r from-blue-100/90 to-indigo-100/90 dark:from-blue-900/40 dark:to-indigo-900/40 theme-green:from-green-100/90 theme-green:to-emerald-100/90 theme-green:dark:from-green-900/40 theme-green:dark:to-emerald-900/40 border-2 border-blue-300/70 dark:border-blue-600/70 theme-green:border-green-300/70 theme-green:dark:border-green-600/70 hover:bg-gradient-to-r hover:from-blue-200/90 hover:to-indigo-200/90 dark:hover:from-blue-800/50 dark:hover:to-indigo-800/50 theme-green:hover:from-green-200/90 theme-green:hover:to-emerald-200/90 theme-green:dark:hover:from-green-800/50 theme-green:dark:hover:to-emerald-800/50 transition-all duration-300 hover:scale-105 hover:shadow-lg group/link"
+                                >
+                                  <ExternalLink className="w-4 h-4 text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400 group-hover/link:rotate-12 transition-transform duration-300" />
+                                  <span className="text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 font-semibold group-hover/link:underline">
+                                    {exp.company}
+                                  </span>
+                                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                                    Visit Website →
+                                  </span>
+                                </a>
                               </div>
                             )}
-                          </div>
 
-                          {exp.companyWebsite && (
-                            <div className="mb-6">
-                              <a
-                                href={exp.companyWebsite}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-100/80 to-indigo-100/80 dark:from-blue-900/30 dark:to-indigo-900/30 theme-green:from-green-100/80 theme-green:to-emerald-100/80 theme-green:dark:from-green-900/30 theme-green:dark:to-emerald-900/30 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700 hover:bg-gradient-to-r hover:from-blue-200/80 hover:to-indigo-200/80 dark:hover:from-blue-800/40 dark:hover:to-indigo-800/40 theme-green:hover:from-green-200/80 theme-green:hover:to-emerald-200/80 theme-green:dark:hover:from-green-800/40 theme-green:dark:hover:to-emerald-800/40 transition-all duration-300 hover:scale-105 hover:shadow-lg group"
-                              >
-                                <ExternalLink className="w-4 h-4 text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400 group-hover:rotate-12 transition-transform duration-300" />
-                                <span className="text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 font-semibold group-hover:underline">
-                                  {exp.company}
-                                </span>
-                                <span className="text-xs text-gray-500 dark:text-gray-400">
-                                  Visit Website →
-                                </span>
-                              </a>
+                            <div className="flex items-center gap-2 mb-4">
+                              <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400" />
+                              <span className="text-gray-600 dark:text-gray-400 text-sm font-medium">
+                                {exp.location}
+                              </span>
                             </div>
-                          )}
-
-                          <div className="flex items-center gap-2 mb-4">
-                            <MapPin className="w-4 h-4 text-gray-500" />
-                            <span className="text-gray-500 text-sm">
-                              {exp.location}
-                            </span>
-                          </div>
-                          {exp.intro && (
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 italic">
-                              {exp.intro}
+                            
+                            {exp.intro && (
+                              <p className="text-sm text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400 mb-3 italic font-medium border-l-4 border-blue-300 dark:border-blue-600 theme-green:border-green-300 theme-green:dark:border-green-600 pl-4 py-2 bg-blue-50/50 dark:bg-blue-900/20 theme-green:bg-green-50/50 theme-green:dark:bg-green-900/20 rounded-r-lg">
+                                {exp.intro}
+                              </p>
+                            )}
+                            
+                            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                              {exp.description}
                             </p>
-                          )}
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                            {exp.description}
-                          </p>
 
-                          <div className="mt-6 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                            {exp.type === "promotion"
-                              ? "🚀 Promoted"
-                              : "🎯 New Role"}
+                            <div className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl hover:from-blue-600 hover:to-purple-600 theme-green:hover:from-green-600 theme-green:hover:to-emerald-600">
+                              <span>
+                                {exp.type === "promotion"
+                                  ? "🚀"
+                                  : "🎯"}
+                              </span>
+                              <span>
+                                {exp.type === "promotion"
+                                  ? "Promoted"
+                                  : "New Role"}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
