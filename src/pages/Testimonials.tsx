@@ -109,7 +109,9 @@ const Testimonials = () => {
       <div className="max-w-7xl mx-auto mb-8">
         <div className="flex items-center justify-center gap-2 mb-6">
           <div className="w-6 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-          <h2 className="text-xl md:text-2xl font-bold text-center">Client Reviews</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-center">
+            Client Reviews
+          </h2>
           <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"></div>
         </div>
 
@@ -194,7 +196,9 @@ const Testimonials = () => {
               <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-2">
                 <Award className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-blue-600 mb-1">30+</div>
+              <div className="text-2xl md:text-3xl font-bold text-blue-600 mb-1">
+                30+
+              </div>
               <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">
                 Projects Completed
               </div>
@@ -210,7 +214,9 @@ const Testimonials = () => {
               <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-2">
                 <Users className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-green-600 mb-1">20+</div>
+              <div className="text-2xl md:text-3xl font-bold text-green-600 mb-1">
+                20+
+              </div>
               <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">
                 Happy Clients
               </div>
@@ -244,7 +250,9 @@ const Testimonials = () => {
               <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-2">
                 <CheckCircle className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-orange-600 mb-1">99%</div>
+              <div className="text-2xl md:text-3xl font-bold text-orange-600 mb-1">
+                99%
+              </div>
               <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">
                 Client Satisfaction
               </div>
