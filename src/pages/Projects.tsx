@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ExternalLink, Github, Filter, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
 import projectsData from "../data/projects.json";
 import SeahorseImage from "@/assets/project/Seahorse.png";
 import MpsImage from "@/assets/project/MPS.jpg";
@@ -22,6 +23,8 @@ import ArcticCodeImage from "@/assets/project/arctic-code.png";
 import TeleMedixImage from "@/assets/project/telemedix.png";
 import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
+import ClinicalDischargePdfImage from "@/assets/project/ClinicalDischargePdf.png";
+import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -47,6 +50,8 @@ const Projects = () => {
     telemedix: TeleMedixImage,
     "invoice-pilot": InvoicePilotImage,
     ghl: GoHighLevelImage,
+    "clinical-discharge-pdf-engine": ClinicalDischargePdfImage,
+    "smart-finance-system": SmartFinanceSystemImage,
   };
 
   const [filter, setFilter] = useState("all");
@@ -64,17 +69,39 @@ const Projects = () => {
       : projects.filter((p) => p.projectType.includes(filter));
 
   return (
-    <div className="container mx-auto px-4 py-20">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl lg:text-5xl font-bold mb-6">Projects</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+    <>
+      <Helmet>
+        <title>Projects - Elanchezhiyan P | Portfolio & Case Studies</title>
+        <meta
+          name="description"
+          content="Explore Elanchezhiyan P's portfolio of enterprise-grade applications including .NET applications, Azure cloud solutions, CRM integrations, and modern web technologies. 30+ projects completed."
+        />
+        <meta
+          name="keywords"
+          content="Elanchezhiyan P, Projects, Portfolio, .NET Projects, Azure Projects, CRM Integration, Web Applications, Software Development"
+        />
+        <meta
+          property="og:title"
+          content="Projects - Elanchezhiyan P | Portfolio & Case Studies"
+        />
+        <meta
+          property="og:description"
+          content="Explore a portfolio of enterprise-grade applications built for scalability, performance, and impact."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://codebyelan.in/projects" />
+      </Helmet>
+      <div className="container mx-auto px-4 py-8 md:py-20">
+        <div className="text-center mb-8 md:mb-16">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Projects</h1>
+        <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Explore a portfolio of enterprise-grade applications built for
           scalability, performance, and impact.
         </p>
       </div>
 
       {/* Filter Controls */}
-      <div className="mb-8">
+      <div className="mb-6 md:mb-8">
         <div className="flex flex-wrap gap-2 justify-center">
           <div className="group relative">
             <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300 rounded-md" />
@@ -116,7 +143,7 @@ const Projects = () => {
       </div>
 
       {/* All Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {filteredProjects.map((project, index) => (
           <Card
             key={project.id}
@@ -245,6 +272,7 @@ const Projects = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

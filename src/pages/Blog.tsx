@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
 import { Calendar, ExternalLink, Clock } from "lucide-react";
 import {
   getCachedBlogData,
@@ -83,8 +84,30 @@ const Blog: React.FC = () => {
   }
 
   return (
-    <div className="pt-14 md:pt-20 pb-10">
-      <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
+    <>
+      <Helmet>
+        <title>Blog - Elanchezhiyan P | Articles & Insights</title>
+        <meta
+          name="description"
+          content="Read articles and insights from Elanchezhiyan P on .NET development, Azure cloud architecture, software engineering best practices, and modern web technologies."
+        />
+        <meta
+          name="keywords"
+          content="Elanchezhiyan P Blog, .NET Articles, Azure Tutorials, Software Development Blog, Cloud Architecture, Programming Insights"
+        />
+        <meta
+          property="og:title"
+          content="Blog - Elanchezhiyan P | Articles & Insights"
+        />
+        <meta
+          property="og:description"
+          content="Insights, tutorials, and thoughts on .NET development, cloud architecture, and software engineering best practices."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://codebyelan.in/blog" />
+      </Helmet>
+      <div className="pt-14 md:pt-20 pb-10">
+        <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
         {/* Header */}
         <section className="text-center mb-10 md:mb-16">
           <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4">
@@ -348,6 +371,7 @@ const Blog: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -35,7 +35,7 @@ const App = () => {
     const metaDescription = document.createElement("meta");
     metaDescription.name = "description";
     metaDescription.content =
-      "Elanchezhiyan P - Seasoned Software Developer with 5+ years experience in .NET, Azure, CRM integrations, and cloud architecture. Expert in building scalable applications.";
+      "Elanchezhiyan P - B.E (Bachelor of Engineering) graduate and Seasoned Software Developer with 5+ years experience in .NET, Azure, CRM integrations, and cloud architecture. Expert in building scalable applications.";
     document.head.appendChild(metaDescription);
 
     const metaKeywords = document.createElement("meta");

@@ -596,7 +596,7 @@ const About = () => {
   const handleResumeDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement("a");
-    link.href = "/public/resume/elanchezhiyan_p.pdf"; // Correct path in public folder
+    link.href = "/resume/Elanchezhiyan_P.pdf"; // Files in public folder are served from root
     link.download = "Elanchezhiyan_P_Resume.pdf";
     document.body.appendChild(link);
     link.click();
@@ -619,18 +619,18 @@ const About = () => {
     isCrm?: boolean;
   }) => (
     <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border-2 border-blue-400/60 dark:border-blue-500/60 theme-green:border-green-400/60 theme-green:dark:border-green-500/60 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80 shadow-lg">
-      <CardContent className="p-6">
-        <div className="flex items-center gap-4 mb-6">
+      <CardContent className="p-4 md:p-6">
+        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
           <div
-            className={`p-4 rounded-2xl bg-gradient-to-br ${gradient} shadow-lg`}
+            className={`p-3 md:p-4 rounded-xl md:rounded-2xl bg-gradient-to-br ${gradient} shadow-lg flex-shrink-0`}
           >
-            <Icon className="w-8 h-8 text-white" />
+            <Icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
           </div>
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors break-words">
               {title}
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
+            <p className="text-gray-600 dark:text-gray-400 mt-1 text-xs md:text-sm">
               {description}
             </p>
           </div>
@@ -690,7 +690,7 @@ const About = () => {
         </title>
         <meta
           name="description"
-          content="Learn about Elanchezhiyan P, a seasoned software developer with 5+ years of experience in .NET Core, Azure Cloud, CRM integrations, and modern web technologies. Expert in building scalable, secure applications."
+          content="Learn about Elanchezhiyan P, a B.E (Bachelor of Engineering) graduate and seasoned software developer with 5+ years of experience in .NET Core, Azure Cloud, CRM integrations, and modern web technologies. Expert in building scalable, secure applications."
         />
         <meta
           name="keywords"
@@ -702,60 +702,63 @@ const About = () => {
         />
         <meta
           property="og:description"
-          content="Seasoned software developer with expertise in .NET, Azure, CRM integrations, and modern web development."
+          content="B.E (Bachelor of Engineering) graduate and seasoned software developer with expertise in .NET, Azure, CRM integrations, and modern web development."
         />
         <meta property="og:type" content="profile" />
-        <link rel="canonical" href="https://elanchezhiyan.dev/about" />
+        <link rel="canonical" href="https://codebyelan.in/about" />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 pt-8 pb-4 md:py-12">
         {/* Hero Section */}
-        <section className="text-center mb-6">
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
+        <section className="text-center mb-4 md:mb-6">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             About Me
           </h1>
-          <div className="glass rounded-3xl p-8 max-w-4xl mx-auto backdrop-blur-xl border border-white/20">
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+          <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl mx-auto backdrop-blur-xl border border-white/20">
+            <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
               I'm a seasoned software developer with{" "}
               <span className="font-bold text-blue-600 theme-green:text-green-600">
                 {yearsOfExperience}+ years
               </span>{" "}
-              of experience in building scalable, secure cloud applications. My
-              expertise spans across .NET technologies, Azure cloud services,
+              of experience in building scalable, secure cloud applications. I hold a{" "}
+              <span className="font-bold text-blue-600 theme-green:text-green-600">
+                B.E (Bachelor of Engineering)
+              </span>{" "}
+              degree. My expertise spans across .NET technologies, Azure cloud services,
               CRM integrations, and modern web development frameworks.
             </p>
           </div>
         </section>
 
         {/* Resume Download Section */}
-        <section className="text-center mb-12">
-          <div className="glass rounded-3xl p-8 max-w-2xl mx-auto backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+        <section className="text-center mb-6 md:mb-12">
+          <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-2xl mx-auto backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20">
+            <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Resume
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4 md:mb-6">
               Get a detailed overview of my experience, skills, and achievements
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
               <Button
                 asChild
-                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-5 md:px-8 py-2 md:py-3 text-sm md:text-lg font-semibold rounded-xl md:rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
               >
                 <a
-                  href="/public/resume/elanchezhiyan_p.pdf"
+                  href="/resume/Elanchezhiyan_P.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ExternalLink className="w-5 h-5 mr-2" />
+                  <ExternalLink className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   View Resume PDF
                 </a>
               </Button>
               <Button
                 onClick={handleResumeDownload}
                 variant="outline"
-                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-105"
+                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-5 md:px-8 py-2 md:py-3 text-sm md:text-lg font-semibold rounded-xl md:rounded-2xl transition-all duration-300 hover:scale-105"
               >
-                <Download className="w-5 h-5 mr-2" />
+                <Download className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                 Download Resume PDF
               </Button>
             </div>
@@ -763,8 +766,8 @@ const About = () => {
         </section>
 
         {/* Experience Timeline */}
-        <section className="mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
+        <section className="mb-6 md:mb-12">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             Professional Journey
           </h2>
 
@@ -777,7 +780,7 @@ const About = () => {
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full bg-gradient-to-b from-blue-200 via-blue-400 via-purple-500 to-indigo-700 theme-green:from-green-200 theme-green:via-green-400 theme-green:via-emerald-500 theme-green:to-teal-700 rounded-full shadow-xl"></div>
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-300/50 via-purple-400/50 to-indigo-600/50 theme-green:from-green-300/50 theme-green:via-emerald-400/50 theme-green:to-teal-600/50 rounded-full blur-sm"></div>
 
-                <div className="space-y-20">
+                <div className="space-y-12 md:space-y-20">
                   {experiences.map((exp, index) => (
                     <div
                       key={index}
@@ -905,11 +908,11 @@ const About = () => {
 
         {/* Technical Expertise Section */}
         <section>
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-300 to-purple-600 theme-green:from-green-300 theme-green:to-emerald-300 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-6 md:mb-16 bg-gradient-to-r from-blue-300 to-purple-600 theme-green:from-green-300 theme-green:to-emerald-300 bg-clip-text text-transparent">
             Technical Expertise
           </h2>
 
-          <div className="space-y-12">
+          <div className="space-y-6 md:space-y-12">
             <SkillCard
               title="CRM Integrations"
               description="Seamless integration with leading CRM platforms across industries"
@@ -957,41 +960,12 @@ const About = () => {
           </div>
         </section>
 
-        {/* Freelance Services Section */}
-        <section>
-          <div className="glass rounded-3xl p-12 backdrop-blur-xl border border-white/20 bg-gradient-to-br from-purple-50/50 via-blue-50/50 to-indigo-50/50 dark:from-purple-900/20 dark:via-blue-900/20 dark:to-indigo-900/20">
-            <h3 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
-              Available for Freelance Projects
-            </h3>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto text-center">
-              I offer comprehensive software development services including .NET
-              applications, Azure cloud solutions, CRM integrations, and custom
-              web applications. Check out my portfolio to see my recent work.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                asChild
-                className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
-              >
-                <a href="/projects">View My Projects</a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 hover:scale-105"
-              >
-                <a href="/contact">Hire Me</a>
-              </Button>
-            </div>
-          </div>
-        </section>
-
         {/* Certifications */}
         <section>
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-6 md:mb-12 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent pt-4 md:pt-10">
             Certifications & Achievements
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {certifications.map((cert, index) => (
               <Card
                 key={cert.name}
@@ -1000,19 +974,19 @@ const About = () => {
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 rounded-t-2xl"></div>
 
-                <CardContent className="p-6">
-                  <div className="space-y-4">
+                <CardContent className="p-4 md:p-6">
+                  <div className="space-y-3 md:space-y-4">
                     {/* Header with icon and external link */}
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
-                        <span className="text-xl">{cert.icon}</span>
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
+                        <span className="text-lg md:text-xl">{cert.icon}</span>
                       </div>
                       <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300" />
                     </div>
 
                     {/* Content */}
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
+                    <div className="space-y-2 md:space-y-3">
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base md:text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
                         {cert.name}
                       </h3>
 
@@ -1053,10 +1027,10 @@ const About = () => {
           </div>
 
           {/* Summary section */}
-          <div className="mt-12 text-center">
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 theme-green:from-green-50 theme-green:to-emerald-50 theme-green:dark:from-green-900/20 theme-green:dark:to-emerald-900/20 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700">
-              <span className="text-2xl">🎓</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="mt-6 md:mt-12 text-center pb-4 md:pb-10">
+            <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 theme-green:from-green-50 theme-green:to-emerald-50 theme-green:dark:from-green-900/20 theme-green:dark:to-emerald-900/20 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700">
+              <span className="text-xl md:text-2xl">🎓</span>
+              <span className="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300">
                 {certifications.length} Professional Certifications
               </span>
             </div>
@@ -1065,15 +1039,15 @@ const About = () => {
 
         {/* Call to Action */}
         <section className="text-center">
-          <div className="glass rounded-3xl p-12 backdrop-blur-xl border-4 border-blue-500 dark:border-blue-400 theme-green:border-green-500 theme-green:dark:border-green-400 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-12 backdrop-blur-xl border-2 md:border-4 border-blue-500 dark:border-blue-400 theme-green:border-green-500 theme-green:dark:border-green-400 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 shadow-xl hover:shadow-2xl transition-all duration-300">
+            <h3 className="text-xl md:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Ready to Build Something Amazing?
             </h3>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto">
               With extensive experience across multiple technologies and
               industries, I'm ready to help bring your vision to life.
             </p>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-6 md:px-8 py-2 md:py-3 text-sm md:text-lg font-semibold rounded-xl md:rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
               Let's Connect
             </Button>
           </div>

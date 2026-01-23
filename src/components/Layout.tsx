@@ -192,10 +192,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {isMobile && (
         <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/85 dark:bg-black/85 border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-blue-500/5 dark:shadow-blue-500/10">
           <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center w-full">
+            <div className="flex items-center w-full min-w-0">
               <Link
                 to="/"
-                className="text-lg font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide dark:text-white"
+                className="text-base font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide dark:text-white whitespace-nowrap flex-shrink-0"
                 style={{
                   WebkitTextStroke: "0.5px #222",
                   textShadow: "0 1px 8px rgba(0,0,0,0.25)",
@@ -203,9 +203,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               >
                 Elanchezhiyan P
               </Link>
-              <div className="flex-1" />
+              <div className="flex-1 min-w-0" />
               {/* Social Icons flush right */}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2 ml-2 flex-shrink-0">
                 {socialLinks.map(({ icon: Icon, href, label, color }) => (
                   <a
                     key={label}
@@ -260,76 +260,129 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Mobile Bottom Navigation */}
       {isMobile && (
-        <nav className="fixed bottom-4 left-4 right-4 z-40 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-3xl shadow-lg flex justify-around py-3 px-6 border border-gray-200 dark:border-gray-700">
+        <nav className="fixed bottom-4 left-4 right-4 z-40 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-3xl shadow-lg flex justify-around items-center py-2.5 px-2 border border-gray-200 dark:border-gray-700">
           {navigation.map((item) => (
             <Link
               key={item.name}
               to={item.href}
-              className={`flex flex-col items-center text-xs font-semibold transition-colors duration-300 ${
+              className={`flex flex-col items-center justify-center text-xs font-semibold transition-colors duration-300 min-w-0 flex-1 ${
                 isActive(item.href)
                   ? "text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
                   : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
               }`}
               aria-current={isActive(item.href) ? "page" : undefined}
             >
-              <item.icon className="w-6 h-6 mb-1" />
-              {item.name}
+              <item.icon className="w-5 h-5 mb-0.5 flex-shrink-0" />
+              <span className="text-[10px] leading-tight text-center truncate w-full">{item.name}</span>
             </Link>
           ))}
         </nav>
       )}
 
       {/* Footer */}
-      <footer className="bg-gray-900 dark:bg-black/95 backdrop-blur-sm text-gray-300 py-16 mt-2">
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div>
-            <h3 className="text-2xl font-extrabold mb-3 bg-gradient-to-r from-blue-500 to-indigo-500 theme-green:from-green-500 theme-green:to-emerald-500 bg-clip-text text-transparent">
-              Elanchezhiyan P
-            </h3>
-            <p className="leading-relaxed max-w-xs">
-              Seasoned Software Developer crafting scalable, maintainable cloud
-              solutions.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {navigation.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.href}
-                    className="hover:text-blue-400 theme-green:hover:text-green-400 transition-colors"
+      <footer className={`bg-gray-900 dark:bg-black/95 backdrop-blur-sm text-gray-300 ${isMobile ? 'py-4 pb-24' : 'py-6 md:py-8'} mt-2`}>
+        <div className={`container mx-auto px-4 md:px-6 ${isMobile ? 'space-y-3' : 'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6'}`}>
+          {isMobile ? (
+            <>
+              {/* Mobile: Compact single column layout */}
+              <div className="text-center">
+                <h3 className="text-lg font-extrabold mb-1 bg-gradient-to-r from-blue-500 to-indigo-500 theme-green:from-green-500 theme-green:to-emerald-500 bg-clip-text text-transparent">
+                  Elanchezhiyan P
+                </h3>
+                <p className="text-xs text-gray-400 mb-2">
+                  Seasoned Software Developer crafting scalable cloud solutions.
+                </p>
+              </div>
+              
+              {/* Quick Links - Horizontal on mobile */}
+              <div>
+                <h4 className="font-semibold mb-2 text-center text-xs">Quick Links</h4>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="text-xs hover:text-blue-400 theme-green:hover:text-green-400 transition-colors px-1.5 py-0.5"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Social & Contact - Compact */}
+              <div className="flex flex-col items-center gap-2">
+                <div>
+                  <a
+                    href="https://elanchezhiyan-p.medium.com/subscribe"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-blue-400 hover:underline theme-green:text-green-400"
                   >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Stay Updated</h4>
-            <a
-              href="https://elanchezhiyan-p.medium.com/subscribe"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline theme-green:text-green-400"
-            >
-              Subscribe on Medium
-            </a>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Get In Touch</h4>
-            <p>Ready to build something amazing together?</p>
-            <Link
-              to="/contact"
-              className="inline-block mt-3 px-5 py-2 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors font-semibold"
-            >
-              Contact Me
-            </Link>
-          </div>
+                    Subscribe on Medium
+                  </a>
+                </div>
+                <Link
+                  to="/contact"
+                  className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors text-xs font-semibold"
+                >
+                  Contact Me
+                </Link>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Desktop: Original 4-column layout */}
+              <div>
+                <h3 className="text-lg md:text-xl font-extrabold mb-1.5 md:mb-2 bg-gradient-to-r from-blue-500 to-indigo-500 theme-green:from-green-500 theme-green:to-emerald-500 bg-clip-text text-transparent">
+                  Elanchezhiyan P
+                </h3>
+                <p className="text-xs md:text-sm leading-relaxed max-w-xs">
+                  Seasoned Software Developer crafting scalable, maintainable cloud
+                  solutions.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Quick Links</h4>
+                <ul className="space-y-1 md:space-y-1.5">
+                  {navigation.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        to={item.href}
+                        className="text-xs md:text-sm hover:text-blue-400 theme-green:hover:text-green-400 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Stay Updated</h4>
+                <a
+                  href="https://elanchezhiyan-p.medium.com/subscribe"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs md:text-sm text-blue-400 hover:underline theme-green:text-green-400"
+                >
+                  Subscribe on Medium
+                </a>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Get In Touch</h4>
+                <p className="text-xs md:text-sm mb-1.5">Ready to build something amazing together?</p>
+                <Link
+                  to="/contact"
+                  className="inline-block mt-1.5 md:mt-2 px-3 md:px-4 py-1 md:py-1.5 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors text-xs md:text-sm font-semibold"
+                >
+                  Contact Me
+                </Link>
+              </div>
+            </>
+          )}
         </div>
 
-        <div className="mt-12 border-t border-gray-800 pt-6 text-center text-sm text-gray-500 select-none">
+        <div className={`${isMobile ? 'mt-3 pt-3' : 'mt-4 md:mt-6 pt-3 md:pt-4'} border-t border-gray-800 text-center text-xs md:text-sm text-gray-500 select-none`}>
           &copy; {new Date().getFullYear()} Elanchezhiyan P. All rights
           reserved.
         </div>

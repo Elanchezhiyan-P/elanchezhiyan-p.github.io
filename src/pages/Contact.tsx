@@ -14,7 +14,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import emailjs from "emailjs-com"; // Added EmailJS import
+import { Helmet } from "react-helmet-async";
+import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -119,26 +120,13 @@ const Contact = () => {
     },
     {
       icon: Users,
-      title: "Remote Collaboration",
+      title: "Remote Work",
       description: "Work with teams worldwide",
     },
     {
       icon: Zap,
       title: "Fast Delivery",
       description: "Efficient development process",
-    },
-  ];
-
-  const testimonials = [
-    {
-      text: "Elan delivered our project ahead of schedule with exceptional quality.",
-      author: "Sarah Chen",
-      role: "Product Manager",
-    },
-    {
-      text: "Professional, responsive, and incredibly skilled developer.",
-      author: "Mike Rodriguez",
-      role: "Startup Founder",
     },
   ];
 
@@ -320,10 +308,32 @@ const Contact = () => {
     isValidEmail(formData.email);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
+    <>
+      <Helmet>
+        <title>Contact - Elanchezhiyan P | Get In Touch</title>
+        <meta
+          name="description"
+          content="Contact Elanchezhiyan P for freelance projects, consultations, or collaborations. B.E graduate and Senior .NET & Azure Developer available for remote work. Quick response guaranteed."
+        />
+        <meta
+          name="keywords"
+          content="Contact Elanchezhiyan P, Hire Developer, Freelance .NET Developer, Azure Developer, Software Development Services"
+        />
+        <meta
+          property="og:title"
+          content="Contact - Elanchezhiyan P | Get In Touch"
+        />
+        <meta
+          property="og:description"
+          content="Get in touch for freelance projects, consultations, or collaborations. Quick response within 24 hours."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://codebyelan.in/contact" />
+      </Helmet>
+      <div className="min-h-screen">
+        {/* Hero Section */}
+        <div className="container mx-auto px-4 py-8 md:py-20">
+        <div className="text-center mb-8 md:mb-16">
           <h1 className="text-4xl lg:text-5xl font-bold mb-6">Contact Me</h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Let's discuss your next project and build something amazing together
@@ -466,15 +476,15 @@ const Contact = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="glass rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                  className="glass rounded-xl p-4 md:p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 min-w-0"
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30">
-                      <feature.icon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <div className="flex items-center gap-2 md:gap-3 mb-3 min-w-0">
+                    <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex-shrink-0">
+                      <feature.icon className="h-4 w-4 md:h-5 md:w-5 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <h3 className="font-semibold text-sm">{feature.title}</h3>
+                    <h3 className="font-semibold text-xs md:text-sm break-words min-w-0 flex-1">{feature.title}</h3>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs">
+                  <p className="text-gray-600 dark:text-gray-300 text-xs break-words">
                     {feature.description}
                   </p>
                 </div>
@@ -589,6 +599,7 @@ const Contact = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

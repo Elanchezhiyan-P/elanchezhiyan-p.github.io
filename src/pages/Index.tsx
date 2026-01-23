@@ -48,6 +48,8 @@ import ArcticCodeImage from "@/assets/project/arctic-code.png";
 import TeleMedixImage from "@/assets/project/telemedix.png";
 import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
+import ClinicalDischargePdfImage from "@/assets/project/ClinicalDischargePdf.png";
+import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.png";
 
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -77,6 +79,8 @@ const Index = () => {
     telemedix: TeleMedixImage,
     "invoice-pilot": InvoicePilotImage,
     ghl: GoHighLevelImage,
+    "clinical-discharge-pdf-engine": ClinicalDischargePdfImage,
+    "smart-finance-system": SmartFinanceSystemImage,
   };
 
   useEffect(() => {
@@ -127,8 +131,11 @@ const Index = () => {
                   Seasoned Software Developer
                 </p>
                 <p className="leading-relaxed">
-                  {yearsOfExperience}+ years of experience architecting scalable
-                  and secure cloud applications.
+                  B.E (Bachelor of Engineering) graduate with{" "}
+                  <span className="font-semibold text-blue-600 theme-green:text-green-600">
+                    {yearsOfExperience}+ years
+                  </span>{" "}
+                  of experience architecting scalable and secure cloud applications.
                 </p>
               </div>
             </div>
@@ -212,24 +219,25 @@ const Index = () => {
             Core Technologies
           </h2>
         </div>
-        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3">
           {[
             { name: ".NET", icon: "💻" },
             { name: "React", icon: "⚛️" },
             { name: "Azure", icon: "☁️" },
             { name: "SQL", icon: "🗄️" },
-            { name: "TypeScript", icon: "📘" },
+            { name: "TypeScript", icon: "📘", shortName: "TS" },
             { name: "Docker", icon: "🐳" },
             { name: "Git", icon: "🔀" },
             { name: "API", icon: "🔌" },
           ].map((tech, index) => (
             <div
               key={index}
-              className="group glass rounded-xl p-3 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-110 hover:shadow-lg text-center"
+              className="group glass rounded-xl p-2 sm:p-3 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-110 hover:shadow-lg text-center min-w-0"
             >
-              <div className="text-2xl mb-1">{tech.icon}</div>
-              <div className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                {tech.name}
+              <div className="text-xl sm:text-2xl mb-1">{tech.icon}</div>
+              <div className="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-300 break-words overflow-hidden">
+                <span className="hidden sm:inline">{tech.name}</span>
+                <span className="sm:hidden">{tech.shortName || tech.name}</span>
               </div>
             </div>
           ))}
@@ -238,13 +246,8 @@ const Index = () => {
 
       {/* Key Achievements */}
       <section className="container mx-auto px-4 py-4">
-        <div className="grid md:grid-cols-3 gap-3">
+        <div className="grid md:grid-cols-2 gap-3">
           {[
-            {
-              icon: <Star className="w-5 h-5" />,
-              title: "Azure Certified",
-              desc: "Expert in cloud architecture",
-            },
             {
               icon: <TrendingUp className="w-5 h-5" />,
               title: "Performance Optimized",
@@ -476,6 +479,99 @@ const Index = () => {
               </p>
             </div>
           </Card>
+        </div>
+      </section>
+
+      {/* Certifications & Achievements */}
+      <section className="container mx-auto px-4 pt-8 pb-4 relative z-0">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 md:mb-8 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent relative z-10">
+          Certifications & Achievements
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-10 max-w-7xl mx-auto items-stretch">
+          {[
+            {
+              name: ".NET Full Stack Developer - C# Corner",
+              issuer: "C# Corner",
+              date: "May 2025",
+              link: "https://www.c-sharpcorner.com/uploadfile/certification-exam/rzmmaqtc/certification.pdf?trk=public_profile_see-credential",
+              icon: "💻",
+              category: "Development",
+            },
+            {
+              name: "Foundational C# with Microsoft",
+              issuer: "freeCodeCamp",
+              date: "Feb 2025",
+              credentialId: "elanchezhiyan-p-fcswm",
+              link: "https://freecodecamp.org/certification/Elanchezhiyan-P/foundational-c-sharp-with-microsoft?trk=public_profile_see-credential",
+              icon: "🔷",
+              category: "Programming",
+            },
+            {
+              name: "Responsive Web Design",
+              issuer: "freeCodeCamp",
+              date: "Feb 2025",
+              credentialId: "elanchezhiyan-p-rwd",
+              link: "https://www.freecodecamp.org/certification/Elanchezhiyan-P/responsive-web-design?trk=public_profile_see-credential",
+              icon: "📱",
+              category: "Web Design",
+            },
+          ].map((cert, index) => (
+            <Card
+              key={cert.name}
+              className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative z-10 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 w-full min-w-0"
+            >
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 rounded-t-xl"></div>
+
+              <CardContent className="p-4 md:p-6 min-w-0">
+                <div className="space-y-3 md:space-y-4">
+                  {/* Header with icon and external link */}
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
+                      <span className="text-lg md:text-xl">{cert.icon}</span>
+                    </div>
+                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="space-y-2 md:space-y-3">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base md:text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
+                      {cert.name}
+                    </h3>
+
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                      {cert.issuer}
+                    </p>
+
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {cert.category}
+                      </Badge>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {cert.date}
+                      </span>
+                    </div>
+
+                    {cert.credentialId && (
+                      <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          ID: {cert.credentialId}
+                        </span>
+                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+
+              <a
+                href={cert.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute inset-0"
+                aria-label={`View ${cert.name} certification`}
+              />
+            </Card>
+          ))}
         </div>
       </section>
 

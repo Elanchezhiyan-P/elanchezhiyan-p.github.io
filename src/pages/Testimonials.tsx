@@ -1,17 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Star, Quote, Award, Users, Clock, CheckCircle } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import testimonialsData from "../data/testimonials.json";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 
 const Testimonials = () => {
   const yearsExperience = calculateYearsOfExperience();
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  // Find Senthil Kumar D testimonial for top section
+  const senthilTestimonial = testimonialsData.find(
+    (t) => t.name === "Senthil Kumar D"
+  ) || testimonialsData[0];
+
+  // Filter out Senthil Kumar D from carousel
+  const carouselTestimonials = testimonialsData.filter(
+    (t) => t.name !== "Senthil Kumar D"
+  );
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+
+    // Auto-scroll every 5 seconds
+    const interval = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else if (api.canScrollPrev()) {
+        // If at the end and loop is enabled, it should wrap, but let's scroll to start
+        api.scrollTo(0, true);
+      }
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api]);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -27,7 +73,29 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+      <Helmet>
+        <title>Testimonials - Elanchezhiyan P | Client Reviews</title>
+        <meta
+          name="description"
+          content="Read testimonials and reviews from clients and colleagues about Elanchezhiyan P's work. 20+ happy clients, 99% satisfaction rate, and proven track record in software development."
+        />
+        <meta
+          name="keywords"
+          content="Elanchezhiyan P Testimonials, Client Reviews, Software Developer Reviews, .NET Developer Testimonials"
+        />
+        <meta
+          property="og:title"
+          content="Testimonials - Elanchezhiyan P | Client Reviews"
+        />
+        <meta
+          property="og:description"
+          content="Discover why clients and colleagues trust Elanchezhiyan P to deliver exceptional results and innovative solutions."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://codebyelan.in/testimonials" />
+      </Helmet>
+      <div className="container mx-auto px-4 py-8">
       {/* Header Section */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full mb-3">
@@ -59,8 +127,8 @@ const Testimonials = () => {
                 <div className="flex-shrink-0">
                   <div className="relative">
                     <img
-                      src={testimonialsData[0].avatar}
-                      alt={testimonialsData[0].name}
+                      src={senthilTestimonial.avatar}
+                      alt={senthilTestimonial.name}
                       className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover border-2 border-white/20 shadow-md"
                     />
                     <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-blue-500 to-purple-500 p-1 rounded-full">
@@ -71,23 +139,23 @@ const Testimonials = () => {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex gap-0.5 mb-2">
-                    {renderStars(testimonialsData[0].rating)}
+                    {renderStars(senthilTestimonial.rating)}
                   </div>
 
                   <blockquote className="text-sm md:text-base lg:text-lg font-medium mb-3 leading-relaxed text-gray-800 dark:text-gray-100">
-                    "{testimonialsData[0].quote}"
+                    "{senthilTestimonial.quote}"
                   </blockquote>
 
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <div>
                       <div className="font-bold text-base md:text-lg text-gray-900 dark:text-white">
-                        {testimonialsData[0].name}
+                        {senthilTestimonial.name}
                       </div>
                       <div className="text-gray-600 dark:text-gray-300 text-xs md:text-sm">
-                        {testimonialsData[0].role}
+                        {senthilTestimonial.role}
                       </div>
                       <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">
-                        {testimonialsData[0].company}
+                        {senthilTestimonial.company}
                       </div>
                     </div>
 
@@ -115,22 +183,26 @@ const Testimonials = () => {
           <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"></div>
         </div>
 
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-4 md:-ml-6">
-            {testimonialsData.map((testimonial, index) => (
+        <div className="relative">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "start",
+              loop: true,
+              slidesToScroll: 1,
+              dragFree: false,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4 md:-ml-6">
+            {carouselTestimonials.map((testimonial, index) => (
               <CarouselItem
                 key={testimonial.id}
-                className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3"
+                className="pl-4 md:pl-6 basis-full sm:basis-1/2 lg:basis-[45%] xl:basis-1/3"
               >
                 <div className="group relative">
                   {/* Card background with gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 pointer-events-none"></div>
 
                   <div className="relative glass rounded-2xl p-8 h-full hover:scale-105 transition-all duration-500 border border-white/10 backdrop-blur-sm group-hover:border-blue-500/30">
                     {/* Quote icon */}
@@ -181,10 +253,15 @@ const Testimonials = () => {
                 </div>
               </CarouselItem>
             ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden md:flex bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 border-0 shadow-lg" />
-          <CarouselNext className="hidden md:flex bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 border-0 shadow-lg" />
-        </Carousel>
+            </CarouselContent>
+            <CarouselPrevious 
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50"
+            />
+            <CarouselNext 
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50"
+            />
+          </Carousel>
+        </div>
       </div>
 
       {/* Stats Section */}
@@ -296,6 +373,7 @@ const Testimonials = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
