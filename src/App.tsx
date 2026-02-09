@@ -13,7 +13,11 @@ import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { preloadBlogData } from "./utils/blogService";
+import { initGA, trackPageView } from "./utils/analytics";
+
+const RECAPTCHA_SITE_KEY = "6Lc-fmUsAAAAALqxveilpOVKZge1pyF9cEdlymOu";
 
 const queryClient = new QueryClient();
 
@@ -21,12 +25,16 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackPageView(pathname);
   }, [pathname]);
   return null;
 };
 
 const App = () => {
   useEffect(() => {
+    // Initialize Google Analytics
+    initGA();
+
     // SEO optimization
     document.title =
       "Elanchezhiyan P - Seasoned Software Developer | .NET & Azure Expert";
@@ -54,28 +62,30 @@ const App = () => {
   }, []);
 
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ScrollToTop />
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/testimonials" element={<Testimonials />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Layout>
-          </BrowserRouter>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_SITE_KEY}>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <ScrollToTop />
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/testimonials" element={<Testimonials />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            </BrowserRouter>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </HelmetProvider>
+    </GoogleReCaptchaProvider>
   );
 };
 

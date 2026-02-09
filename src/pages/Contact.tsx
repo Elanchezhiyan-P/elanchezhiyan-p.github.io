@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Mail,
   MapPin,
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Helmet } from "react-helmet-async";
 import emailjs from "emailjs-com";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +27,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,7 +38,7 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -51,37 +53,70 @@ const Contact = () => {
       return;
     }
 
-    // EmailJS integration
-    const serviceID = "elan_serviceId"; // Replace with your EmailJS service ID
-    const templateID = "template_contactus"; // Replace with your EmailJS template ID
-    const userID = "FYZYdf1_r-enWrKCY"; // Replace with your EmailJS public key
+    // reCAPTCHA v3 verification
+    if (!executeRecaptcha) {
+      toast({
+        title: "reCAPTCHA not ready",
+        description: "Please wait a moment and try again.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      subject: formData.subject,
-      message: formData.message,
-    };
+    try {
+      const recaptchaToken = await executeRecaptcha("contact_form");
 
-    emailjs.send(serviceID, templateID, templateParams, userID).then(
-      (response) => {
+      if (!recaptchaToken) {
         toast({
-          title: "Message sent successfully!",
-          description: "Thank you for reaching out. I'll get back to you soon.",
-        });
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        setIsSubmitting(false);
-      },
-      (error) => {
-        toast({
-          title: "Failed to send message.",
-          description: "Please try again later or contact me directly.",
+          title: "Verification failed",
+          description: "Could not verify you are human. Please try again.",
           variant: "destructive",
         });
         setIsSubmitting(false);
+        return;
       }
-    );
-  };
+
+      // EmailJS integration
+      const serviceID = "elan_serviceId";
+      const templateID = "template_contactus";
+      const userID = "FYZYdf1_r-enWrKCY";
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        "g-recaptcha-response": recaptchaToken,
+      };
+
+      emailjs.send(serviceID, templateID, templateParams, userID).then(
+        (response) => {
+          toast({
+            title: "Message sent successfully!",
+            description: "Thank you for reaching out. I'll get back to you soon.",
+          });
+          setFormData({ name: "", email: "", subject: "", message: "" });
+          setIsSubmitting(false);
+        },
+        (error) => {
+          toast({
+            title: "Failed to send message.",
+            description: "Please try again later or contact me directly.",
+            variant: "destructive",
+          });
+          setIsSubmitting(false);
+        }
+      );
+    } catch (error) {
+      toast({
+        title: "Verification error",
+        description: "reCAPTCHA verification failed. Please try again.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+    }
+  }, [executeRecaptcha, formData, toast]);
 
   const contactInfo = [
     {
@@ -584,6 +619,18 @@ const Contact = () => {
                 className="h-12 px-8 text-lg font-semibold bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
               >
                 Start a Project
+              </Button>
+              <Button
+                asChild
+                className="h-12 px-8 text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white transition-all duration-300 transform hover:scale-105"
+              >
+                <a
+                  href="https://topmate.io/elanchezhiyan_poosamani"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Book a Free Call
+                </a>
               </Button>
               <Button
                 variant="outline"

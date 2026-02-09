@@ -13,6 +13,13 @@ import {
   Wrench,
   Brain,
   Download,
+  Monitor,
+  BarChart3,
+  Activity,
+  GitBranch,
+  Layers,
+  TestTube,
+  Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -546,6 +553,243 @@ const About = () => {
     },
   ];
 
+  const backendPlatformSkills = [
+    {
+      name: "ASP.NET Core Web API",
+      description: "Production-grade API development",
+      icon: "🔌",
+      category: "API",
+    },
+    {
+      name: "Node.js (TypeScript) Services",
+      description: "Type-safe backend services",
+      icon: "🟢",
+      category: "Backend",
+    },
+    {
+      name: "RESTful API Design & Versioning",
+      description: "Scalable API architecture patterns",
+      icon: "📐",
+      category: "Architecture",
+    },
+    {
+      name: "JWT & Role-Based Access Control",
+      description: "Authentication & authorization",
+      icon: "🔐",
+      category: "Security",
+    },
+    {
+      name: "Middleware & Request Pipelines",
+      description: "Custom middleware & request flow",
+      icon: "🔗",
+      category: "Backend",
+    },
+    {
+      name: "Environment-Based Configuration",
+      description: "Dev / Staging / Prod config management",
+      icon: "⚙️",
+      category: "DevOps",
+    },
+  ];
+
+  const analyticsTrackingSkills = [
+    {
+      name: "Google Analytics 4 (GA4)",
+      description: "Implementation & key events tracking",
+      icon: "📊",
+      category: "Analytics",
+    },
+    {
+      name: "Google Tag Manager (GTM)",
+      description: "Tag setup, debugging & deployment",
+      icon: "🏷️",
+      category: "Tag Management",
+    },
+    {
+      name: "Event-Based Analytics Design",
+      description: "Custom event schemas & tracking plans",
+      icon: "🎯",
+      category: "Analytics",
+    },
+    {
+      name: "Funnel & User Journey Tracking",
+      description: "Conversion funnel analysis",
+      icon: "🔄",
+      category: "Analytics",
+    },
+    {
+      name: "HubSpot Forms & Lead Tracking",
+      description: "Marketing automation integration",
+      icon: "📋",
+      category: "Marketing",
+    },
+    {
+      name: "Cross-Domain Tracking",
+      description: "Embedded form & multi-domain tracking",
+      icon: "🌐",
+      category: "Analytics",
+    },
+  ];
+
+  const observabilitySkills = [
+    {
+      name: "New Relic APM for .NET",
+      description: "Application performance monitoring",
+      icon: "📈",
+      category: "APM",
+    },
+    {
+      name: "Centralized Logging",
+      description: "Log aggregation & error correlation",
+      icon: "📝",
+      category: "Logging",
+    },
+    {
+      name: "Distributed Tracing",
+      description: "End-to-end request tracking",
+      icon: "🔍",
+      category: "Tracing",
+    },
+    {
+      name: "Production Debugging",
+      description: "Root cause analysis & diagnostics",
+      icon: "🐛",
+      category: "Debugging",
+    },
+    {
+      name: "Performance Profiling",
+      description: "Latency, throughput & bottleneck analysis",
+      icon: "⚡",
+      category: "Performance",
+    },
+  ];
+
+  const devopsSkills = [
+    {
+      name: "CI/CD Pipelines",
+      description: "GitHub Actions & Azure DevOps",
+      icon: "🚀",
+      category: "CI/CD",
+    },
+    {
+      name: "Dockerized Backend Services",
+      description: "Containerization & deployment",
+      icon: "🐳",
+      category: "Containers",
+    },
+    {
+      name: "Secrets & Config Management",
+      description: "Environment variables & vault management",
+      icon: "🔒",
+      category: "Security",
+    },
+    {
+      name: "Production Rollouts & Hotfixes",
+      description: "Zero-downtime deployment strategies",
+      icon: "📦",
+      category: "Deployment",
+    },
+    {
+      name: "Incident Response & Postmortems",
+      description: "On-call troubleshooting & analysis",
+      icon: "🚨",
+      category: "Reliability",
+    },
+  ];
+
+  const architectureSkills = [
+    {
+      name: "SaaS Application Architecture",
+      description: "Multi-tenant cloud-native design",
+      icon: "🏗️",
+      category: "Architecture",
+    },
+    {
+      name: "Scalable API Design",
+      description: "High-traffic API architecture",
+      icon: "📐",
+      category: "Design",
+    },
+    {
+      name: "Event-Driven Architecture",
+      description: "Message queues & pub/sub patterns",
+      icon: "⚡",
+      category: "Patterns",
+    },
+    {
+      name: "Microservices vs Modular Monolith",
+      description: "Architecture trade-off decisions",
+      icon: "🧩",
+      category: "Strategy",
+    },
+    {
+      name: "High-Availability & Fault Tolerance",
+      description: "Resilient system design patterns",
+      icon: "🛡️",
+      category: "Reliability",
+    },
+  ];
+
+  const testingQASkills = [
+    {
+      name: "API Testing (Postman)",
+      description: "Automated API test suites",
+      icon: "🧪",
+      category: "API Testing",
+    },
+    {
+      name: "Integration Testing",
+      description: "End-to-end system validation",
+      icon: "🔗",
+      category: "Testing",
+    },
+    {
+      name: "Analytics Validation & Event QA",
+      description: "Tracking accuracy verification",
+      icon: "✅",
+      category: "QA",
+    },
+    {
+      name: "Production vs Staging Verification",
+      description: "Environment parity checks",
+      icon: "🔄",
+      category: "Verification",
+    },
+    {
+      name: "Regression Testing",
+      description: "Tracking & integration regression suites",
+      icon: "🔁",
+      category: "Testing",
+    },
+  ];
+
+  const productOwnershipSkills = [
+    {
+      name: "Client Requirement Analysis",
+      description: "Translating business needs to tech specs",
+      icon: "📋",
+      category: "Analysis",
+    },
+    {
+      name: "Stakeholder Communication",
+      description: "Technical & non-technical reporting",
+      icon: "💬",
+      category: "Communication",
+    },
+    {
+      name: "End-to-End Feature Ownership",
+      description: "From design to deployment & monitoring",
+      icon: "🎯",
+      category: "Ownership",
+    },
+    {
+      name: "Cross-Functional Collaboration",
+      description: "Tech + Marketing + Product alignment",
+      icon: "🤝",
+      category: "Collaboration",
+    },
+  ];
+
   const certifications = [
     {
       name: ".NET Full Stack Developer - C# Corner",
@@ -955,6 +1199,69 @@ const About = () => {
               skills={collaborationAndOtherSkills}
               icon={Brain}
               gradient="from-pink-500 to-purple-600"
+              isCrm={true}
+            />
+
+            <SkillCard
+              title="Backend & Platform Engineering"
+              description="Production-grade API development, authentication & configuration management"
+              skills={backendPlatformSkills}
+              icon={Monitor}
+              gradient="from-slate-600 to-blue-700"
+              isCrm={true}
+            />
+
+            <SkillCard
+              title="Analytics, Tracking & Marketing Tech"
+              description="GA4, GTM, event tracking, funnel analysis & marketing automation"
+              skills={analyticsTrackingSkills}
+              icon={BarChart3}
+              gradient="from-amber-500 to-orange-600"
+              isCrm={true}
+            />
+
+            <SkillCard
+              title="Observability, Monitoring & Debugging"
+              description="APM, logging, distributed tracing & performance profiling"
+              skills={observabilitySkills}
+              icon={Activity}
+              gradient="from-cyan-500 to-blue-600"
+              isCrm={true}
+            />
+
+            <SkillCard
+              title="DevOps, Deployment & Reliability"
+              description="CI/CD, Docker, secrets management & incident response"
+              skills={devopsSkills}
+              icon={GitBranch}
+              gradient="from-emerald-500 to-green-700"
+              isCrm={true}
+            />
+
+            <SkillCard
+              title="Architecture & System Design"
+              description="SaaS architecture, scalable APIs, event-driven & resilient systems"
+              skills={architectureSkills}
+              icon={Layers}
+              gradient="from-violet-500 to-purple-700"
+              isCrm={true}
+            />
+
+            <SkillCard
+              title="Testing, Validation & Quality"
+              description="API testing, integration testing, analytics QA & regression suites"
+              skills={testingQASkills}
+              icon={TestTube}
+              gradient="from-rose-500 to-red-600"
+              isCrm={true}
+            />
+
+            <SkillCard
+              title="Product, Client & Ownership Skills"
+              description="Requirement analysis, stakeholder communication & end-to-end ownership"
+              skills={productOwnershipSkills}
+              icon={Users}
+              gradient="from-indigo-500 to-blue-600"
               isCrm={true}
             />
           </div>

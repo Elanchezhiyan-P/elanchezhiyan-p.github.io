@@ -21,6 +21,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { FloatingSocialSidebar } from "./FloatingSocialSidebar";
 import { FloatingChatbot } from "./FloatingChatbot";
+import { FloatingWhatsApp } from "./FloatingWhatsApp";
+import { ExitIntentPopup } from "./ExitIntentPopup";
+import { NewsletterSignup } from "./NewsletterSignup";
 import { ParticleBackground } from "./ParticleBackground";
 import { ThemeSettings } from "./ThemeSettings";
 import { Loader } from "./Loader";
@@ -311,17 +314,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               </div>
 
               {/* Social & Contact - Compact */}
-              <div className="flex flex-col items-center gap-2">
-                <div>
-                  <a
-                    href="https://elanchezhiyan-p.medium.com/subscribe"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-blue-400 hover:underline theme-green:text-green-400"
-                  >
-                    Subscribe on Medium
-                  </a>
-                </div>
+              <div className="flex flex-col items-center gap-2 w-full px-4">
+                <NewsletterSignup variant="footer" />
                 <Link
                   to="/contact"
                   className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors text-xs font-semibold"
@@ -357,17 +351,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   ))}
                 </ul>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Stay Updated</h4>
-                <a
-                  href="https://elanchezhiyan-p.medium.com/subscribe"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs md:text-sm text-blue-400 hover:underline theme-green:text-green-400"
-                >
-                  Subscribe on Medium
-                </a>
-              </div>
+              <NewsletterSignup variant="footer" />
               <div>
                 <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Get In Touch</h4>
                 <p className="text-xs md:text-sm mb-1.5">Ready to build something amazing together?</p>
@@ -391,6 +375,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Floating Components */}
       {!isMobile && <FloatingSocialSidebar />}
       <FloatingChatbot isMobile={isMobile} />
+      <FloatingWhatsApp isMobile={isMobile} />
+
+      {/* Exit Intent Popup (desktop only) */}
+      {!isMobile && <ExitIntentPopup />}
 
       {/* Theme Settings Panel */}
       {showSettings && <ThemeSettings onClose={() => setShowSettings(false)} />}

@@ -153,6 +153,22 @@ const Index = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 theme-green:from-green-700 theme-green:via-emerald-700 theme-green:to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </Button>
               </Link>
+              <a
+                href="https://topmate.io/elanchezhiyan_poosamani"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  size="lg"
+                  className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Book a Call
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </Button>
+              </a>
               <Link to="/contact">
                 <Button
                   size="lg"
@@ -380,17 +396,17 @@ const Index = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/30 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 hover:scale-110 transition-all duration-300"
+            className="absolute left-2 md:left-4 top-[30%] md:top-1/2 transform -translate-y-1/2 p-2 md:p-3 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/30 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 hover:scale-110 transition-all duration-300 z-10"
             aria-label="Previous project"
           >
-            <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/30 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 hover:scale-110 transition-all duration-300"
+            className="absolute right-2 md:right-4 top-[30%] md:top-1/2 transform -translate-y-1/2 p-2 md:p-3 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/30 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 hover:scale-110 transition-all duration-300 z-10"
             aria-label="Next project"
           >
-            <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300" />
           </button>
 
           {/* Dots Indicator */}
@@ -649,15 +665,32 @@ const Index = () => {
               Let's turn your ideas into reality with robust, scalable, and
               beautiful software solutions.
             </p>
-            <Link to="/contact">
-              <Button className="group bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 theme-green:hover:from-green-700 theme-green:hover:via-emerald-700 theme-green:hover:to-teal-700 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden relative">
-                <span className="relative z-10 flex items-center gap-2">
-                  Let's Connect
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 theme-green:from-green-700 theme-green:via-emerald-700 theme-green:to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link to="/contact">
+                <Button className="group bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 theme-green:hover:from-green-700 theme-green:hover:via-emerald-700 theme-green:hover:to-teal-700 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden relative">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Let's Connect
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 theme-green:from-green-700 theme-green:via-emerald-700 theme-green:to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </Button>
+              </Link>
+              <a
+                href="https://topmate.io/elanchezhiyan_poosamani"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  variant="outline"
+                  className="group px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl border-2 border-purple-500 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                >
+                  <span className="flex items-center gap-2">
+                    Book a Free Call
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
       </section>
