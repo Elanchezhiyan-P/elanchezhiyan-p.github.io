@@ -32,6 +32,7 @@ import {
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { MobileTimeline } from "@/components/MobileTimeline";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 
 const About = () => {
@@ -977,9 +978,9 @@ const About = () => {
         {/* Resume Download Section */}
         <section className="text-center mb-6 md:mb-12">
           <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-2xl mx-auto backdrop-blur-xl border border-white/20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20">
-            <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+            <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Resume
-            </h3>
+            </h2>
             <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4 md:mb-6">
               Get a detailed overview of my experience, skills, and achievements
             </p>
@@ -1347,15 +1348,15 @@ const About = () => {
         {/* Call to Action */}
         <section className="text-center">
           <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-12 backdrop-blur-xl border-2 md:border-4 border-blue-500 dark:border-blue-400 theme-green:border-green-500 theme-green:dark:border-green-400 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <h3 className="text-xl md:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+            <h2 className="text-xl md:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Ready to Build Something Amazing?
-            </h3>
+            </h2>
             <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto">
               With extensive experience across multiple technologies and
               industries, I'm ready to help bring your vision to life.
             </p>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-6 md:px-8 py-2 md:py-3 text-sm md:text-lg font-semibold rounded-xl md:rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
-              Let's Connect
+            <Button asChild className="bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 hover:from-blue-700 hover:to-purple-700 theme-green:hover:from-green-700 theme-green:hover:to-emerald-700 text-white px-6 md:px-8 py-2 md:py-3 text-sm md:text-lg font-semibold rounded-xl md:rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
+              <Link to="/contact">Let's Connect</Link>
             </Button>
           </div>
         </section>

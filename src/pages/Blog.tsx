@@ -15,7 +15,6 @@ const Blog: React.FC = () => {
   const [hoveredPost, setHoveredPost] = useState<number | null>(null);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [mediumLink, setMediumLink] = useState<string>();
-  const [latestImageRatio, setLatestImageRatio] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -180,21 +179,12 @@ const Blog: React.FC = () => {
               </div>
               <div className="flex flex-col md:flex-row">
                 {/* Image */}
-                <div className="w-full md:w-1/2 relative overflow-hidden">
+                <div className="w-full md:w-1/2 relative overflow-hidden aspect-video md:aspect-auto">
                   <img
                     src={latestPost.image}
                     alt={latestPost.title}
                     loading="lazy"
-                    onLoad={(e) => {
-                      const img = e.currentTarget;
-                      const ratio = img.naturalWidth / img.naturalHeight;
-                      setLatestImageRatio(ratio);
-                    }}
-                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl md:rounded-l-xl md:rounded-t-none ${
-                      latestImageRatio && latestImageRatio > 1.3
-                        ? "h-48 md:h-full"
-                        : "h-64"
-                    }`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl md:rounded-l-xl md:rounded-t-none"
                   />
                   <div className="absolute inset-0 border-4 border-transparent group-hover:border-t-red-500 group-hover:border-l-red-500 transition-colors duration-300" />
                 </div>

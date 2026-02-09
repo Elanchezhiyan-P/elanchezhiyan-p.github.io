@@ -26,7 +26,6 @@ import { ExitIntentPopup } from "./ExitIntentPopup";
 import { NewsletterSignup } from "./NewsletterSignup";
 import { ParticleBackground } from "./ParticleBackground";
 import { ThemeSettings } from "./ThemeSettings";
-import { Loader } from "./Loader";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -35,8 +34,7 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
   const location = useLocation();
 
   const socialLinks = [
@@ -86,14 +84,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
 
-    checkMobile();
     window.addEventListener("resize", checkMobile);
-
-    const timer = setTimeout(() => setIsLoading(false), 1800);
 
     return () => {
       window.removeEventListener("resize", checkMobile);
-      clearTimeout(timer);
     };
   }, []);
 
@@ -118,10 +112,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 theme-green:from-green-50 theme-green:via-emerald-50 theme-green:to-teal-100 theme-green:dark:from-green-900 theme-green:dark:via-emerald-800 theme-green:dark:to-teal-900 transition-colors duration-500">
@@ -271,7 +261,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               className={`flex flex-col items-center justify-center text-xs font-semibold transition-colors duration-300 min-w-0 flex-1 ${
                 isActive(item.href)
                   ? "text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
-                  : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
+                  : "text-gray-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 theme-green:hover:text-green-600 theme-green:dark:hover:text-green-400"
               }`}
               aria-current={isActive(item.href) ? "page" : undefined}
             >

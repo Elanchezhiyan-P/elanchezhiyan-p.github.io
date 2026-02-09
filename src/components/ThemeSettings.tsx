@@ -74,7 +74,7 @@ export const ThemeSettings: React.FC<ThemeSettingsProps> = ({ onClose }) => {
             <Palette className="w-5 h-5 mr-2" />
             Theme Settings
           </h2>
-          <Button variant="ghost" size="sm" onClick={onClose}>
+          <Button variant="ghost" size="sm" onClick={onClose} aria-label="Close settings">
             <X className="w-4 h-4" />
           </Button>
         </div>
@@ -86,6 +86,7 @@ export const ThemeSettings: React.FC<ThemeSettingsProps> = ({ onClose }) => {
             <div className="flex space-x-3">
               <button
                 onClick={() => handleThemeColorChange("blue")}
+                aria-label="Blue theme"
                 className={`w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center transition-all ${
                   themeColor === "blue"
                     ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-800"
@@ -98,6 +99,7 @@ export const ThemeSettings: React.FC<ThemeSettingsProps> = ({ onClose }) => {
               </button>
               <button
                 onClick={() => handleThemeColorChange("green")}
+                aria-label="Green theme"
                 className={`w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center transition-all ${
                   themeColor === "green"
                     ? "ring-2 ring-green-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-800"

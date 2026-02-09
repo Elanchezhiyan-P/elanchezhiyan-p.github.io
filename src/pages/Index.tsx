@@ -194,8 +194,11 @@ const Index = () => {
               <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-600 theme-green:to-teal-600 p-1.5 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-blue-500/40 theme-green:group-hover:shadow-green-500/40 group-hover:scale-105">
                 <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-2 flex items-center justify-center overflow-hidden">
                   <img
-                    src="../Elan.jpg"
+                    src="/Elan.jpg"
                     alt="Elanchezhiyan P"
+                    width={224}
+                    height={224}
+                    fetchPriority="high"
                     className="w-full h-full rounded-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:rotate-2 group-hover:brightness-110"
                   />
                 </div>

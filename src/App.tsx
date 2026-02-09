@@ -10,6 +10,8 @@ import React, { Suspense, useEffect } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { preloadBlogData } from "./utils/blogService";
 import { initGA, trackPageView } from "./utils/analytics";
+import { calculateYearsOfExperience } from "./utils/dateUtils";
+import { Helmet } from "react-helmet-async";
 
 // Lazy-load pages for code splitting
 const Index = React.lazy(() => import("./pages/Index"));
@@ -44,31 +46,11 @@ const ScrollToTop = () => {
 };
 
 const App = () => {
+  const yearsOfExperience = calculateYearsOfExperience();
+
   useEffect(() => {
     // Initialize Google Analytics
     initGA();
-
-    // SEO optimization
-    document.title =
-      "Elanchezhiyan P - Seasoned Software Developer | .NET & Azure Expert";
-
-    // Add meta tags
-    const metaDescription = document.createElement("meta");
-    metaDescription.name = "description";
-    metaDescription.content =
-      "Elanchezhiyan P - B.E (Bachelor of Engineering) graduate and Seasoned Software Developer with 5+ years experience in .NET, Azure, CRM integrations, and cloud architecture. Expert in building scalable applications.";
-    document.head.appendChild(metaDescription);
-
-    const metaKeywords = document.createElement("meta");
-    metaKeywords.name = "keywords";
-    metaKeywords.content =
-      "Elanchezhiyan P, Software Developer, .NET Developer, Azure Expert, CRM Integration, Cloud Architecture, Full Stack Developer, Seasoned Developer";
-    document.head.appendChild(metaKeywords);
-
-    const metaAuthor = document.createElement("meta");
-    metaAuthor.name = "author";
-    metaAuthor.content = "Elanchezhiyan P";
-    document.head.appendChild(metaAuthor);
 
     // Preload blog data in the background
     preloadBlogData();
@@ -83,6 +65,10 @@ const App = () => {
             <Sonner />
             <BrowserRouter>
               <ScrollToTop />
+              <Helmet>
+                <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
+                <meta name="description" content={`B.E (Bachelor of Engineering) graduate and Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience architecting scalable and secure cloud applications. Specializing in DevOps, automation, and modern web technologies.`} />
+              </Helmet>
               <JsonLd />
               <Layout>
                 <Suspense fallback={<PageLoader />}>
