@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { X, Calendar, MessageSquare, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { trackExitIntentShown, trackExitIntentAction } from "@/utils/analytics";
 
 export const ExitIntentPopup: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,6 +17,7 @@ export const ExitIntentPopup: React.FC = () => {
       if (e.clientY <= 5 && !sessionStorage.getItem("exitIntentShown")) {
         setIsVisible(true);
         sessionStorage.setItem("exitIntentShown", "true");
+        trackExitIntentShown();
       }
     };
 
@@ -73,6 +75,7 @@ export const ExitIntentPopup: React.FC = () => {
               href="https://topmate.io/elanchezhiyan_poosamani"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackExitIntentAction("Book a Free Call")}
               className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
             >
               <Calendar className="w-4 h-4" />
@@ -82,7 +85,10 @@ export const ExitIntentPopup: React.FC = () => {
 
             <Link
               to="/contact"
-              onClick={() => setIsVisible(false)}
+              onClick={() => {
+                trackExitIntentAction("Send a Message");
+                setIsVisible(false);
+              }}
               className="flex items-center justify-center gap-2 w-full px-6 py-3 border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300"
             >
               <MessageSquare className="w-4 h-4" />

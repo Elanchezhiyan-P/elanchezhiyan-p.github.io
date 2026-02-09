@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Star, Quote, Award, Users, Clock, CheckCircle } from "lucide-react";
+import { Star, Quote, Award, Users, Clock, CheckCircle, Linkedin } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import {
   Carousel,
@@ -129,6 +129,7 @@ const Testimonials = () => {
                     <img
                       src={senthilTestimonial.avatar}
                       alt={senthilTestimonial.name}
+                      loading="lazy"
                       className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover border-2 border-white/20 shadow-md"
                     />
                     <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-blue-500 to-purple-500 p-1 rounded-full">
@@ -159,11 +160,26 @@ const Testimonials = () => {
                       </div>
                     </div>
 
-                    <div className="hidden md:flex items-center gap-1.5 bg-green-50 dark:bg-green-900/20 px-2.5 py-1 rounded-full">
-                      <CheckCircle className="h-2.5 w-2.5 text-green-600" />
-                      <span className="text-xs font-medium text-green-600">
-                        Verified
-                      </span>
+                    <div className="hidden md:flex items-center gap-2">
+                      {senthilTestimonial.linkedin && (
+                        <a
+                          href={senthilTestimonial.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/20 px-2.5 py-1 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+                        >
+                          <Linkedin className="h-2.5 w-2.5 text-blue-600" />
+                          <span className="text-xs font-medium text-blue-600">
+                            LinkedIn
+                          </span>
+                        </a>
+                      )}
+                      <div className="flex items-center gap-1.5 bg-green-50 dark:bg-green-900/20 px-2.5 py-1 rounded-full">
+                        <CheckCircle className="h-2.5 w-2.5 text-green-600" />
+                        <span className="text-xs font-medium text-green-600">
+                          Verified
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -216,6 +232,7 @@ const Testimonials = () => {
                         <img
                           src={testimonial.avatar}
                           alt={testimonial.name}
+                          loading="lazy"
                           className="w-14 h-14 rounded-xl object-cover border-2 border-blue-500/20 shadow-lg"
                         />
                         <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
@@ -223,8 +240,21 @@ const Testimonials = () => {
                         </div>
                       </div>
                       <div className="flex-1">
-                        <div className="font-bold text-lg text-gray-900 dark:text-white">
-                          {testimonial.name}
+                        <div className="flex items-center gap-2">
+                          <div className="font-bold text-lg text-gray-900 dark:text-white">
+                            {testimonial.name}
+                          </div>
+                          {testimonial.linkedin && (
+                            <a
+                              href={testimonial.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                              title={`View ${testimonial.name} on LinkedIn`}
+                            >
+                              <Linkedin className="h-4 w-4" />
+                            </a>
+                          )}
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                           {testimonial.role}
@@ -254,11 +284,11 @@ const Testimonials = () => {
               </CarouselItem>
             ))}
             </CarouselContent>
-            <CarouselPrevious 
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50"
+            <CarouselPrevious
+              className="!absolute !left-2 md:!left-4 !top-1/2 !-translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50 pointer-events-auto cursor-pointer"
             />
-            <CarouselNext 
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50"
+            <CarouselNext
+              className="!absolute !right-2 md:!right-4 !top-1/2 !-translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50 pointer-events-auto cursor-pointer"
             />
           </Carousel>
         </div>

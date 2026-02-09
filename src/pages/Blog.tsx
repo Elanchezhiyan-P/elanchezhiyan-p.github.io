@@ -9,6 +9,7 @@ import {
   fetchBlogPosts,
   type BlogPost,
 } from "@/utils/blogService";
+import { trackBlogClick } from "@/utils/analytics";
 
 const Blog: React.FC = () => {
   const [hoveredPost, setHoveredPost] = useState<number | null>(null);
@@ -183,6 +184,7 @@ const Blog: React.FC = () => {
                   <img
                     src={latestPost.image}
                     alt={latestPost.title}
+                    loading="lazy"
                     onLoad={(e) => {
                       const img = e.currentTarget;
                       const ratio = img.naturalWidth / img.naturalHeight;
@@ -269,6 +271,7 @@ const Blog: React.FC = () => {
                     <img
                       src={post.image}
                       alt={post.title}
+                      loading="lazy"
                       className="w-full h-40 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl"
                     />
                     <div

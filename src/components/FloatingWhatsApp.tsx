@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
+import { trackWhatsAppClick } from "@/utils/analytics";
 
 interface FloatingWhatsAppProps {
   isMobile?: boolean;
@@ -42,6 +43,7 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackWhatsAppClick}
             className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded-lg transition-colors w-full justify-center"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">

@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Helmet } from "react-helmet-async";
 import emailjs from "emailjs-com";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { trackContactFormSubmit, trackBookCall } from "@/utils/analytics";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -92,6 +93,7 @@ const Contact = () => {
 
       emailjs.send(serviceID, templateID, templateParams, userID).then(
         (response) => {
+          trackContactFormSubmit();
           toast({
             title: "Message sent successfully!",
             description: "Thank you for reaching out. I'll get back to you soon.",
@@ -628,6 +630,7 @@ const Contact = () => {
                   href="https://topmate.io/elanchezhiyan_poosamani"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={trackBookCall}
                 >
                   Book a Free Call
                 </a>

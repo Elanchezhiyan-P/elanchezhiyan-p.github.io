@@ -18,6 +18,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
+import { useCountUp } from "@/hooks/useCountUp";
+import { trackBookCall, trackProjectView, trackCertificationClick } from "@/utils/analytics";
+import { ResumeLeadMagnet } from "@/components/ResumeLeadMagnet";
 import projectsData from "@/data/projects.json";
 import {
   Card,
@@ -157,6 +160,7 @@ const Index = () => {
                 href="https://topmate.io/elanchezhiyan_poosamani"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={trackBookCall}
               >
                 <Button
                   size="lg"
@@ -180,32 +184,8 @@ const Index = () => {
               </Link>
             </div>
 
-            {/* Quick Stats */}
-            <div className="flex flex-wrap gap-3 md:gap-4 pt-3">
-              {[
-                {
-                  value: `${yearsOfExperience}+`,
-                  label: "Years Experience",
-                  icon: "🎯",
-                },
-                { value: "30+", label: "Projects Completed", icon: "🚀" },
-                { value: "40%", label: "Performance Improvement", icon: "⚡" },
-              ].map((stat, index) => (
-                <div key={index} className="group relative">
-                  <div className="glass rounded-xl p-3 md:p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                    <div className="text-center">
-                      <div className="text-xl mb-1">{stat.icon}</div>
-                      <div className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 font-medium">
-                        {stat.label}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* Animated Quick Stats */}
+            <AnimatedStats yearsOfExperience={yearsOfExperience} />
           </div>
 
           <div className="flex-1 flex justify-center">
@@ -330,6 +310,7 @@ const Index = () => {
                       <img
                         src={imageMap[project.id]}
                         alt={project.title}
+                        loading="lazy"
                         className="relative w-full h-full object-cover rounded-2xl shadow-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110 group-hover:shadow-2xl"
                       />
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -648,6 +629,13 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Resume Lead Magnet */}
+      <section className="container mx-auto px-4 py-4">
+        <div className="max-w-xl mx-auto">
+          <ResumeLeadMagnet />
+        </div>
+      </section>
+
       {/* Call to Action */}
       <section className="text-center py-4 md:py-6">
         <div className="relative mx-auto max-w-3xl">
@@ -694,6 +682,65 @@ const Index = () => {
           </div>
         </div>
       </section>
+    </div>
+  );
+};
+
+// Animated Stats Component with counting animation
+const AnimatedStats: React.FC<{ yearsOfExperience: number }> = ({
+  yearsOfExperience,
+}) => {
+  const yearsCounter = useCountUp({
+    end: Math.floor(yearsOfExperience),
+    duration: 2000,
+    suffix: "+",
+  });
+  const projectsCounter = useCountUp({
+    end: 30,
+    duration: 2200,
+    suffix: "+",
+  });
+  const performanceCounter = useCountUp({
+    end: 40,
+    duration: 1800,
+    suffix: "%",
+  });
+
+  const stats = [
+    {
+      ...yearsCounter,
+      label: "Years Experience",
+      icon: "🎯",
+    },
+    {
+      ...projectsCounter,
+      label: "Projects Completed",
+      icon: "🚀",
+    },
+    {
+      ...performanceCounter,
+      label: "Performance Improvement",
+      icon: "⚡",
+    },
+  ];
+
+  return (
+    <div className="flex flex-wrap gap-3 md:gap-4 pt-3">
+      {stats.map((stat, index) => (
+        <div key={index} className="group relative" ref={stat.ref}>
+          <div className="glass rounded-xl p-3 md:p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="text-center">
+              <div className="text-xl mb-1">{stat.icon}</div>
+              <div className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                {stat.displayValue}
+              </div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 font-medium">
+                {stat.label}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
