@@ -47,15 +47,22 @@
     <!-- Link to Manifest for Progressive Web App -->
     <link rel="manifest" href="/manifest.json">
 
-    <!-- Google Fonts -->
+    <!-- Preload hero image for LCP -->
+    <link rel="preload" as="image" href="/Elan.jpg">
+
+    <!-- Google Fonts (non-render-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
     <!-- Placeholder for images or SVGs -->
     <link rel="icon" href="placeholder.svg" type="image/svg+xml" />
-    <script type="module" crossorigin src="/assets/index-BzFf_pox.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-uHkUygaA.css">
+    <script type="module" crossorigin src="/assets/index-aM_RAVNi.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-ui-Bp3R9nPJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-utils-0IQlQ27U.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CfwJhDq7.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BkFX8fgE.css">
   </head>
 
   <body>
