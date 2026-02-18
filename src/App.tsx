@@ -7,7 +7,6 @@ import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/Layout";
 import { JsonLd } from "./components/JsonLd";
 import React, { Suspense, useEffect } from "react";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { preloadBlogData } from "./utils/blogService";
 import { initGA, trackPageView } from "./utils/analytics";
 import { calculateYearsOfExperience } from "./utils/dateUtils";
@@ -21,8 +20,6 @@ const Blog = React.lazy(() => import("./pages/Blog"));
 const Testimonials = React.lazy(() => import("./pages/Testimonials"));
 const Contact = React.lazy(() => import("./pages/Contact"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
-
-const RECAPTCHA_SITE_KEY = "6Lc-fmUsAAAAALqxveilpOVKZge1pyF9cEdlymOu";
 
 const queryClient = new QueryClient();
 
@@ -57,37 +54,35 @@ const App = () => {
   }, []);
 
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_SITE_KEY}>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop />
-              <Helmet>
-                <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
-                <meta name="description" content={`B.E (Bachelor of Engineering) graduate and Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience architecting scalable and secure cloud applications. Specializing in DevOps, automation, and modern web technologies.`} />
-              </Helmet>
-              <JsonLd />
-              <Layout>
-                <Suspense fallback={<PageLoader />}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route path="/blog" element={<Blog />} />
-                    <Route path="/testimonials" element={<Testimonials />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-              </Layout>
-            </BrowserRouter>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
-    </GoogleReCaptchaProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Helmet>
+              <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
+              <meta name="description" content={`B.E (Bachelor of Engineering) graduate and Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience architecting scalable and secure cloud applications. Specializing in DevOps, automation, and modern web technologies.`} />
+            </Helmet>
+            <JsonLd />
+            <Layout>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/testimonials" element={<Testimonials />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </Layout>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 
