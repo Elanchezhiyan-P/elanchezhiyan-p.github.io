@@ -20,7 +20,7 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({
   return (
     <div
       className={`fixed z-50 ${
-        isMobile ? "bottom-24 left-6" : "bottom-6 left-6"
+        isMobile ? "bottom-[6rem] left-6" : "bottom-6 left-6"
       }`}
     >
       {/* Tooltip */}

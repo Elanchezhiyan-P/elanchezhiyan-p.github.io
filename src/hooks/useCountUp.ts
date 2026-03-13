@@ -15,7 +15,7 @@ export const useCountUp = ({
   prefix = "",
   suffix = "",
 }: UseCountUpOptions) => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end);
   const [hasStarted, setHasStarted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

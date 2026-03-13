@@ -1,13 +1,19 @@
-import ReactGA from "react-ga4";
+// Analytics via Cloudflare Zaraz — uses dataLayer.push for SPA page_view tracking
+// Zaraz handles GA4 script loading automatically; we only push events
 
-const MEASUREMENT_ID = "G-W0KG44LXCR";
+declare global {
+  interface Window {
+    dataLayer: Record<string, unknown>[];
+  }
+}
 
-export const initGA = () => {
-  ReactGA.initialize(MEASUREMENT_ID);
-};
+window.dataLayer = window.dataLayer || [];
 
 export const trackPageView = (path: string) => {
-  ReactGA.send({ hitType: "pageview", page: path });
+  window.dataLayer.push({
+    event: "page_view",
+    page_path: path,
+  });
 };
 
 // Custom event tracking for lead generation & conversions
@@ -17,10 +23,10 @@ export const trackEvent = (
   label?: string,
   value?: number
 ) => {
-  ReactGA.event({
-    category,
-    action,
-    label,
+  window.dataLayer.push({
+    event: action,
+    event_category: category,
+    event_label: label,
     value,
   });
 };

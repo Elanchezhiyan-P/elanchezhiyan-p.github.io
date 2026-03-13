@@ -55,7 +55,7 @@ export const ParticleBackground: React.FC = () => {
     };
 
     const createParticles = () => {
-      const particleCount = window.innerWidth < 768 ? 50 : 120;
+      const particleCount = window.innerWidth < 768 ? 20 : 80;
       const colors = getThemeColors();
       particlesRef.current = [];
       for (let i = 0; i < particleCount; i++) {

@@ -8,7 +8,7 @@ import { Layout } from "./components/Layout";
 import { JsonLd } from "./components/JsonLd";
 import React, { Suspense, useEffect } from "react";
 import { preloadBlogData } from "./utils/blogService";
-import { initGA, trackPageView } from "./utils/analytics";
+import { trackPageView } from "./utils/analytics";
 import { calculateYearsOfExperience } from "./utils/dateUtils";
 import { Helmet } from "react-helmet-async";
 
@@ -46,9 +46,6 @@ const App = () => {
   const yearsOfExperience = calculateYearsOfExperience();
 
   useEffect(() => {
-    // Initialize Google Analytics
-    initGA();
-
     // Preload blog data in the background
     preloadBlogData();
   }, []);

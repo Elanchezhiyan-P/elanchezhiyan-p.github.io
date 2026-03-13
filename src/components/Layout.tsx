@@ -273,7 +273,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       )}
 
       {/* Footer */}
-      <footer className={`bg-gray-900 dark:bg-black/95 backdrop-blur-sm text-gray-300 ${isMobile ? 'py-4 pb-24' : 'py-6 md:py-8'} mt-2`}>
+      <footer className={`bg-gray-900 dark:bg-black/95 backdrop-blur-sm text-gray-300 ${isMobile ? 'py-4 pb-44' : 'py-6 md:py-8'} mt-2`}>
         <div className={`container mx-auto px-4 md:px-6 ${isMobile ? 'space-y-3' : 'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6'}`}>
           {isMobile ? (
             <>

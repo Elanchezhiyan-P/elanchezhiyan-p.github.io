@@ -18,7 +18,7 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       {/* Chatbot Button */}
       <Button
         className={`fixed z-50 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 ${
-          isMobile ? "bottom-24 right-6" : "bottom-6 right-6"
+          isMobile ? "bottom-[6rem] right-6" : "bottom-6 right-6"
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -33,7 +33,7 @@ export const FloatingChatbot: React.FC<FloatingChatbotProps> = ({
       {isOpen && (
         <div
           className={`fixed z-50 w-80 max-w-[calc(100vw-2rem)] rounded-2xl shadow-2xl animate-fade-in bg-white/80 dark:bg-gray-900/80 backdrop-blur border border-blue-100 dark:border-gray-800 flex flex-col overflow-hidden ${
-            isMobile ? "bottom-40 right-6" : "bottom-24 right-6"
+            isMobile ? "bottom-[10rem] right-6" : "bottom-24 right-6"
           }`}
           style={{ minHeight: "340px" }}
         >

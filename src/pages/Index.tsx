@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
   Code,
@@ -107,23 +108,35 @@ const Index = () => {
 
   return (
     <div className="space-y">
-      <title>
-        Elanchezhiyan P - Seasoned Software Developer | .NET & Azure Expert
-      </title>
+      <Helmet>
+        <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
+        <meta
+          name="description"
+          content={`Hire Elanchezhiyan P — Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience. Open to full-time, contract, and freelance opportunities. Specializing in scalable cloud applications, DevOps, and modern web technologies.`}
+        />
+        <meta
+          name="keywords"
+          content="Hire .NET Developer, Senior Azure Developer, Freelance C# Developer, Full Stack Developer India, .NET Developer for Hire, Azure Cloud Consultant, Remote Developer, DevOps Engineer, React Developer"
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://codebyelan.in/" />
+      </Helmet>
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-4 md:py-6">
         <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
           <div className="flex-1 space-y-4 animate-fade-in-up">
             <div className="space-y-3">
-              <div className="inline-block px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 mb-2 animate-fade-in">
-                <span className="text-xs font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300">
-                  👋 Welcome to My Portfolio
-                </span>
+              <div className="flex flex-wrap gap-2 mb-2 animate-fade-in">
+                <div className="inline-block px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-700">
+                  <span className="text-xs font-semibold text-green-700 dark:text-green-300">
+                    Open to Opportunities — Full-time / Contract / Freelance
+                  </span>
+                </div>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight">
                 <span className="block text-gray-800 dark:text-gray-200 mb-1">
-                  Hi, I'm
+                  Hi, I'm{" "}
                 </span>
                 <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-500 bg-clip-text text-transparent animate-gradient">
                   Elanchezhiyan P
@@ -343,33 +356,37 @@ const Index = () => {
                       ))}
                     </div>
                     <div className="flex gap-2 mt-1">
-                      <Button
-                        variant="outline"
-                        className="group/btn flex items-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 border-blue-300 dark:border-blue-700 theme-green:border-green-300 theme-green:dark:border-green-700 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 hover:bg-blue-50 dark:hover:bg-blue-900/20 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/20"
-                        asChild
-                      >
-                        <a
-                          href={project.links?.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                      {project.links?.github && (
+                        <Button
+                          variant="outline"
+                          className="group/btn flex items-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 border-blue-300 dark:border-blue-700 theme-green:border-green-300 theme-green:dark:border-green-700 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 hover:bg-blue-50 dark:hover:bg-blue-900/20 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/20"
+                          asChild
                         >
-                          <Github className="h-4 w-4 group-hover/btn:rotate-12 transition-transform duration-300" />
-                          View Code
-                        </a>
-                      </Button>
-                      <Button
-                        className="group/btn bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 theme-green:hover:from-green-700 theme-green:hover:via-emerald-700 theme-green:hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 hover:scale-105"
-                        asChild
-                      >
-                        <a
-                          href={project.links?.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          <a
+                            href={project.links.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Github className="h-4 w-4 group-hover/btn:rotate-12 transition-transform duration-300" />
+                            View Code
+                          </a>
+                        </Button>
+                      )}
+                      {project.links?.live && project.links.live !== "#" && (
+                        <Button
+                          className="group/btn bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 theme-green:hover:from-green-700 theme-green:hover:via-emerald-700 theme-green:hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2 hover:scale-105"
+                          asChild
                         >
-                          <ExternalLink className="h-4 w-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
-                          Live Demo
-                        </a>
-                      </Button>
+                          <a
+                            href={project.links.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <ExternalLink className="h-4 w-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
+                            Live Demo
+                          </a>
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </Card>

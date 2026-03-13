@@ -24,6 +24,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    inquiryType: "",
     subject: "",
     message: "",
     company: "",
@@ -35,7 +36,7 @@ const Contact = () => {
   const { toast } = useToast();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     setFormData({
       ...formData,
@@ -82,7 +83,8 @@ const Contact = () => {
       const templateParams = {
         name: formData.name,
         email: formData.email,
-        subject: formData.subject,
+        inquiry_type: formData.inquiryType,
+        subject: `[${formData.inquiryType}] ${formData.subject}`,
         message: formData.message,
         turnstileToken,
       };
@@ -99,6 +101,7 @@ const Contact = () => {
         setFormData({
           name: "",
           email: "",
+          inquiryType: "",
           subject: "",
           message: "",
           company: "",
@@ -434,6 +437,30 @@ const Contact = () => {
                         placeholder="john@example.com"
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="inquiryType"
+                      className="block text-sm font-medium mb-2"
+                    >
+                      Inquiry Type *
+                    </label>
+                    <select
+                      id="inquiryType"
+                      name="inquiryType"
+                      value={formData.inquiryType}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors"
+                    >
+                      <option value="">Select inquiry type</option>
+                      <option value="Job Opportunity">Job Opportunity</option>
+                      <option value="Freelance Project">Freelance Project</option>
+                      <option value="Collaboration">Collaboration</option>
+                      <option value="Consultation">Consultation</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
 
                   <div>
