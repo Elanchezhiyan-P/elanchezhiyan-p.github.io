@@ -1,59 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
+import { calculateYearsOfExperience } from "@/utils/dateUtils";
 
 const BASE_URL = "https://codebyelan.in";
-
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Elanchezhiyan P",
-  url: BASE_URL,
-  image: `${BASE_URL}/Elan.jpg`,
-  jobTitle: "Senior Software Developer",
-  description:
-    "B.E (Bachelor of Engineering) graduate and Seasoned Software Developer with 5+ years of experience in .NET, Azure, CRM integrations, and cloud architecture.",
-  email: "elanche97@gmail.com",
-  telephone: "+919942644999",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Coimbatore",
-    addressRegion: "Tamil Nadu",
-    addressCountry: "IN",
-  },
-  sameAs: [
-    "https://github.com/elanchezhiyan-p",
-    "https://linkedin.com/in/elanchezhiyan-p",
-    "https://medium.com/@elanchezhiyan",
-  ],
-  knowsAbout: [
-    ".NET Core",
-    "Azure",
-    "React",
-    "TypeScript",
-    "SQL Server",
-    "Docker",
-    "DevOps",
-    "Cloud Architecture",
-    "CRM Integration",
-  ],
-  alumniOf: {
-    "@type": "EducationalOrganization",
-    name: "Bachelor of Engineering",
-  },
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Elanchezhiyan P - Portfolio",
-  url: BASE_URL,
-  description:
-    "Portfolio of Elanchezhiyan P, a Seasoned Software Developer specializing in .NET, Azure, and cloud architecture.",
-  author: {
-    "@type": "Person",
-    name: "Elanchezhiyan P",
-  },
-};
 
 const breadcrumbMap: Record<string, string> = {
   "/": "Home",
@@ -68,6 +17,57 @@ export const JsonLd = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const currentPageName = breadcrumbMap[currentPath] || "Page";
+  const yearsOfExperience = calculateYearsOfExperience();
+
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Elanchezhiyan P",
+    url: BASE_URL,
+    image: `${BASE_URL}/Elan.jpg`,
+    jobTitle: "Senior Software Developer",
+    description: `B.E (Bachelor of Engineering) graduate and Seasoned Software Developer with ${yearsOfExperience}+ years of experience in .NET, Azure, CRM integrations, and cloud architecture.`,
+    email: "elanche97@gmail.com",
+    telephone: "+919942644999",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Coimbatore",
+      addressRegion: "Tamil Nadu",
+      addressCountry: "IN",
+    },
+    sameAs: [
+      "https://github.com/elanchezhiyan-p",
+      "https://linkedin.com/in/elanchezhiyan-p",
+      "https://medium.com/@elanchezhiyan",
+    ],
+    knowsAbout: [
+      ".NET Core",
+      "Azure",
+      "React",
+      "TypeScript",
+      "SQL Server",
+      "Docker",
+      "DevOps",
+      "Cloud Architecture",
+      "CRM Integration",
+    ],
+    alumniOf: {
+      "@type": "EducationalOrganization",
+      name: "Bachelor of Engineering",
+    },
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Elanchezhiyan P - Portfolio",
+    url: BASE_URL,
+    description: `Portfolio of Elanchezhiyan P, a Seasoned Software Developer with ${yearsOfExperience}+ years of experience specializing in .NET, Azure, and cloud architecture.`,
+    author: {
+      "@type": "Person",
+      name: "Elanchezhiyan P",
+    },
+  };
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
