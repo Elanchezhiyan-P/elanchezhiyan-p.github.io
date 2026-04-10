@@ -46,8 +46,8 @@ const App = () => {
   const yearsOfExperience = calculateYearsOfExperience();
 
   useEffect(() => {
-    // Preload blog data in the background
-    preloadBlogData();
+    // Preload blog data in the background — .catch() prevents unhandled rejection warnings
+    preloadBlogData().catch(() => {});
   }, []);
 
   return (
