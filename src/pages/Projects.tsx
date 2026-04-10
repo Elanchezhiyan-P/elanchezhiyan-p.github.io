@@ -52,6 +52,7 @@ const Projects = () => {
     ghl: GoHighLevelImage,
     "clinical-discharge-pdf-engine": ClinicalDischargePdfImage,
     "smart-finance-system": SmartFinanceSystemImage,
+    "python-package-visualizer": "https://raw.githubusercontent.com/Elanchezhiyan-P/python-package-visualizer/main/media/screenshots/dashboard.png",
   };
 
   const [filter, setFilter] = useState("all");

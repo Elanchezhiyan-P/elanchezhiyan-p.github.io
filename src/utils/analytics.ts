@@ -1,33 +1,36 @@
-// Analytics via Cloudflare Zaraz — uses dataLayer.push for SPA page_view tracking
-// Zaraz handles GA4 script loading automatically; we only push events
+// Analytics via Cloudflare Zaraz
+// - Page views: handled automatically by Zaraz's built-in Pageview system trigger on each full page load
+// - Custom events: use window.zaraz.track() so Zaraz's "Events" action forwards them to GA4
 
 declare global {
   interface Window {
     dataLayer: Record<string, unknown>[];
+    zaraz?: {
+      track: (eventName: string, properties?: Record<string, unknown>) => void;
+      spaPageview: () => void;
+    };
   }
 }
 
 window.dataLayer = window.dataLayer || [];
 
 export const trackPageView = (path: string) => {
-  window.dataLayer.push({
-    event: "page_view",
-    page_path: path,
-  });
+  // No-op: Zaraz fires pageviews automatically on each full page load.
+  // Kept for backwards compatibility in case it's called anywhere.
 };
 
 // Custom event tracking for lead generation & conversions
+// Uses zaraz.track() so events reach GA4 via Zaraz's Events action
 export const trackEvent = (
   category: string,
   action: string,
   label?: string,
   value?: number
 ) => {
-  window.dataLayer.push({
-    event: action,
+  window.zaraz?.track(action, {
     event_category: category,
-    event_label: label,
-    value,
+    ...(label !== undefined && { event_label: label }),
+    ...(value !== undefined && { value }),
   });
 };
 

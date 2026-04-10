@@ -458,6 +458,34 @@
     "projectType": "Console Application"
   },
   {
+    "id": "python-package-visualizer",
+    "title": "Python Package Visualizer",
+    "description": "A VS Code & Cursor extension to visualize, manage, and audit Python workspace dependencies — with version checks, CVE badges, unused package detection, dependency graph, and one-click updates.",
+    "image": "PythonPackageVisualizerImage",
+    "technologies": ["TypeScript", "VS Code Extension API", "D3.js", "Python", "PyPI", "pip"],
+    "links": {
+      "github": "https://github.com/Elanchezhiyan-P/python-package-visualizer",
+      "live": "https://marketplace.visualstudio.com/items?itemName=Elanchezhiyan-P.python-package-visualizer"
+    },
+    "type": "personal",
+    "featured": true,
+    "keyFeatures": [
+      "Package list with installed vs. latest version comparison",
+      "One-click package updates directly from the sidebar",
+      "CVE vulnerability detection with severity badges",
+      "Unused package detection via import analysis",
+      "Interactive D3.js dependency graph visualization",
+      "Import annotations showing package usage in files",
+      "Function metrics (lines, references, complexity)",
+      "Environment snapshots for reproducibility",
+      "Safe mode to block breaking major version jumps",
+      "Migration tools for uv and Poetry",
+      "Export tools for requirements.txt and lock files"
+    ],
+    "technicalImplementation": "Built with TypeScript using the VS Code Extension API. The sidebar webview renders package data fetched by calling pip and PyPI REST APIs. D3.js powers the interactive dependency graph. Static import analysis identifies unused packages across the workspace. CVE data is retrieved from public vulnerability databases and displayed as severity badges. The extension supports both venv and global Python environments and is compatible with VS Code and Cursor editors.",
+    "projectType": "VS Code Extension"
+  },
+  {
     "id": "smart-finance-system",
     "title": "Smart Finance System",
     "description": "A lightweight desktop application for managing customers, loans, payments, and collaterals. Built using Electron, React, and SQLite, designed for small and medium finance companies to track loans and daily collections with automated EMI scheduling and PDF report generation.",
