@@ -113,7 +113,7 @@ const Index = () => {
         <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
         <meta
           name="description"
-          content={`Hire Elanchezhiyan P — Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience. Open to full-time, contract, and freelance opportunities. Specializing in scalable cloud applications, DevOps, and modern web technologies.`}
+          content={`Hire Elanchezhiyan P — Senior .NET & Azure Developer, ${yearsOfExperience}+ yrs exp. Available for full-time, contract & freelance. Cloud, DevOps, React.`}
         />
         <meta
           name="keywords"
@@ -142,6 +142,7 @@ const Index = () => {
                 <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-500 bg-clip-text text-transparent animate-gradient">
                   Elanchezhiyan P
                 </span>
+                <span className="sr-only"> — Senior .NET &amp; Azure Developer</span>
               </h1>
               <div className="text-base md:text-lg text-gray-700 dark:text-gray-300 space-y-1.5">
                 <p className="font-bold text-gray-900 dark:text-gray-100">

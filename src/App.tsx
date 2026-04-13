@@ -60,7 +60,7 @@ const App = () => {
             <ScrollToTop />
             <Helmet>
               <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
-              <meta name="description" content={`B.E (Bachelor of Engineering) graduate and Senior .NET & Azure Developer with ${yearsOfExperience}+ years of experience architecting scalable and secure cloud applications. Specializing in DevOps, automation, and modern web technologies.`} />
+              <meta name="description" content={`Senior .NET & Azure Developer with ${yearsOfExperience}+ years building scalable cloud applications. Expert in DevOps, automation, and modern web technologies.`} />
             </Helmet>
             <JsonLd />
             <Layout>
