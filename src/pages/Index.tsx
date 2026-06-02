@@ -21,7 +21,6 @@ import { Button } from "@/components/ui/button";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { useCountUp } from "@/hooks/useCountUp";
 import { trackBookCall, trackProjectView, trackCertificationClick } from "@/utils/analytics";
-import { ResumeLeadMagnet } from "@/components/ResumeLeadMagnet";
 import projectsData from "@/data/projects.json";
 import {
   Card,
@@ -591,70 +590,6 @@ const Index = () => {
               />
             </Card>
           ))}
-        </div>
-      </section>
-
-      {/* Quick Links */}
-      <section className="container mx-auto px-4 py-4">
-        <div className="grid md:grid-cols-3 gap-3">
-          <Link to="/about">
-            <div className="glass rounded-xl p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center text-white shadow-md">
-                  <Code className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">
-                    About Me
-                  </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    Learn more about my journey
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/blog">
-            <div className="glass rounded-xl p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 theme-green:from-emerald-500 theme-green:to-teal-600 flex items-center justify-center text-white shadow-md">
-                  <Rocket className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">
-                    Blog Posts
-                  </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    Read my latest articles
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/testimonials">
-            <div className="glass rounded-xl p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 theme-green:from-teal-500 theme-green:to-emerald-600 flex items-center justify-center text-white shadow-md">
-                  <Star className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">
-                    Testimonials
-                  </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    See what clients say
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
-      </section>
-
-      {/* Resume Lead Magnet */}
-      <section className="container mx-auto px-4 py-4">
-        <div className="max-w-xl mx-auto">
-          <ResumeLeadMagnet />
         </div>
       </section>
 
