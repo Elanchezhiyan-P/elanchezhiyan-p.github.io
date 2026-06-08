@@ -3,57 +3,11 @@ import { ExternalLink, Github, Filter, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import projectsData from "../data/projects.json";
-import SeahorseImage from "@/assets/project/Seahorse.png";
-import MpsImage from "@/assets/project/MPS.jpg";
-import QueryBuilderImage from "@/assets/project/Querybuilder.png";
-import IcsImage from "@/assets/project/ics.jpg";
-import ScoutImage from "@/assets/project/Scout.jpg";
-import IOSBackupToolImage from "@/assets/project/Scout-iOS.png";
-import Qliq1sImage from "@/assets/project/Qliq1s.jpg";
-import ExpertConnectImage from "@/assets/project/expertconnectlegal.png";
-import KuralInsightsImage from "@/assets/project/kural-insights.png";
-import GitHubUserSearchImage from "@/assets/project/github-user-search.png";
-import WorldCountryExplorerImage from "@/assets/project/WorldCountryExplorer.png";
-import TamilSongDownloaderImage from "@/assets/project/tamilsongdownloader.png";
-import BlogSubscriptionImage from "@/assets/project/BlogSubscriptionSystem.png";
-import SSOIntegrationImage from "@/assets/project/SSOIntegration.png";
-import NetimobiledeviceImage from "@/assets/project/Netimobiledevice.png";
-import HeicJpegToolkitImage from "@/assets/project/HeicJpegToolkit.png";
-import ArcticCodeImage from "@/assets/project/arctic-code.png";
-import TeleMedixImage from "@/assets/project/telemedix.png";
-import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
-import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
-import ClinicalDischargePdfImage from "@/assets/project/ClinicalDischargePdf.png";
-import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.png";
+import { projectImageMap } from "@/utils/imageMap";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const Projects = () => {
-  const imageMap = {
-    "seahorse-analytics": SeahorseImage,
-    "mps-finance": MpsImage,
-    "query-builder": QueryBuilderImage,
-    ics: IcsImage,
-    remotecom: ScoutImage,
-    "ios-backup-tool": IOSBackupToolImage,
-    qliq1s: Qliq1sImage,
-    "expert-connect-legal": ExpertConnectImage,
-    "kural-insights": KuralInsightsImage,
-    "gitHub-user-search": GitHubUserSearchImage,
-    "world-country-explorer": WorldCountryExplorerImage,
-    "tamil-song-downloader": TamilSongDownloaderImage,
-    "blog-subscription-system": BlogSubscriptionImage,
-    SSOIntegrationSolution: SSOIntegrationImage,
-    Netimobiledevice: NetimobiledeviceImage,
-    HeicJpegToolkit: HeicJpegToolkitImage,
-    ArcticCodeVaultContributor: ArcticCodeImage,
-    telemedix: TeleMedixImage,
-    "invoice-pilot": InvoicePilotImage,
-    ghl: GoHighLevelImage,
-    "clinical-discharge-pdf-engine": ClinicalDischargePdfImage,
-    "smart-finance-system": SmartFinanceSystemImage,
-    "python-package-visualizer": "https://raw.githubusercontent.com/Elanchezhiyan-P/python-package-visualizer/main/media/screenshots/dashboard.png",
-  };
 
   const [filter, setFilter] = useState("all");
   const [projects] = useState(projectsData);
@@ -164,8 +118,9 @@ const Projects = () => {
             )}
             <div className="relative overflow-hidden aspect-video">
               <img
-                src={imageMap[project.id]}
+                src={projectImageMap[project.id] || "/placeholder.svg"}
                 alt={project.title}
+                loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300" />

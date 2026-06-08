@@ -1,42 +1,27 @@
 import React, { useState, useEffect } from "react";
 import {
-  Calendar,
   MapPin,
-  Award,
-  Code,
-  Cloud,
-  Database,
-  Server,
   Trophy,
   ExternalLink,
-  Zap,
-  Wrench,
-  Brain,
   Download,
-  Monitor,
-  BarChart3,
-  Activity,
-  GitBranch,
-  Layers,
-  TestTube,
-  Users,
 } from "lucide-react";
+import { SiDotnet, SiJira, SiCpanel } from "react-icons/si";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { MobileTimeline } from "@/components/MobileTimeline";
+import TechExpertise from "@/components/TechExpertise";
+import CertCard from "@/components/CertCard";
+import type { CertDef } from "@/components/CertCard";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 
+// ─── Page Component ───────────────────────────────────────────────────────────
 const About = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
   const yearsOfExperience = calculateYearsOfExperience();
 
   useEffect(() => {
@@ -113,691 +98,16 @@ const About = () => {
     },
   ];
 
-  const crmIntegrations = [
-    {
-      name: "NetSuite",
-      description: "ERP & CRM integration",
-      icon: "🏢",
-      category: "Enterprise",
-    },
-    {
-      name: "HubSpot",
-      description: "Marketing & Sales CRM",
-      icon: "🎯",
-      category: "Marketing",
-    },
-    {
-      name: "ConnectWise",
-      description: "IT Service Management",
-      icon: "🔧",
-      category: "IT Services",
-    },
-    {
-      name: "EverFi",
-      description: "Education & Compliance",
-      icon: "📚",
-      category: "Education",
-    },
-    {
-      name: "ServiceNow",
-      description: "Enterprise Service Management",
-      icon: "⚡",
-      category: "Enterprise",
-    },
-    {
-      name: "Zego Cloud",
-      description: "Cloud-based CRM",
-      icon: "☁️",
-      category: "Cloud",
-    },
-    {
-      name: "ProcessMaker",
-      description: "Business Process Automation",
-      icon: "🔄",
-      category: "Automation",
-    },
-    {
-      name: "QuestionPro",
-      description: "Survey & Research Platform",
-      icon: "📊",
-      category: "Research",
-    },
-  ];
-
-  const dotnetSkills = [
-    {
-      name: ".NET MAUI",
-      description: "Cross-platform mobile & desktop apps",
-      icon: "📱",
-      category: "Mobile",
-    },
-    {
-      name: ".NET Core Web Applications",
-      description: "Modern web applications & APIs",
-      icon: "🌐",
-      category: "Web",
-    },
-    {
-      name: ".NET Core with PLC Integration",
-      description: "Industrial automation systems",
-      icon: "⚙️",
-      category: "Industrial",
-    },
-    {
-      name: ".NET Core with RFID Readers",
-      description: "IoT & hardware integration",
-      icon: "📡",
-      category: "IoT",
-    },
-    {
-      name: ".NET Core API Development",
-      description: "RESTful & GraphQL APIs",
-      icon: "🔌",
-      category: "API",
-    },
-    {
-      name: ".NET Framework Applications",
-      description: "Legacy & enterprise systems",
-      icon: "🏛️",
-      category: "Enterprise",
-    },
-    {
-      name: ".NET with NHibernate",
-      description: "Object-relational mapping",
-      icon: "🗄️",
-      category: "ORM",
-    },
-    {
-      name: ".NET with IoC Pattern",
-      description: "Dependency injection & DI containers",
-      icon: "🔧",
-      category: "Architecture",
-    },
-    {
-      name: ".NET MVC with Stripe",
-      description: "Payment processing integration",
-      icon: "💳",
-      category: "Payments",
-    },
-    {
-      name: ".NET MVC with Azure",
-      description: "Cloud-native applications",
-      icon: "☁️",
-      category: "Cloud",
-    },
-    {
-      name: ".NET API Applications",
-      description: "Microservices & API gateways",
-      icon: "🔗",
-      category: "Microservices",
-    },
-    {
-      name: ".NET with Selenium Automation",
-      description: "Test automation & web scraping",
-      icon: "🤖",
-      category: "Testing",
-    },
-    {
-      name: ".NET with PhantomJS Scraping",
-      description: "Web scraping & data extraction",
-      icon: "🕷️",
-      category: "Data",
-    },
-    {
-      name: ".NET with ReactJS",
-      description: "Full-stack React integration",
-      icon: "⚛️",
-      category: "Frontend",
-    },
-    {
-      name: "Windows Applications",
-      description: "Desktop & system applications",
-      icon: "🖥️",
-      category: "Desktop",
-    },
-    {
-      name: "Windows Services",
-      description: "Background services & daemons",
-      icon: "⚙️",
-      category: "Services",
-    },
-    {
-      name: "SSO Integration",
-      description: "Microsoft, Google, Facebook, LinkedIn",
-      icon: "🔐",
-      category: "Security",
-    },
-    {
-      name: ".NET Core with iOS",
-      description: "iOS app development",
-      icon: "🍎",
-      category: "Mobile",
-    },
-    {
-      name: ".NET with AI/ML Integration",
-      description: "Machine learning & AI services",
-      icon: "🧠",
-      category: "AI/ML",
-    },
-    {
-      name: "Angular with .NET",
-      description: "Angular frontend integration",
-      icon: "🅰️",
-      category: "Frontend",
-    },
-    {
-      name: "React with .NET",
-      description: "React frontend integration",
-      icon: "⚛️",
-      category: "Frontend",
-    },
-    {
-      name: "Next.Js",
-      description: "React framework & SSR",
-      icon: "⚡",
-      category: "Frontend",
-    },
-    {
-      name: "Nest.Js",
-      description: "Node.js backend framework",
-      icon: "🪺",
-      category: "Backend",
-    },
-    {
-      name: "Node.js",
-      description: "JavaScript runtime & server",
-      icon: "🟢",
-      category: "Backend",
-    },
-    {
-      name: "PHP",
-      description: "Server-side scripting",
-      icon: "🐘",
-      category: "Backend",
-    },
-    {
-      name: "Adobe ColdFusion",
-      description: "Enterprise web development",
-      icon: "❄️",
-      category: "Enterprise",
-    },
-  ];
-
-  const tools = [
-    {
-      name: "PowerBI",
-      description: "Business intelligence & analytics",
-      icon: "📊",
-      category: "Analytics",
-    },
-    {
-      name: "Power Automate",
-      description: "Workflow automation",
-      icon: "🔄",
-      category: "Automation",
-    },
-    {
-      name: "SSRS",
-      description: "SQL Server Reporting Services",
-      icon: "📋",
-      category: "Reporting",
-    },
-    {
-      name: "SSIS",
-      description: "SQL Server Integration Services",
-      icon: "🔗",
-      category: "ETL",
-    },
-    {
-      name: "ETL Process",
-      description: "Data extraction & transformation",
-      icon: "🔄",
-      category: "Data",
-    },
-    {
-      name: "Redis Cache",
-      description: "In-memory data store",
-      icon: "⚡",
-      category: "Caching",
-    },
-    {
-      name: "AmChart",
-      description: "Interactive charts & graphs",
-      icon: "📈",
-      category: "Visualization",
-    },
-    {
-      name: "CanvasJs",
-      description: "JavaScript charting library",
-      icon: "🎨",
-      category: "Visualization",
-    },
-    {
-      name: "Chart.js",
-      description: "Simple chart library",
-      icon: "📊",
-      category: "Visualization",
-    },
-    {
-      name: "Aspose Document Editors",
-      description: "Document processing & editing",
-      icon: "📄",
-      category: "Documents",
-    },
-    {
-      name: "Firebase",
-      description: "Google's app development platform",
-      icon: "🔥",
-      category: "Backend",
-    },
-    {
-      name: "Zego Cloud",
-      description: "Cloud-based solutions",
-      icon: "☁️",
-      category: "Cloud",
-    },
-    {
-      name: "ProcessMaker",
-      description: "Business process automation",
-      icon: "⚙️",
-      category: "Automation",
-    },
-    {
-      name: "QuestionPro",
-      description: "Survey & research platform",
-      icon: "📝",
-      category: "Research",
-    },
-    {
-      name: "Selenium Automation",
-      description: "Web testing automation",
-      icon: "🤖",
-      category: "Testing",
-    },
-    {
-      name: "PhantomJS Scraping",
-      description: "Headless browser automation",
-      icon: "👻",
-      category: "Automation",
-    },
-    {
-      name: "HTML2Canvas",
-      description: "Screenshot & PDF generation",
-      icon: "📸",
-      category: "Utilities",
-    },
-    {
-      name: "NetiMobileDevice",
-      description: "Mobile device management",
-      icon: "📱",
-      category: "Mobile",
-    },
-  ];
-
-  const databases = [
-    {
-      name: "SQL Server",
-      description: "Microsoft's relational database",
-      icon: "🗄️",
-      category: "Relational",
-    },
-    {
-      name: "SQL Server Profiler",
-      description: "Database performance monitoring",
-      icon: "📊",
-      category: "Monitoring",
-    },
-    {
-      name: "Azure SQL",
-      description: "Cloud-based SQL database",
-      icon: "☁️",
-      category: "Cloud",
-    },
-    {
-      name: "Azure Storage Table",
-      description: "NoSQL data storage",
-      icon: "📋",
-      category: "NoSQL",
-    },
-    {
-      name: "MySQL",
-      description: "Open-source relational database",
-      icon: "🐬",
-      category: "Relational",
-    },
-    {
-      name: "PostgreSQL",
-      description: "Advanced open-source database",
-      icon: "🐘",
-      category: "Relational",
-    },
-    {
-      name: "AS400",
-      description: "IBM's enterprise system",
-      icon: "💻",
-      category: "Legacy",
-    },
-    {
-      name: "SQLite",
-      description: "Lightweight embedded database",
-      icon: "💾",
-      category: "Embedded",
-    },
-    {
-      name: "CosmosDB",
-      description: "Microsoft's NoSQL database",
-      icon: "🌌",
-      category: "NoSQL",
-    },
-    {
-      name: "MongoDB",
-      description: "Document-oriented database",
-      icon: "🍃",
-      category: "NoSQL",
-    },
-    {
-      name: "Firebird",
-      description: "Open-source relational database",
-      icon: "🔥",
-      category: "Relational",
-    },
-    {
-      name: "Oracle",
-      description: "Enterprise database system",
-      icon: "🏛️",
-      category: "Enterprise",
-    },
-  ];
-
-  const collaborationAndOtherSkills = [
-    {
-      name: "Android & iOS Development",
-      description: "Cross-platform mobile collaboration",
-      icon: "📱",
-      category: "Mobile",
-    },
-    {
-      name: "Client Interaction",
-      description: "Requirement gathering & communication",
-      icon: "🤝",
-      category: "Communication",
-    },
-    {
-      name: "Team Leadership",
-      description: "Mentoring & project management",
-      icon: "👥",
-      category: "Leadership",
-    },
-    {
-      name: "Continuous Learning",
-      description: "Adaptability & skill development",
-      icon: "📚",
-      category: "Growth",
-    },
-    {
-      name: "Open Source Contributions",
-      description: "Community involvement & sharing",
-      icon: "🌟",
-      category: "Community",
-    },
-    {
-      name: "Technical Documentation",
-      description: "Code documentation & guides",
-      icon: "📝",
-      category: "Documentation",
-    },
-    {
-      name: "Agile/Scrum Methodologies",
-      description: "Project management frameworks",
-      icon: "🔄",
-      category: "Methodology",
-    },
-  ];
-
-  const backendPlatformSkills = [
-    {
-      name: "ASP.NET Core Web API",
-      description: "Production-grade API development",
-      icon: "🔌",
-      category: "API",
-    },
-    {
-      name: "Node.js (TypeScript) Services",
-      description: "Type-safe backend services",
-      icon: "🟢",
-      category: "Backend",
-    },
-    {
-      name: "RESTful API Design & Versioning",
-      description: "Scalable API architecture patterns",
-      icon: "📐",
-      category: "Architecture",
-    },
-    {
-      name: "JWT & Role-Based Access Control",
-      description: "Authentication & authorization",
-      icon: "🔐",
-      category: "Security",
-    },
-    {
-      name: "Middleware & Request Pipelines",
-      description: "Custom middleware & request flow",
-      icon: "🔗",
-      category: "Backend",
-    },
-    {
-      name: "Environment-Based Configuration",
-      description: "Dev / Staging / Prod config management",
-      icon: "⚙️",
-      category: "DevOps",
-    },
-  ];
-
-  const analyticsTrackingSkills = [
-    {
-      name: "Google Analytics 4 (GA4)",
-      description: "Implementation & key events tracking",
-      icon: "📊",
-      category: "Analytics",
-    },
-    {
-      name: "Google Tag Manager (GTM)",
-      description: "Tag setup, debugging & deployment",
-      icon: "🏷️",
-      category: "Tag Management",
-    },
-    {
-      name: "Event-Based Analytics Design",
-      description: "Custom event schemas & tracking plans",
-      icon: "🎯",
-      category: "Analytics",
-    },
-    {
-      name: "Funnel & User Journey Tracking",
-      description: "Conversion funnel analysis",
-      icon: "🔄",
-      category: "Analytics",
-    },
-    {
-      name: "HubSpot Forms & Lead Tracking",
-      description: "Marketing automation integration",
-      icon: "📋",
-      category: "Marketing",
-    },
-    {
-      name: "Cross-Domain Tracking",
-      description: "Embedded form & multi-domain tracking",
-      icon: "🌐",
-      category: "Analytics",
-    },
-  ];
-
-  const observabilitySkills = [
-    {
-      name: "New Relic APM for .NET",
-      description: "Application performance monitoring",
-      icon: "📈",
-      category: "APM",
-    },
-    {
-      name: "Centralized Logging",
-      description: "Log aggregation & error correlation",
-      icon: "📝",
-      category: "Logging",
-    },
-    {
-      name: "Distributed Tracing",
-      description: "End-to-end request tracking",
-      icon: "🔍",
-      category: "Tracing",
-    },
-    {
-      name: "Production Debugging",
-      description: "Root cause analysis & diagnostics",
-      icon: "🐛",
-      category: "Debugging",
-    },
-    {
-      name: "Performance Profiling",
-      description: "Latency, throughput & bottleneck analysis",
-      icon: "⚡",
-      category: "Performance",
-    },
-  ];
-
-  const devopsSkills = [
-    {
-      name: "CI/CD Pipelines",
-      description: "GitHub Actions & Azure DevOps",
-      icon: "🚀",
-      category: "CI/CD",
-    },
-    {
-      name: "Dockerized Backend Services",
-      description: "Containerization & deployment",
-      icon: "🐳",
-      category: "Containers",
-    },
-    {
-      name: "Secrets & Config Management",
-      description: "Environment variables & vault management",
-      icon: "🔒",
-      category: "Security",
-    },
-    {
-      name: "Production Rollouts & Hotfixes",
-      description: "Zero-downtime deployment strategies",
-      icon: "📦",
-      category: "Deployment",
-    },
-    {
-      name: "Incident Response & Postmortems",
-      description: "On-call troubleshooting & analysis",
-      icon: "🚨",
-      category: "Reliability",
-    },
-  ];
-
-  const architectureSkills = [
-    {
-      name: "SaaS Application Architecture",
-      description: "Multi-tenant cloud-native design",
-      icon: "🏗️",
-      category: "Architecture",
-    },
-    {
-      name: "Scalable API Design",
-      description: "High-traffic API architecture",
-      icon: "📐",
-      category: "Design",
-    },
-    {
-      name: "Event-Driven Architecture",
-      description: "Message queues & pub/sub patterns",
-      icon: "⚡",
-      category: "Patterns",
-    },
-    {
-      name: "Microservices vs Modular Monolith",
-      description: "Architecture trade-off decisions",
-      icon: "🧩",
-      category: "Strategy",
-    },
-    {
-      name: "High-Availability & Fault Tolerance",
-      description: "Resilient system design patterns",
-      icon: "🛡️",
-      category: "Reliability",
-    },
-  ];
-
-  const testingQASkills = [
-    {
-      name: "API Testing (Postman)",
-      description: "Automated API test suites",
-      icon: "🧪",
-      category: "API Testing",
-    },
-    {
-      name: "Integration Testing",
-      description: "End-to-end system validation",
-      icon: "🔗",
-      category: "Testing",
-    },
-    {
-      name: "Analytics Validation & Event QA",
-      description: "Tracking accuracy verification",
-      icon: "✅",
-      category: "QA",
-    },
-    {
-      name: "Production vs Staging Verification",
-      description: "Environment parity checks",
-      icon: "🔄",
-      category: "Verification",
-    },
-    {
-      name: "Regression Testing",
-      description: "Tracking & integration regression suites",
-      icon: "🔁",
-      category: "Testing",
-    },
-  ];
-
-  const productOwnershipSkills = [
-    {
-      name: "Client Requirement Analysis",
-      description: "Translating business needs to tech specs",
-      icon: "📋",
-      category: "Analysis",
-    },
-    {
-      name: "Stakeholder Communication",
-      description: "Technical & non-technical reporting",
-      icon: "💬",
-      category: "Communication",
-    },
-    {
-      name: "End-to-End Feature Ownership",
-      description: "From design to deployment & monitoring",
-      icon: "🎯",
-      category: "Ownership",
-    },
-    {
-      name: "Cross-Functional Collaboration",
-      description: "Tech + Marketing + Product alignment",
-      icon: "🤝",
-      category: "Collaboration",
-    },
-  ];
-
-  const certifications = [
+  const certifications: CertDef[] = [
     {
       name: ".NET Full Stack Developer - C# Corner",
       issuer: "C# Corner",
       date: "May 2025",
       link: "https://www.c-sharpcorner.com/uploadfile/certification-exam/rzmmaqtc/certification.pdf?trk=public_profile_see-credential",
-      icon: "💻",
+      Icon: SiDotnet,
+      gradientFrom: "from-violet-600",
+      gradientTo: "to-indigo-700",
+      glowColor: "#7C3AED",
       category: "Development",
     },
     {
@@ -806,7 +116,10 @@ const About = () => {
       date: "Feb 2025",
       credentialId: "elanchezhiyan-p-fcswm",
       link: "https://freecodecamp.org/certification/Elanchezhiyan-P/foundational-c-sharp-with-microsoft?trk=public_profile_see-credential",
-      icon: "🔷",
+      badge: "fCC",
+      gradientFrom: "from-green-600",
+      gradientTo: "to-emerald-700",
+      glowColor: "#10B981",
       category: "Programming",
     },
     {
@@ -815,7 +128,10 @@ const About = () => {
       date: "Feb 2025",
       credentialId: "elanchezhiyan-p-rwd",
       link: "https://www.freecodecamp.org/certification/Elanchezhiyan-P/responsive-web-design?trk=public_profile_see-credential",
-      icon: "📱",
+      badge: "RWD",
+      gradientFrom: "from-sky-500",
+      gradientTo: "to-blue-700",
+      glowColor: "#0EA5E9",
       category: "Web Design",
     },
     {
@@ -824,8 +140,10 @@ const About = () => {
       date: "Feb 2024",
       credentialId: "299136941",
       link: "https://university.atlassian.com/student/award/17WcnErMoSR8bgZ9hsN3hSTw?trk=public_profile_see-credential",
-      icon: "🎯",
-      category: "Project Management",
+      Icon: SiJira,
+      gradientFrom: "from-blue-600",
+      gradientTo: "to-blue-800",
+      glowColor: "#0052CC",      category: "Project Management",
     },
     {
       name: "cPanel User Interface Proficiency",
@@ -833,109 +151,21 @@ const About = () => {
       date: "Jan 2025",
       credentialId: "851a-2616-8f92-f311",
       link: "https://university.cpanel.net/?trk=public_profile_see-credential",
-      icon: "⚙️",
-      category: "System Administration",
+      Icon: SiCpanel,
+      gradientFrom: "from-orange-500",
+      gradientTo: "to-orange-700",
+      glowColor: "#F97316",
+      category: "Infrastructure",
     },
   ];
-
-  const handleResumeDownload = () => {
-    // Create a link element and trigger download
-    const link = document.createElement("a");
-    link.href = "/resume/Elanchezhiyan_P.pdf"; // Files in public folder are served from root
-    link.download = "Elanchezhiyan_P_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const SkillCard = ({
-    title,
-    skills,
-    icon: Icon,
-    gradient,
-    description,
-    isCrm = false,
-  }: {
-    title: string;
-    skills: any[];
-    icon: any;
-    gradient: string;
-    description: string;
-    isCrm?: boolean;
-  }) => (
-    <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-blue-400 transition-all duration-500 relative hover:scale-105 glass backdrop-blur-xl border-2 border-blue-400/60 dark:border-blue-500/60 theme-green:border-green-400/60 theme-green:dark:border-green-500/60 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-900/80 dark:to-gray-800/80 shadow-lg">
-      <CardContent className="p-4 md:p-6">
-        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div
-            className={`p-3 md:p-4 rounded-xl md:rounded-2xl bg-gradient-to-br ${gradient} shadow-lg flex-shrink-0`}
-          >
-            <Icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors break-words">
-              {title}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mt-1 text-xs md:text-sm">
-              {description}
-            </p>
-          </div>
-        </div>
-
-        {isCrm ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {skills.map((crm, index) => (
-              <div
-                key={index}
-                className="group relative rounded-xl p-4 border-2 border-blue-300/70 dark:border-blue-500/70 hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="text-2xl">{crm.icon}</div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 dark:text-gray-200 text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {crm.name}
-                    </h4>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {crm.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <Badge variant="secondary" className="text-xs">
-                    {crm.category}
-                  </Badge>
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {skills.map((skill, index) => (
-              <div
-                key={index}
-                className="rounded-xl p-4 border-2 border-blue-300/70 dark:border-blue-500/70 hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md"
-              >
-                <span className="text-gray-800 dark:text-gray-200 text-sm font-medium leading-relaxed group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {skill}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
 
   return (
     <>
       <Helmet>
-        <title>
-          About Elanchezhiyan P - Senior .NET & Azure Developer | 5+ Years
-          Experience
-        </title>
+        <title>{`About Elanchezhiyan P — Senior .NET & Azure Engineer | ${yearsOfExperience}+ Years`}</title>
         <meta
           name="description"
-          content="Learn about Elanchezhiyan P, a B.E (Bachelor of Engineering) graduate and seasoned software developer with 5+ years of experience in .NET Core, Azure Cloud, CRM integrations, and modern web technologies. Expert in building scalable, secure applications."
+          content={`Elanchezhiyan P is a Senior .NET & Azure Engineer with ${yearsOfExperience}+ years of experience building enterprise SaaS platforms, IoT systems, CRM integrations (NetSuite, HubSpot, ConnectWise), and cloud-native APIs.`}
         />
         <meta
           name="keywords"
@@ -959,18 +189,24 @@ const About = () => {
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             About Me
           </h1>
-          <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl mx-auto backdrop-blur-xl border border-white/20">
-            <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              I'm a seasoned software developer with{" "}
+          <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl mx-auto backdrop-blur-xl border border-white/20 space-y-4">
+            <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              I specialise in{" "}
+              <span className="font-bold text-blue-600 theme-green:text-green-600">
+                .NET and Azure
+              </span>{" "}
+              — building everything from ERP integrations (NetSuite, HubSpot, ConnectWise)
+              and IoT control systems to multi-tenant analytics platforms and high-throughput APIs.
+            </p>
+            <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              Over{" "}
               <span className="font-bold text-blue-600 theme-green:text-green-600">
                 {yearsOfExperience}+ years
               </span>{" "}
-              of experience in building scalable, secure cloud applications. I hold a{" "}
-              <span className="font-bold text-blue-600 theme-green:text-green-600">
-                B.E (Bachelor of Engineering)
-              </span>{" "}
-              degree. My expertise spans across .NET technologies, Azure cloud services,
-              CRM integrations, and modern web development frameworks.
+              at App Innovation Technologies, I progressed from Developer to Technical Lead to
+              Senior Developer — shipping 30+ production systems, contributing to open-source
+              tooling with Arctic Code Vault recognition, and mentoring engineers across
+              cloud-native projects.
             </p>
           </div>
         </section>
@@ -999,12 +235,14 @@ const About = () => {
                 </a>
               </Button>
               <Button
-                onClick={handleResumeDownload}
+                asChild
                 variant="outline"
                 className="border-2 border-blue-600 theme-green:border-green-600 text-blue-600 theme-green:text-green-600 hover:bg-blue-50 theme-green:hover:bg-green-50 px-5 md:px-8 py-2 md:py-3 text-sm md:text-lg font-semibold rounded-xl md:rounded-2xl transition-all duration-300 hover:scale-105"
               >
-                <Download className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                Download Resume PDF
+                <a href="/resume/Elanchezhiyan_P.pdf" download="Elanchezhiyan_P_Resume.pdf">
+                  <Download className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                  Download Resume PDF
+                </a>
               </Button>
             </div>
           </div>
@@ -1152,119 +390,12 @@ const About = () => {
         </section>
 
         {/* Technical Expertise Section */}
-        <section>
-          <h2 className="text-2xl md:text-4xl font-bold text-center mb-6 md:mb-16 bg-gradient-to-r from-blue-300 to-purple-600 theme-green:from-green-300 theme-green:to-emerald-300 bg-clip-text text-transparent">
+        <section className="mb-6 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-bold text-center mb-6 md:mb-10 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             Technical Expertise
           </h2>
-
-          <div className="space-y-6 md:space-y-12">
-            <SkillCard
-              title="CRM Integrations"
-              description="Seamless integration with leading CRM platforms across industries"
-              skills={crmIntegrations}
-              icon={Zap}
-              gradient="from-orange-500 to-red-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title=".NET Applications"
-              description="Comprehensive .NET ecosystem development across platforms"
-              skills={dotnetSkills}
-              icon={Code}
-              gradient="from-blue-500 to-purple-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Tools & Technologies"
-              description="Modern development and integration tools ecosystem"
-              skills={tools}
-              icon={Wrench}
-              gradient="from-green-500 to-teal-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Databases"
-              description="Multi-database expertise and management across platforms"
-              skills={databases}
-              icon={Database}
-              gradient="from-yellow-500 to-orange-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Collaboration & Soft Skills"
-              description="Effective communication, leadership, and team collaboration"
-              skills={collaborationAndOtherSkills}
-              icon={Brain}
-              gradient="from-pink-500 to-purple-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Backend & Platform Engineering"
-              description="Production-grade API development, authentication & configuration management"
-              skills={backendPlatformSkills}
-              icon={Monitor}
-              gradient="from-slate-600 to-blue-700"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Analytics, Tracking & Marketing Tech"
-              description="GA4, GTM, event tracking, funnel analysis & marketing automation"
-              skills={analyticsTrackingSkills}
-              icon={BarChart3}
-              gradient="from-amber-500 to-orange-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Observability, Monitoring & Debugging"
-              description="APM, logging, distributed tracing & performance profiling"
-              skills={observabilitySkills}
-              icon={Activity}
-              gradient="from-cyan-500 to-blue-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="DevOps, Deployment & Reliability"
-              description="CI/CD, Docker, secrets management & incident response"
-              skills={devopsSkills}
-              icon={GitBranch}
-              gradient="from-emerald-500 to-green-700"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Architecture & System Design"
-              description="SaaS architecture, scalable APIs, event-driven & resilient systems"
-              skills={architectureSkills}
-              icon={Layers}
-              gradient="from-violet-500 to-purple-700"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Testing, Validation & Quality"
-              description="API testing, integration testing, analytics QA & regression suites"
-              skills={testingQASkills}
-              icon={TestTube}
-              gradient="from-rose-500 to-red-600"
-              isCrm={true}
-            />
-
-            <SkillCard
-              title="Product, Client & Ownership Skills"
-              description="Requirement analysis, stakeholder communication & end-to-end ownership"
-              skills={productOwnershipSkills}
-              icon={Users}
-              gradient="from-indigo-500 to-blue-600"
-              isCrm={true}
-            />
+          <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 backdrop-blur-xl border border-white/20">
+            <TechExpertise />
           </div>
         </section>
 
@@ -1273,64 +404,9 @@ const About = () => {
           <h2 className="text-2xl md:text-4xl font-bold text-center mb-6 md:mb-12 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent pt-4 md:pt-10">
             Certifications & Achievements
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert, index) => (
-              <Card
-                key={cert.name}
-                className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 rounded-t-2xl"></div>
-
-                <CardContent className="p-4 md:p-6">
-                  <div className="space-y-3 md:space-y-4">
-                    {/* Header with icon and external link */}
-                    <div className="flex items-center justify-between">
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
-                        <span className="text-lg md:text-xl">{cert.icon}</span>
-                      </div>
-                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300" />
-                    </div>
-
-                    {/* Content */}
-                    <div className="space-y-2 md:space-y-3">
-                      <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base md:text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
-                        {cert.name}
-                      </h3>
-
-                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {cert.issuer}
-                      </p>
-
-                      <div className="flex items-center gap-2">
-                        <Badge variant="secondary" className="text-xs">
-                          {cert.category}
-                        </Badge>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {cert.date}
-                        </span>
-                      </div>
-
-                      {cert.credentialId && (
-                        <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-                          <span className="text-xs text-gray-500 dark:text-gray-400">
-                            ID: {cert.credentialId}
-                          </span>
-                          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-
-                <a
-                  href={cert.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute inset-0"
-                  aria-label={`View ${cert.name} certification`}
-                />
-              </Card>
+              <CertCard key={cert.name} cert={cert} index={index} />
             ))}
           </div>
 

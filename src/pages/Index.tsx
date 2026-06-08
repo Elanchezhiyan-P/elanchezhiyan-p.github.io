@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
+
+// Lazy-load the Three.js scene so it doesn't block initial render
+const Hero3DScene = lazy(() => import("@/components/Hero3DScene"));
 import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
-  Code,
-  Cloud,
-  Zap,
   ChevronLeft,
   ChevronRight,
   Github,
   ExternalLink,
-  Database,
-  Shield,
-  Rocket,
-  CheckCircle2,
-  Star,
-  TrendingUp,
 } from "lucide-react";
+import {
+  SiDotnet,
+  SiReact,
+  SiTypescript,
+  SiDocker,
+  SiGit,
+  SiNodedotjs,
+  SiGithubactions,
+  SiAngular,
+  SiJira,
+  SiCpanel,
+} from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { useCountUp } from "@/hooks/useCountUp";
@@ -31,28 +37,10 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-import SeahorseImage from "@/assets/project/Seahorse.png";
-import MpsImage from "@/assets/project/MPS.jpg";
-import QueryBuilderImage from "@/assets/project/Querybuilder.png";
-import IcsImage from "@/assets/project/ics.jpg";
-import ScoutImage from "@/assets/project/Scout.jpg";
-import IOSBackupToolImage from "@/assets/project/Scout-iOS.png";
-import Qliq1sImage from "@/assets/project/Qliq1s.jpg";
-import ExpertConnectImage from "@/assets/project/expertconnectlegal.png";
-import KuralInsightsImage from "@/assets/project/kural-insights.png";
-import GitHubUserSearchImage from "@/assets/project/github-user-search.png";
-import WorldCountryExplorerImage from "@/assets/project/WorldCountryExplorer.png";
-import TamilSongDownloaderImage from "@/assets/project/tamilsongdownloader.png";
-import BlogSubscriptionImage from "@/assets/project/BlogSubscriptionSystem.png";
-import SSOIntegrationImage from "@/assets/project/SSOIntegration.png";
-import NetimobiledeviceImage from "@/assets/project/Netimobiledevice.png";
-import HeicJpegToolkitImage from "@/assets/project/HeicJpegToolkit.png";
-import ArcticCodeImage from "@/assets/project/arctic-code.png";
-import TeleMedixImage from "@/assets/project/telemedix.png";
-import InvoicePilotImage from "@/assets/project/invoice-pdf-image.png";
-import GoHighLevelImage from "@/assets/project/GoHighLevelImage.png";
-import ClinicalDischargePdfImage from "@/assets/project/ClinicalDischargePdf.png";
-import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.png";
+import { projectImageMap } from "@/utils/imageMap";
+import TiltDiv from "@/components/TiltDiv";
+import CertCard from "@/components/CertCard";
+import type { CertDef } from "@/components/CertCard";
 
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -60,32 +48,9 @@ const Index = () => {
 
   const featuredProjects = projectsData.filter((project) => project.featured);
   const yearsOfExperience = calculateYearsOfExperience();
-
-  const imageMap = {
-    "seahorse-analytics": SeahorseImage,
-    "mps-finance": MpsImage,
-    "query-builder": QueryBuilderImage,
-    ics: IcsImage,
-    remotecom: ScoutImage,
-    "ios-backup-tool": IOSBackupToolImage,
-    qliq1s: Qliq1sImage,
-    "expert-connect-legal": ExpertConnectImage,
-    "kural-insights": KuralInsightsImage,
-    "gitHub-user-search": GitHubUserSearchImage,
-    "world-country-explorer": WorldCountryExplorerImage,
-    "tamil-song-downloader": TamilSongDownloaderImage,
-    "blog-subscription-system": BlogSubscriptionImage,
-    SSOIntegrationSolution: SSOIntegrationImage,
-    Netimobiledevice: NetimobiledeviceImage,
-    HeicJpegToolkit: HeicJpegToolkitImage,
-    ArcticCodeVaultContributor: ArcticCodeImage,
-    telemedix: TeleMedixImage,
-    "invoice-pilot": InvoicePilotImage,
-    ghl: GoHighLevelImage,
-    "clinical-discharge-pdf-engine": ClinicalDischargePdfImage,
-    "smart-finance-system": SmartFinanceSystemImage,
-    "python-package-visualizer": "https://raw.githubusercontent.com/Elanchezhiyan-P/python-package-visualizer/main/media/screenshots/dashboard.png",
-  };
+  const isGreenTheme =
+    typeof document !== "undefined" &&
+    document.documentElement.classList.contains("theme-green");
 
   useEffect(() => {
     if (!isHovered) {
@@ -109,14 +74,14 @@ const Index = () => {
   return (
     <div className="space-y">
       <Helmet>
-        <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
+        <title>Elanchezhiyan P — Senior .NET &amp; Azure Engineer | Enterprise SaaS &amp; Cloud</title>
         <meta
           name="description"
-          content={`Hire Elanchezhiyan P — Senior .NET & Azure Developer, ${yearsOfExperience}+ yrs exp. Available for full-time, contract & freelance. Cloud, DevOps, React.`}
+          content={`Hire Elanchezhiyan P — Senior .NET & Azure Engineer with ${yearsOfExperience}+ years building enterprise SaaS platforms, IoT systems, CRM integrations, and cloud-native APIs. Available full-time, contract & freelance.`}
         />
         <meta
           name="keywords"
-          content="Hire .NET Developer, Senior Azure Developer, Freelance C# Developer, Full Stack Developer India, .NET Developer for Hire, Azure Cloud Consultant, Remote Developer, DevOps Engineer, React Developer"
+          content="Hire .NET Developer, Senior Azure Engineer, Enterprise SaaS Developer, C# Developer, Full Stack Developer India, Azure Cloud Architect, IoT .NET Developer, CRM Integration Developer, React Developer, Remote .NET Developer"
         />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://codebyelan.in/" />
@@ -130,7 +95,7 @@ const Index = () => {
               <div className="flex flex-wrap gap-2 mb-2 animate-fade-in">
                 <div className="inline-block px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-700">
                   <span className="text-xs font-semibold text-green-700 dark:text-green-300">
-                    Open to Opportunities — Full-time / Contract / Freelance
+                    Available · Full-time · Contract · Freelance
                   </span>
                 </div>
               </div>
@@ -138,82 +103,92 @@ const Index = () => {
                 <span className="block text-gray-800 dark:text-gray-200 mb-1">
                   Hi, I'm{" "}
                 </span>
-                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-500 bg-clip-text text-transparent animate-gradient">
+                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-500 bg-clip-text text-transparent">
                   Elanchezhiyan P
                 </span>
-                <span className="sr-only"> — Senior .NET &amp; Azure Developer</span>
               </h1>
-              <div className="text-base md:text-lg text-gray-700 dark:text-gray-300 space-y-1.5">
-                <p className="font-bold text-gray-900 dark:text-gray-100">
-                  Seasoned Software Developer
+              <div className="text-base md:text-lg text-gray-700 dark:text-gray-300 space-y-2">
+                <p className="font-bold text-gray-900 dark:text-gray-100 text-lg md:text-xl">
+                  Senior .NET &amp; Azure Engineer
                 </p>
                 <p className="leading-relaxed">
-                  B.E (Bachelor of Engineering) graduate with{" "}
                   <span className="font-semibold text-blue-600 theme-green:text-green-600">
                     {yearsOfExperience}+ years
                   </span>{" "}
-                  of experience architecting scalable and secure cloud applications.
+                  building enterprise SaaS platforms — IoT integrations, CRM systems,
+                  analytics dashboards, and cloud-native APIs.
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              <Link to="/projects">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+              {/* Primary CTA — full width on mobile */}
+              <Link to="/projects" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="group relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 theme-green:from-green-600 theme-green:via-green-700 theme-green:to-emerald-700 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl hover:shadow-blue-500/50 theme-green:hover:shadow-green-500/50 transition-all duration-300 hover:scale-105 overflow-hidden"
+                  className="group relative w-full sm:w-auto bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 theme-green:from-green-600 theme-green:via-green-700 theme-green:to-emerald-700 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl hover:shadow-blue-500/50 theme-green:hover:shadow-green-500/50 transition-all duration-300 hover:scale-105 overflow-hidden"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
                     View My Work
                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 theme-green:from-green-700 theme-green:via-emerald-700 theme-green:to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </Button>
               </Link>
-              <a
-                href="https://topmate.io/elanchezhiyan_poosamani"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={trackBookCall}
-              >
-                <Button
-                  size="lg"
-                  className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 overflow-hidden"
+              {/* Secondary CTAs — side by side on mobile */}
+              <div className="flex gap-2 w-full sm:w-auto">
+                <a
+                  href="https://topmate.io/elanchezhiyan_poosamani"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={trackBookCall}
+                  className="flex-1 sm:flex-initial"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Book a Call
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </Button>
-              </a>
-              <Link to="/contact">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="group px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white theme-green:border-green-600 theme-green:text-green-600 theme-green:hover:bg-green-600 theme-green:hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                >
-                  Get In Touch
-                </Button>
-              </Link>
+                  <Button
+                    size="lg"
+                    className="group relative w-full bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 overflow-hidden"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      Book a Call
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-700 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </Button>
+                </a>
+                <Link to="/contact" className="flex-1 sm:flex-initial">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="group w-full px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white theme-green:border-green-600 theme-green:text-green-600 theme-green:hover:bg-green-600 theme-green:hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  >
+                    Get In Touch
+                  </Button>
+                </Link>
+              </div>
             </div>
 
             {/* Animated Quick Stats */}
             <AnimatedStats yearsOfExperience={yearsOfExperience} />
           </div>
 
-          <div className="flex-1 flex justify-center">
-            <div className="relative group animate-scale-in">
+          <div className="flex-1 flex justify-center relative min-h-[260px] md:min-h-[320px]">
+            {/* 3D scene – desktop only, sits behind the photo */}
+            <div className="absolute inset-0 hidden lg:block pointer-events-none" aria-hidden="true">
+              <Suspense fallback={null}>
+                <Hero3DScene isGreenTheme={isGreenTheme} />
+              </Suspense>
+            </div>
+
+            <div className="relative group animate-scale-in z-10 self-center">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-600 theme-green:to-teal-600 rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500 animate-pulse"></div>
               <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-600 theme-green:to-teal-600 p-1.5 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-blue-500/40 theme-green:group-hover:shadow-green-500/40 group-hover:scale-105">
                 <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-2 flex items-center justify-center overflow-hidden">
                   <img
-                    src="/Elan.jpg"
-                    alt="Elanchezhiyan P"
+                    src="/Elan-Professional.png"
+                    alt="Elanchezhiyan P — Senior .NET and Azure Engineer"
                     width={224}
                     height={224}
-                    fetchPriority="high"
-                    className="w-full h-full rounded-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:rotate-2 group-hover:brightness-110"
+                    className="w-full h-full rounded-full object-cover object-top transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
                   />
                 </div>
               </div>
@@ -232,62 +207,42 @@ const Index = () => {
             Core Technologies
           </h2>
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3">
+        <div className="grid grid-cols-4 md:grid-cols-8 gap-2 sm:gap-3">
           {[
-            { name: ".NET", icon: "💻" },
-            { name: "React", icon: "⚛️" },
-            { name: "Azure", icon: "☁️" },
-            { name: "SQL", icon: "🗄️" },
-            { name: "TypeScript", icon: "📘", shortName: "TS" },
-            { name: "Docker", icon: "🐳" },
-            { name: "Git", icon: "🔀" },
-            { name: "API", icon: "🔌" },
+            { name: ".NET",       Icon: SiDotnet,       color: "#512BD4" },
+            { name: "React",      Icon: SiReact,        color: "#61DAFB" },
+            { name: "Azure",      badge: "Az",          color: "#0078D4" },
+            { name: "TypeScript", Icon: SiTypescript,   color: "#3178C6" },
+            { name: "Angular",    Icon: SiAngular,      color: "#DD0031" },
+            { name: "Docker",     Icon: SiDocker,       color: "#2496ED" },
+            { name: "Git",        Icon: SiGit,          color: "#F05032" },
+            { name: "Node.js",    Icon: SiNodedotjs,    color: "#339933" },
           ].map((tech, index) => (
-            <div
+            <TiltDiv
               key={index}
-              className="group glass rounded-xl p-2 sm:p-3 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-110 hover:shadow-lg text-center min-w-0"
+              intensity={12}
+              glare={false}
+              className="group glass rounded-xl p-2 sm:p-3 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:shadow-lg text-center min-w-0 cursor-default"
             >
-              <div className="text-xl sm:text-2xl mb-1">{tech.icon}</div>
-              <div className="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-300 break-words overflow-hidden">
-                <span className="hidden sm:inline">{tech.name}</span>
-                <span className="sm:hidden">{tech.shortName || tech.name}</span>
+              <div className="flex items-center justify-center w-9 h-9 mx-auto mb-1.5">
+                {tech.Icon ? (
+                  <tech.Icon
+                    style={{ color: tech.color, width: 30, height: 30 }}
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-[10px] font-bold shadow-sm"
+                    style={{ background: tech.color }}
+                  >
+                    {tech.badge}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Key Achievements */}
-      <section className="container mx-auto px-4 py-4">
-        <div className="grid md:grid-cols-2 gap-3">
-          {[
-            {
-              icon: <TrendingUp className="w-5 h-5" />,
-              title: "Performance Optimized",
-              desc: "40% improvement average",
-            },
-            {
-              icon: <Shield className="w-5 h-5" />,
-              title: "Secure by Design",
-              desc: "Enterprise-grade security",
-            },
-          ].map((achievement, index) => (
-            <div
-              key={index}
-              className="glass rounded-xl p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center text-white shadow-md">
-                  {achievement.icon}
-                </div>
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white">
-                  {achievement.title}
-                </h3>
+              <div className="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-300 overflow-hidden truncate">
+                {tech.name}
               </div>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
-                {achievement.desc}
-              </p>
-            </div>
+            </TiltDiv>
           ))}
         </div>
       </section>
@@ -325,7 +280,7 @@ const Index = () => {
                     <div className="relative w-full h-48 lg:h-64 flex items-center justify-center group/image">
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-indigo-500/20 theme-green:from-green-500/20 theme-green:via-emerald-500/20 theme-green:to-teal-500/20 rounded-2xl blur-xl group-hover/image:opacity-75 transition-opacity duration-500"></div>
                       <img
-                        src={imageMap[project.id]}
+                        src={projectImageMap[project.id] || "/placeholder.svg"}
                         alt={project.title}
                         loading="lazy"
                         className="relative w-full h-full object-cover rounded-2xl shadow-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110 group-hover:shadow-2xl"
@@ -448,147 +403,149 @@ const Index = () => {
 
         <div className="grid md:grid-cols-3 gap-3 lg:gap-4">
           {/* Full-Stack Development Card */}
-          <Card className="group relative overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-all duration-500 hover:-translate-y-3 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 card-lift">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:via-emerald-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl"></div>
-            <div className="relative flex flex-col items-center p-4">
-              <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 theme-green:from-green-500 theme-green:to-emerald-600 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                <Code className="w-7 h-7 text-white" />
+          <TiltDiv intensity={7} glare={true} className="rounded-2xl">
+            <Card className="group relative overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl pointer-events-none" />
+              <div className="relative flex flex-col items-center p-4">
+                <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-700 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <SiDotnet style={{ color: "white", width: 28, height: 28 }} aria-hidden="true" />
+                </div>
+                <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-indigo-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                  Full-Stack Development
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
+                  Building scalable applications with .NET Core, React, Angular and modern JavaScript frameworks.
+                </p>
+                <div className="flex gap-2 mt-3">
+                  <SiDotnet style={{ color: "#512BD4", width: 16, height: 16 }} aria-hidden="true" />
+                  <SiReact style={{ color: "#61DAFB", width: 16, height: 16 }} aria-hidden="true" />
+                  <SiAngular style={{ color: "#DD0031", width: 16, height: 16 }} aria-hidden="true" />
+                  <SiTypescript style={{ color: "#3178C6", width: 16, height: 16 }} aria-hidden="true" />
+                </div>
               </div>
-              <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 theme-green:group-hover:from-green-600 theme-green:group-hover:to-emerald-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                Full-Stack Development
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
-                Building scalable applications with .NET Core, React, and modern
-                JavaScript frameworks.
-              </p>
-            </div>
-          </Card>
+            </Card>
+          </TiltDiv>
 
           {/* Cloud Solutions Card */}
-          <Card className="group relative overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-all duration-500 hover:-translate-y-3 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 card-lift">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:via-emerald-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl"></div>
-            <div className="relative flex flex-col items-center p-4">
-              <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                <Cloud className="w-7 h-7 text-white" />
+          <TiltDiv intensity={7} glare={true} className="rounded-2xl">
+            <Card className="group relative overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-cyan-500/0 group-hover:from-blue-500/5 group-hover:to-cyan-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl pointer-events-none" />
+              <div className="relative flex flex-col items-center p-4">
+                <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-700 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <SiDocker style={{ color: "white", width: 28, height: 28 }} aria-hidden="true" />
+                </div>
+                <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-sky-600 group-hover:to-blue-700 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                  Cloud & DevOps
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
+                  Azure App Services, Blob Storage, serverless functions and containerised deployments.
+                </p>
+                <div className="flex items-center gap-2 mt-3">
+                  <SiDocker style={{ color: "#2496ED", width: 16, height: 16 }} aria-hidden="true" />
+                  <SiGithubactions style={{ color: "#2088FF", width: 16, height: 16 }} aria-hidden="true" />
+                  <span className="inline-flex items-center justify-center rounded text-white font-bold text-[8px]" style={{ background: "#0078D4", width: 16, height: 16 }}>Az</span>
+                  <SiGit style={{ color: "#F05032", width: 16, height: 16 }} aria-hidden="true" />
+                </div>
               </div>
-              <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 theme-green:group-hover:from-green-600 theme-green:group-hover:to-emerald-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                Cloud Solutions
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
-                Azure expertise in App Services, SQL Database, Blob Storage, and
-                serverless architectures.
-              </p>
-            </div>
-          </Card>
+            </Card>
+          </TiltDiv>
 
           {/* DevOps & Automation Card */}
-          <Card className="group relative overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-all duration-500 hover:-translate-y-3 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 card-lift">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:via-emerald-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl"></div>
-            <div className="relative flex flex-col items-center p-4">
-              <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 theme-green:from-emerald-500 theme-green:to-teal-600 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                <Zap className="w-7 h-7 text-white" />
+          <TiltDiv intensity={7} glare={true} className="rounded-2xl">
+            <Card className="group relative overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/5 group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl pointer-events-none" />
+              <div className="relative flex flex-col items-center p-4">
+                <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <SiGithubactions style={{ color: "white", width: 28, height: 28 }} aria-hidden="true" />
+                </div>
+                <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-emerald-600 group-hover:to-teal-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                  CI/CD & Automation
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
+                  GitHub Actions pipelines, automated testing, and Infrastructure as Code deployment strategies.
+                </p>
+                <div className="flex gap-2 mt-3">
+                  <SiGithubactions style={{ color: "#2088FF", width: 16, height: 16 }} aria-hidden="true" />
+                  <SiNodedotjs style={{ color: "#339933", width: 16, height: 16 }} aria-hidden="true" />
+                  <SiDocker style={{ color: "#2496ED", width: 16, height: 16 }} aria-hidden="true" />
+                  <SiGit style={{ color: "#F05032", width: 16, height: 16 }} aria-hidden="true" />
+                </div>
               </div>
-              <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-indigo-600 theme-green:group-hover:from-emerald-600 theme-green:group-hover:to-teal-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                DevOps & Automation
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
-                CI/CD pipelines, Infrastructure as Code, and automated
-                deployment strategies.
-              </p>
-            </div>
-          </Card>
+            </Card>
+          </TiltDiv>
         </div>
       </section>
 
       {/* Certifications & Achievements */}
-      <section className="container mx-auto px-4 pt-8 pb-4 relative z-0">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 md:mb-8 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent relative z-10">
+      <section className="container mx-auto px-4 pt-8 pb-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
           Certifications & Achievements
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-10 max-w-7xl mx-auto items-stretch">
-          {[
-            {
-              name: ".NET Full Stack Developer - C# Corner",
-              issuer: "C# Corner",
-              date: "May 2025",
-              link: "https://www.c-sharpcorner.com/uploadfile/certification-exam/rzmmaqtc/certification.pdf?trk=public_profile_see-credential",
-              icon: "💻",
-              category: "Development",
-            },
-            {
-              name: "Foundational C# with Microsoft",
-              issuer: "freeCodeCamp",
-              date: "Feb 2025",
-              credentialId: "elanchezhiyan-p-fcswm",
-              link: "https://freecodecamp.org/certification/Elanchezhiyan-P/foundational-c-sharp-with-microsoft?trk=public_profile_see-credential",
-              icon: "🔷",
-              category: "Programming",
-            },
-            {
-              name: "Responsive Web Design",
-              issuer: "freeCodeCamp",
-              date: "Feb 2025",
-              credentialId: "elanchezhiyan-p-rwd",
-              link: "https://www.freecodecamp.org/certification/Elanchezhiyan-P/responsive-web-design?trk=public_profile_see-credential",
-              icon: "📱",
-              category: "Web Design",
-            },
-          ].map((cert, index) => (
-            <Card
-              key={cert.name}
-              className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative z-10 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 w-full min-w-0"
-            >
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 rounded-t-xl"></div>
-
-              <CardContent className="p-4 md:p-6 min-w-0">
-                <div className="space-y-3 md:space-y-4">
-                  {/* Header with icon and external link */}
-                  <div className="flex items-center justify-between">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
-                      <span className="text-lg md:text-xl">{cert.icon}</span>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="space-y-2 md:space-y-3">
-                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base md:text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
-                      {cert.name}
-                    </h3>
-
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                      {cert.issuer}
-                    </p>
-
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {cert.category}
-                      </Badge>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        {cert.date}
-                      </span>
-                    </div>
-
-                    {cert.credentialId && (
-                      <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          ID: {cert.credentialId}
-                        </span>
-                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-
-              <a
-                href={cert.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute inset-0"
-                aria-label={`View ${cert.name} certification`}
-              />
-            </Card>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
+          {(
+            [
+              {
+                name: ".NET Full Stack Developer - C# Corner",
+                issuer: "C# Corner",
+                date: "May 2025",
+                link: "https://www.c-sharpcorner.com/uploadfile/certification-exam/rzmmaqtc/certification.pdf",
+                Icon: SiDotnet,
+                gradientFrom: "from-violet-600",
+                gradientTo: "to-indigo-700",
+                glowColor: "#7C3AED",
+                category: "Development",
+              },
+              {
+                name: "Foundational C# with Microsoft",
+                issuer: "freeCodeCamp",
+                date: "Feb 2025",
+                credentialId: "elanchezhiyan-p-fcswm",
+                link: "https://freecodecamp.org/certification/Elanchezhiyan-P/foundational-c-sharp-with-microsoft",
+                badge: "fCC",
+                gradientFrom: "from-green-600",
+                gradientTo: "to-emerald-700",
+                glowColor: "#10B981",
+                category: "Programming",
+              },
+              {
+                name: "Responsive Web Design",
+                issuer: "freeCodeCamp",
+                date: "Feb 2025",
+                credentialId: "elanchezhiyan-p-rwd",
+                link: "https://www.freecodecamp.org/certification/Elanchezhiyan-P/responsive-web-design",
+                badge: "RWD",
+                gradientFrom: "from-sky-500",
+                gradientTo: "to-blue-700",
+                glowColor: "#0EA5E9",
+                category: "Web Design",
+              },
+              {
+                name: "Jira Fundamentals Badge",
+                issuer: "Atlassian",
+                date: "Feb 2024",
+                credentialId: "299136941",
+                link: "https://university.atlassian.com/student/award/17WcnErMoSR8bgZ9hsN3hSTw",
+                Icon: SiJira,
+                gradientFrom: "from-blue-600",
+                gradientTo: "to-blue-800",
+                glowColor: "#0052CC",
+                category: "Project Management",
+              },
+              {
+                name: "cPanel User Interface Proficiency",
+                issuer: "cPanel University",
+                date: "Jan 2025",
+                credentialId: "851a-2616-8f92-f311",
+                link: "https://university.cpanel.net/",
+                Icon: SiCpanel,
+                gradientFrom: "from-orange-500",
+                gradientTo: "to-orange-700",
+                glowColor: "#F97316",
+                category: "Infrastructure",
+              },
+            ] as CertDef[]
+          ).map((cert, index) => (
+            <CertCard key={cert.name} cert={cert} index={index} />
           ))}
         </div>
       </section>
@@ -682,20 +639,25 @@ const AnimatedStats: React.FC<{ yearsOfExperience: number }> = ({
   ];
 
   return (
-    <div className="flex flex-wrap gap-3 md:gap-4 pt-3">
+    <div className="grid grid-cols-3 gap-2 md:gap-4 pt-3 w-full max-w-sm">
       {stats.map((stat, index) => (
-        <div key={index} className="group relative" ref={stat.ref}>
-          <div className="glass rounded-xl p-3 md:p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+        /* Outer div holds the IntersectionObserver ref from useCountUp */
+        <div key={index} ref={stat.ref}>
+          <TiltDiv
+            intensity={10}
+            glare={false}
+            className="glass rounded-xl p-3 md:p-4 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 hover:shadow-lg cursor-default"
+          >
             <div className="text-center">
               <div className="text-xl mb-1">{stat.icon}</div>
-              <div className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+              <div className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
                 {stat.displayValue}
               </div>
               <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 font-medium">
                 {stat.label}
               </div>
             </div>
-          </div>
+          </TiltDiv>
         </div>
       ))}
     </div>

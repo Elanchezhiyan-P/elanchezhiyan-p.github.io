@@ -129,6 +129,31 @@ All colors MUST be HSL.
   }
 }
 
+/* Certification card continuous float animation */
+@keyframes certFloat {
+  0%,  100% { transform: translateY(0px) rotateX(0deg); }
+  50%        { transform: translateY(-10px) rotateX(2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cert-float { animation: none !important; }
+}
+
+/* Tab-switch fade + slide animation for TechExpertise grid */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-slide-in {
+  animation: fadeSlideIn 0.22s ease forwards;
+}
+
+/* Hide scrollbars while keeping scroll functionality */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
 /* Enhanced glassmorphism effect */
 .glass {
   background: rgba(255, 255, 255, 0.7);

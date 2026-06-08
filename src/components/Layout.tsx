@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Menu,
-  X,
   Sun,
   Moon,
-  Settings,
   Github,
   Linkedin,
   Mail,
-  Facebook,
-  Instagram,
   Home,
   User,
   FolderOpen,
@@ -25,7 +20,6 @@ import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import { ExitIntentPopup } from "./ExitIntentPopup";
 import { NewsletterSignup } from "./NewsletterSignup";
 import { ParticleBackground } from "./ParticleBackground";
-import { ThemeSettings } from "./ThemeSettings";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -33,7 +27,6 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
   const location = useLocation();
 
@@ -124,7 +117,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Logo */}
             <Link
               to="/"
-              className="text-2xl font-extrabold bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 theme-green:from-green-700 theme-green:via-emerald-700 theme-green:to-teal-700 bg-clip-text text-transparent tracking-wide hover:scale-105 transition-transform duration-300 animate-gradient"
+              className="text-2xl font-extrabold whitespace-nowrap flex-shrink-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 theme-green:from-green-700 theme-green:via-emerald-700 theme-green:to-teal-700 bg-clip-text text-transparent tracking-wide hover:scale-105 transition-transform duration-300"
             >
               Elanchezhiyan P
             </Link>
@@ -159,22 +152,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 size="sm"
                 onClick={toggleDarkMode}
                 className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
-                aria-label="Toggle dark mode"
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
               >
                 {isDarkMode ? (
                   <Sun className="w-5 h-5" />
                 ) : (
                   <Moon className="w-5 h-5" />
                 )}
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowSettings(true)}
-                className="hidden rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
-                aria-label="Open settings"
-              >
-                <Settings className="w-5 h-5" />
               </Button>
             </div>
           </div>
@@ -184,60 +168,26 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Mobile Header */}
       {isMobile && (
         <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/85 dark:bg-black/85 border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-blue-500/5 dark:shadow-blue-500/10">
-          <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center w-full min-w-0">
-              <Link
-                to="/"
-                className="text-base font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide dark:text-white whitespace-nowrap flex-shrink-0"
-                style={{
-                  WebkitTextStroke: "0.5px #222",
-                  textShadow: "0 1px 8px rgba(0,0,0,0.25)",
-                }}
-              >
-                Elanchezhiyan P
-              </Link>
-              <div className="flex-1 min-w-0" />
-              {/* Social Icons flush right */}
-              <div className="flex items-center gap-2 ml-2 flex-shrink-0">
-                {socialLinks.map(({ icon: Icon, href, label, color }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`rounded-full p-2 transition ${color}`}
-                    aria-label={label}
-                    style={{ lineHeight: 0 }}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
-              <div className="flex items-center gap-2 ml-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleDarkMode}
-                  className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
-                  aria-label="Toggle dark mode"
-                >
-                  {isDarkMode ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowSettings(true)}
-                  className="hidden rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
-                  aria-label="Open settings"
-                >
-                  <Settings className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
+          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <Link
+              to="/"
+              className="text-base font-bold bg-gradient-to-r from-blue-700 to-indigo-700 theme-green:from-green-700 theme-green:to-emerald-700 bg-clip-text text-transparent tracking-wide whitespace-nowrap"
+            >
+              Elanchezhiyan P
+            </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleDarkMode}
+              className="rounded-full p-2 hover:bg-blue-100 dark:hover:bg-blue-900 theme-green:hover:bg-green-100 theme-green:dark:hover:bg-green-900 transition"
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDarkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </Button>
           </div>
         </header>
       )}
@@ -303,8 +253,22 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
               </div>
 
-              {/* Social & Contact - Compact */}
-              <div className="flex flex-col items-center gap-2 w-full px-4">
+              {/* Social Icons + Contact - Compact */}
+              <div className="flex flex-col items-center gap-3 w-full px-4">
+                <div className="flex items-center gap-3">
+                  {socialLinks.map(({ icon: Icon, href, label, color }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`rounded-full p-2 transition ${color}`}
+                      aria-label={label}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </a>
+                  ))}
+                </div>
                 <NewsletterSignup variant="footer" />
                 <Link
                   to="/contact"
@@ -369,9 +333,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Exit Intent Popup (desktop only) */}
       {!isMobile && <ExitIntentPopup />}
-
-      {/* Theme Settings Panel */}
-      {showSettings && <ThemeSettings onClose={() => setShowSettings(false)} />}
     </div>
   );
 };

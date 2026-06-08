@@ -200,6 +200,20 @@ export const ParticleBackground: React.FC = () => {
       }, 200);
     };
 
+    // Pause animation when tab is hidden to save GPU resources
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+          animationRef.current = undefined;
+        }
+      } else {
+        if (!animationRef.current) {
+          animate();
+        }
+      }
+    };
+
     resizeCanvas();
     createParticles();
     animate();
@@ -207,6 +221,7 @@ export const ParticleBackground: React.FC = () => {
     window.addEventListener("resize", handleResize);
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       if (animationRef.current) {
@@ -215,6 +230,7 @@ export const ParticleBackground: React.FC = () => {
       window.removeEventListener("resize", handleResize);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (resizeTimeout.current) {
         clearTimeout(resizeTimeout.current);
       }
@@ -224,6 +240,8 @@ export const ParticleBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
+      role="presentation"
       className="fixed inset-0 pointer-events-none z-[-1]"
       style={{
         position: "fixed",

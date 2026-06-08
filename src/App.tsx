@@ -56,11 +56,11 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <ScrollToTop />
             <Helmet>
-              <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
-              <meta name="description" content={`Senior .NET & Azure Developer with ${yearsOfExperience}+ years building scalable cloud applications. Expert in DevOps, automation, and modern web technologies.`} />
+              <title>Elanchezhiyan P — Senior .NET &amp; Azure Engineer</title>
+              <meta name="description" content={`Senior .NET & Azure Engineer with ${yearsOfExperience}+ years building enterprise SaaS platforms, IoT systems, CRM integrations, and cloud-native APIs.`} />
             </Helmet>
             <JsonLd />
             <Layout>
