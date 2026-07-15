@@ -25,7 +25,7 @@ export const JsonLd = () => {
     name: "Elanchezhiyan P",
     url: BASE_URL,
     image: `${BASE_URL}/Elan.jpg`,
-    jobTitle: "Senior Software Developer",
+    jobTitle: "Development Team Lead",
     description: `B.E (Bachelor of Engineering) graduate and Seasoned Software Developer with ${yearsOfExperience}+ years of experience in .NET, Azure, CRM integrations, and cloud architecture.`,
     email: "elanche97@gmail.com",
     telephone: "+919942644999",

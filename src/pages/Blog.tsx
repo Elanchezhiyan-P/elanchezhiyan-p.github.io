@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
-import { Calendar, ExternalLink, Clock } from "lucide-react";
+import { Calendar, ExternalLink, Clock, BookOpen, Eye, ArrowRight } from "lucide-react";
+import { SiMedium } from "react-icons/si";
 import {
   getCachedBlogData,
   fetchBlogPosts,
@@ -11,359 +11,368 @@ import {
 } from "@/utils/blogService";
 import { trackBlogClick } from "@/utils/analytics";
 
+// ─── Tag colour map ───────────────────────────────────────────────────────────
+const TAG_COLORS = [
+  "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+  "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
+  "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+  "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+  "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
+];
+const tagColor = (i: number) => TAG_COLORS[i % TAG_COLORS.length];
+
+// ─── Skeleton loader card ─────────────────────────────────────────────────────
+const SkeletonCard = () => (
+  <div className="animate-pulse rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+    <div className="h-44 bg-gray-200 dark:bg-gray-800" />
+    <div className="p-5 space-y-3">
+      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6" />
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6" />
+      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+    </div>
+  </div>
+);
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 const Blog: React.FC = () => {
-  const [hoveredPost, setHoveredPost] = useState<number | null>(null);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [mediumLink, setMediumLink] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTag, setActiveTag] = useState<string>("All");
 
   useEffect(() => {
     const loadBlogPosts = async () => {
       setIsLoading(true);
-      
-      // First, try to load from cache for instant display
       const cached = getCachedBlogData();
       if (cached) {
         setBlogPosts(cached.posts);
         setMediumLink(cached.mediumLink);
         setIsLoading(false);
-        
-        // Fetch fresh data in the background
         try {
           const { posts, mediumLink: link } = await fetchBlogPosts();
           setBlogPosts(posts);
           setMediumLink(link);
-        } catch (error) {
-          // If fetch fails, keep using cached data
-          console.error("Failed to refresh blog posts:", error);
-        }
+        } catch { /* keep cached */ }
       } else {
-        // No cache available, fetch fresh data
         try {
           const { posts, mediumLink: link } = await fetchBlogPosts();
           setBlogPosts(posts);
           setMediumLink(link);
-        } catch (error) {
-          console.error("Failed to fetch blog posts:", error);
+        } catch (e) {
+          console.error("Failed to fetch blog posts:", e);
         } finally {
           setIsLoading(false);
         }
       }
     };
-
     loadBlogPosts();
   }, []);
 
-  const getSourceBadgeColor = (source: string) => {
-    switch (source) {
-      case "Medium":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
-      case "Dev.to":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400";
-      case "Hashnode":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400";
-    }
-  };
+  // ── Derived data ────────────────────────────────────────────────────────────
+  const featuredPost = blogPosts.find((p) => p.isLatest) ?? blogPosts[0];
+  const restPosts    = blogPosts.filter((p) => p !== featuredPost);
+  const editorialPicks = restPosts.slice(0, 2);
+  const gridPosts      = restPosts.slice(2);
 
-  const latestPost = blogPosts.find((post) => post.isLatest);
-
-  // Show loading state only if no cache and still loading
-  if (isLoading && blogPosts.length === 0) {
-    return (
-      <div className="pt-14 md:pt-20 pb-10">
-        <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading blog posts...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const allTags = ["All", ...Array.from(new Set(blogPosts.flatMap((p) => p.tags)))];
+  const filteredGrid =
+    activeTag === "All"
+      ? gridPosts
+      : gridPosts.filter((p) => p.tags.includes(activeTag));
 
   return (
     <>
       <Helmet>
-        <title>Blog - Elanchezhiyan P | Articles & Insights</title>
-        <meta
-          name="description"
-          content="Read articles and insights from Elanchezhiyan P on .NET development, Azure cloud architecture, software engineering best practices, and modern web technologies."
-        />
-        <meta
-          name="keywords"
-          content="Elanchezhiyan P Blog, .NET Articles, Azure Tutorials, Software Development Blog, Cloud Architecture, Programming Insights"
-        />
-        <meta
-          property="og:title"
-          content="Blog - Elanchezhiyan P | Articles & Insights"
-        />
-        <meta
-          property="og:description"
-          content="Insights, tutorials, and thoughts on .NET development, cloud architecture, and software engineering best practices."
-        />
+        <title>Blog — Elanchezhiyan P | .NET, Azure & Cloud Articles</title>
+        <meta name="description" content="Curated articles on .NET development, Azure cloud, software architecture and engineering best practices by Elanchezhiyan P." />
+        <meta name="keywords" content="Elanchezhiyan P Blog, .NET Articles, Azure Tutorials, Cloud Architecture, Programming" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://codebyelan.in/blog" />
       </Helmet>
-      <div className="pt-14 md:pt-20 pb-10">
-        <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
-        {/* Header */}
-        <section className="text-center mb-10 md:mb-16">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4">
-            Blog & Articles
-          </h1>
-          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Insights, tutorials, and thoughts on .NET development, cloud
-            architecture, and software engineering best practices.
-          </p>
-        </section>
 
-        {/* Stats */}
-        <section className="mb-8 md:mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            <Card className="text-center">
-              <CardContent className="p-3 md:p-4">
-                <div className="text-xl md:text-2xl font-bold text-blue-600 mb-1">
-                  {blogPosts.length}+
-                </div>
-                <p className="text-xs md:text-sm text-muted-foreground">
-                  Articles Published
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="text-center">
-              <CardContent className="p-3 md:p-4">
-                <div className="text-xl md:text-2xl font-bold text-green-600 mb-1">
-                  ~15k+
-                </div>
-                <p className="text-xs md:text-sm text-muted-foreground">
-                  Total Views
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="text-center">
-              <CardContent className="p-3 md:p-4">
-                <div className="text-xl md:text-2xl font-bold text-purple-600 mb-1">
-                  10+
-                </div>
-                <p className="text-xs md:text-sm text-muted-foreground">
-                  Followers
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="text-center">
-              <CardContent className="p-3 md:p-4">
-                <div className="text-xl md:text-2xl font-bold text-orange-600 mb-1">
-                  1
-                </div>
-                <p className="text-xs md:text-sm text-muted-foreground">
-                  Platform
-                </p>
-              </CardContent>
-            </Card>
+      <div className="min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+
+          {/* ── Page header ───────────────────────────────────────────────── */}
+          <div className="relative text-center mb-12 md:mb-16">
+            <span className="section-number" style={{ left: "50%", transform: "translateX(-50%)" }}>✍</span>
+            <div className="relative z-10">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full border border-blue-200 dark:border-blue-800 mb-4">
+                <SiMedium className="w-3 h-3" /> Published on Medium
+              </span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent mb-4">
+                Blog & Articles
+              </h1>
+              <p className="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+                Hand-picked articles on .NET, Azure cloud architecture, and modern software engineering
+              </p>
+            </div>
           </div>
-        </section>
 
-        {/* Featured Post */}
-        {latestPost && (
-          <section className="mb-10 md:mb-16">
-            <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
-              Latest Article
-            </h2>
-            <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-500 relative">
-              <div className="absolute top-4 right-4 z-10">
-                <Badge className="bg-red-500 text-white shadow-lg">
-                  Latest
-                </Badge>
-              </div>
-              <div className="flex flex-col md:flex-row">
-                {/* Image */}
-                <div className="w-full md:w-1/2 relative overflow-hidden aspect-video md:aspect-auto">
-                  <img
-                    src={latestPost.image}
-                    alt={latestPost.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl md:rounded-l-xl md:rounded-t-none"
-                  />
-                  <div className="absolute inset-0 border-4 border-transparent group-hover:border-t-red-500 group-hover:border-l-red-500 transition-colors duration-300" />
+          {/* ── Stats strip ───────────────────────────────────────────────── */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            {[
+              { icon: BookOpen,  value: `${blogPosts.length || 10}`,  label: "Articles",     color: "text-blue-600"   },
+              { icon: Eye,       value: "~15k+",                       label: "Total Views",  color: "text-emerald-600"},
+              { icon: Clock,     value: "5 min",                       label: "Avg. Read",    color: "text-violet-600" },
+              { icon: SiMedium,  value: "Medium",                      label: "Platform",     color: "text-gray-700 dark:text-gray-300" },
+            ].map(({ icon: Icon, value, label, color }, i) => (
+              <div key={i} className="glass rounded-2xl p-4 border border-gray-200/60 dark:border-gray-700/60 flex items-center gap-3 hover:shadow-md transition-shadow duration-300">
+                <div className={`p-2 rounded-xl bg-gray-50 dark:bg-gray-800 ${color}`}>
+                  <Icon className="w-4 h-4" />
                 </div>
-
-                {/* Content */}
-                <CardContent className="w-full md:w-1/2 p-5 md:p-8">
-                  <div className="flex flex-wrap items-center gap-2 mb-3 md:mb-4">
-                    <Badge className={getSourceBadgeColor(latestPost.source)}>
-                      {latestPost.source}
-                    </Badge>
-                    <div className="flex items-center text-xs md:text-sm text-muted-foreground">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {new Date(latestPost.date).toLocaleDateString()}
-                    </div>
-                    <div className="flex items-center text-xs md:text-sm text-muted-foreground">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {latestPost.readTime}
-                    </div>
-                  </div>
-                  <h3 className="text-lg md:text-2xl font-bold mb-3 md:mb-4 group-hover:text-red-600 transition-colors">
-                    {latestPost.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
-                    {latestPost.excerpt}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
-                    {latestPost.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
-                    <Button
-                      className="relative inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-white font-semibold shadow-md bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-400 transition duration-200 text-sm md:text-base"
-                      asChild
-                    >
-                      <a
-                        href={latestPost.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                        Read Article
-                      </a>
-                    </Button>
-                    <span className="text-xs md:text-sm text-muted-foreground">
-                      {latestPost.views} views
-                    </span>
-                  </div>
-                </CardContent>
+                <div>
+                  <div className={`text-lg font-extrabold ${color}`}>{value}</div>
+                  <div className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">{label}</div>
+                </div>
               </div>
-            </Card>
-          </section>
-        )}
+            ))}
+          </div>
 
-        {/* Articles Grid */}
-        <section>
-          <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
-            All Articles
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-            {blogPosts
-              .filter((post) => !post.isLatest)
-              .map((post, index) => (
-                <Card
-                  key={post.id}
-                  className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative rounded-xl"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                  onMouseEnter={() => setHoveredPost(post.id)}
-                  onMouseLeave={() => setHoveredPost(null)}
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      loading="lazy"
-                      className="w-full h-40 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-xl"
-                    />
-                    <div
-                      className={`absolute inset-0 border-2 border-transparent transition-all duration-300 ${
-                        hoveredPost === post.id
-                          ? "border-t-blue-500 border-l-blue-500 shadow-md shadow-blue-500/20"
-                          : ""
-                      }`}
-                    />
-                  </div>
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex items-center justify-between mb-2 md:mb-3">
-                      <Badge className={getSourceBadgeColor(post.source)}>
-                        {post.source}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">
-                        {post.views} views
+          {/* ── Hero: Featured / Latest post ──────────────────────────────── */}
+          {isLoading ? (
+            <div className="animate-pulse rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 mb-10 h-80 bg-gray-200 dark:bg-gray-800" />
+          ) : featuredPost ? (
+            <a
+              href={featuredPost.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackBlogClick(featuredPost.id?.toString())}
+              className="group block mb-10 md:mb-14"
+            >
+              <div className="relative rounded-3xl overflow-hidden border border-gray-200/60 dark:border-gray-700/60 hover:border-blue-400 dark:hover:border-blue-600 shadow-xl hover:shadow-2xl transition-all duration-500 bg-white dark:bg-gray-900">
+                {/* Image */}
+                <div className="relative h-52 md:h-80 overflow-hidden">
+                  <img
+                    src={featuredPost.image}
+                    alt={featuredPost.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
+                  {/* Content overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-500 text-white text-xs font-bold shadow-lg">
+                        ✦ Latest
+                      </span>
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold border border-white/30">
+                        <SiMedium className="w-3 h-3" /> {featuredPost.source}
+                      </span>
+                      <span className="flex items-center gap-1 text-white/70 text-xs">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(featuredPost.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                      </span>
+                      <span className="flex items-center gap-1 text-white/70 text-xs">
+                        <Clock className="w-3 h-3" /> {featuredPost.readTime}
                       </span>
                     </div>
-                    <h3 className="font-bold mb-2 md:mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 text-base md:text-lg">
-                      {post.title}
-                    </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-3">
-                      {post.excerpt}
+                    <h2 className="text-lg md:text-2xl font-extrabold text-white mb-2 leading-tight group-hover:text-blue-300 transition-colors duration-300">
+                      {featuredPost.title}
+                    </h2>
+                    <p className="text-white/70 text-sm md:text-base line-clamp-2 max-w-2xl hidden md:block">
+                      {featuredPost.excerpt}
                     </p>
-                    <div className="flex items-center text-xs text-muted-foreground mb-3 md:mb-4">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      {new Date(post.date).toLocaleDateString()}
-                      <span className="mx-2">•</span>
-                      <Clock className="h-3 w-3 mr-1" />
-                      {post.readTime}
+                    <div className="flex items-center gap-2 mt-3">
+                      <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-300 group-hover:text-blue-200">
+                        Read Article <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                      </span>
+                      <span className="text-white/50 text-xs ml-2">{featuredPost.views} views</span>
                     </div>
-                    <div className="flex flex-wrap gap-1 mb-3 md:mb-4">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                      {post.tags.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{post.tags.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                    <Button
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-5 md:py-2 rounded-md font-semibold shadow-sm transition duration-200 inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-sm md:text-base"
-                      asChild
-                    >
-                      <a
-                        href={post.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Read Article
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        </section>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ) : null}
 
-        {/* Newsletter Signup */}
-        <div className="mt-10 md:mt-16 text-center">
-          <div className="glass rounded-xl p-6 md:p-8">
-            <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">
-              Want to stay updated?
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 md:mb-6 text-sm md:text-base">
-              Follow me on Medium for the latest articles on .NET development
-              and Azure cloud solutions.
-            </p>
-            <div className="flex flex-wrap gap-3 md:gap-4 justify-center mb-4">
-              <Button
-                variant="outline"
-                className="border-blue-600 text-blue-600 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-700 transition-colors duration-200 text-sm md:text-base px-4 md:px-6 py-2 md:py-2.5"
-                asChild
-              >
-                <a href={mediumLink} target="_blank" rel="noopener noreferrer">
-                  Medium
-                </a>
-              </Button>
+          {/* ── Editorial picks: top 2 side by side ───────────────────────── */}
+          {!isLoading && editorialPicks.length > 0 && (
+            <div className="mb-10 md:mb-14">
+              <div className="flex items-center gap-3 mb-5">
+                <h2 className="text-lg md:text-xl font-extrabold text-gray-900 dark:text-white">Editor's Picks</h2>
+                <div className="flex-1 h-px bg-gradient-to-r from-gray-200 dark:from-gray-700 to-transparent" />
+              </div>
+              <div className="grid md:grid-cols-2 gap-5">
+                {editorialPicks.map((post, i) => (
+                  <a
+                    key={post.id}
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackBlogClick(post.id?.toString())}
+                    className="group flex gap-4 p-4 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-blue-400 dark:hover:border-blue-600 bg-white dark:bg-gray-900 hover:shadow-lg transition-all duration-300"
+                  >
+                    <div className="flex-shrink-0 w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden">
+                      <img src={post.image} alt={post.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div className="flex flex-col justify-between min-w-0">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${tagColor(i)}`}>
+                            {post.tags[0] || post.source}
+                          </span>
+                        </div>
+                        <h3 className="text-sm md:text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                          {post.title}
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-2 mt-2 text-[11px] text-gray-400 dark:text-gray-500">
+                        <Clock className="w-3 h-3" /> {post.readTime}
+                        <span>·</span>
+                        <Eye className="w-3 h-3" /> {post.views}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-3 md:gap-6 justify-center">
-              <Button
-                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold px-6 py-3 md:px-8 md:py-3 rounded-xl shadow-lg transition duration-200 text-base md:text-lg"
-                asChild
-              >
-                <a href="/contact">Get In Touch</a>
-              </Button>
-              <Button
-                className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold px-6 py-3 md:px-8 md:py-3 rounded-xl shadow-lg transition duration-200 text-base md:text-lg"
-                asChild
-              >
-                <a href="/projects">View My Work</a>
-              </Button>
+          )}
+
+          {/* ── Tag filter ────────────────────────────────────────────────── */}
+          {!isLoading && allTags.length > 1 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {allTags.slice(0, 8).map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setActiveTag(tag)}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-200 ${
+                    activeTag === tag
+                      ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                      : "bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-600"
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* ── Articles grid ─────────────────────────────────────────────── */}
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-5">
+              <h2 className="text-lg md:text-xl font-extrabold text-gray-900 dark:text-white">
+                All Articles
+                <span className="ml-2 text-sm font-normal text-gray-400">
+                  ({activeTag === "All" ? gridPosts.length : filteredGrid.length})
+                </span>
+              </h2>
+              <div className="flex-1 h-px bg-gradient-to-r from-gray-200 dark:from-gray-700 to-transparent" />
+            </div>
+
+            {isLoading ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+              </div>
+            ) : filteredGrid.length === 0 ? (
+              <div className="text-center py-16 text-gray-400 dark:text-gray-500">
+                <BookOpen className="w-10 h-10 mx-auto mb-3 opacity-40" />
+                <p className="text-sm">No articles found for this tag.</p>
+                <button onClick={() => setActiveTag("All")} className="mt-3 text-blue-600 dark:text-blue-400 text-sm font-semibold hover:underline">
+                  Show all →
+                </button>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredGrid.map((post, idx) => (
+                  <a
+                    key={post.id}
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackBlogClick(post.id?.toString())}
+                    className="group flex flex-col rounded-2xl overflow-hidden border border-gray-200/60 dark:border-gray-700/60 hover:border-blue-400 dark:hover:border-blue-600 bg-white dark:bg-gray-900 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                    style={{ animationDelay: `${idx * 60}ms` }}
+                  >
+                    {/* Thumbnail */}
+                    <div className="relative h-44 overflow-hidden">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {/* Article number */}
+                      <div className="absolute top-3 left-3 w-7 h-7 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md flex items-center justify-center text-xs font-extrabold text-gray-700 dark:text-gray-200 shadow">
+                        {String(idx + 3).padStart(2, "0")}
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex flex-col flex-1 p-4">
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {post.tags.slice(0, 2).map((tag, ti) => (
+                          <span key={tag} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${tagColor(ti)}`}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <h3 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug mb-2 flex-1">
+                        {post.title}
+                      </h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3 leading-relaxed">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex items-center justify-between text-[11px] text-gray-400 dark:text-gray-500 mt-auto pt-3 border-t border-gray-100 dark:border-gray-800">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {new Date(post.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {post.readTime}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-3 h-3" /> {post.views}
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ── CTA footer ────────────────────────────────────────────────── */}
+          <div className="mt-14">
+            <div className="relative rounded-3xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-700" />
+              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_30%_50%,white_1px,transparent_1px)] bg-[size:24px_24px]" />
+              <div className="relative px-6 py-10 md:px-12 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="text-center md:text-left">
+                  <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
+                    <SiMedium className="w-5 h-5 text-white" />
+                    <span className="text-white/80 text-sm font-semibold">Follow on Medium</span>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-extrabold text-white mb-1">
+                    More articles every week
+                  </h3>
+                  <p className="text-white/70 text-sm max-w-md">
+                    Stay up to date with .NET tips, Azure patterns, and real-world engineering lessons.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <a
+                    href={mediumLink || "https://medium.com/@elanchezhiyan-p"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-blue-700 font-bold text-sm shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    <SiMedium className="w-4 h-4" /> Follow on Medium
+                  </a>
+                  <a
+                    href="/contact"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/15 backdrop-blur-md text-white font-semibold text-sm border border-white/30 hover:bg-white/25 hover:scale-105 transition-all duration-300"
+                  >
+                    Get In Touch <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
-    </div>
     </>
   );
 };

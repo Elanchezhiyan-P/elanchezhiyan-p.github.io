@@ -223,108 +223,151 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       )}
 
       {/* Footer */}
-      <footer className={`bg-gray-900 dark:bg-black/95 backdrop-blur-sm text-gray-300 ${isMobile ? 'py-4 pb-44' : 'py-6 md:py-8'} mt-2`}>
-        <div className={`container mx-auto px-4 md:px-6 ${isMobile ? 'space-y-3' : 'grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6'}`}>
-          {isMobile ? (
-            <>
-              {/* Mobile: Compact single column layout */}
-              <div className="text-center">
-                <h3 className="text-lg font-extrabold mb-1 bg-gradient-to-r from-blue-500 to-indigo-500 theme-green:from-green-500 theme-green:to-emerald-500 bg-clip-text text-transparent">
-                  Elanchezhiyan P
-                </h3>
-                <p className="text-xs text-gray-400 mb-2">
-                  Seasoned Software Developer crafting scalable cloud solutions.
-                </p>
+      {isMobile ? (
+        /* ── MOBILE FOOTER ──────────────────────────────────────────────── */
+        <footer className="mt-4 pb-28 bg-gray-950 text-gray-300">
+          {/* Top accent line */}
+          <div className="h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600" />
+
+          <div className="px-5 pt-8 pb-4 space-y-6">
+
+            {/* ── Brand block ──────────────────────────────────── */}
+            <div className="text-center">
+              <h3 className="text-xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 theme-green:from-green-400 theme-green:via-emerald-400 theme-green:to-teal-400 bg-clip-text text-transparent mb-1">
+                Elanchezhiyan P
+              </h3>
+              <p className="text-xs text-gray-400 leading-relaxed max-w-xs mx-auto">
+                Senior .NET &amp; Azure Engineer — building scalable enterprise products.
+              </p>
+              <div className="inline-flex items-center gap-1.5 mt-2.5 px-3 py-1 rounded-full bg-green-900/40 border border-green-700/50">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-[10px] font-semibold text-green-400">Available for hire</span>
               </div>
-              
-              {/* Quick Links - Horizontal on mobile */}
+            </div>
+
+            {/* ── Social icons ─────────────────────────────────── */}
+            <div className="flex justify-center gap-3">
+              {socialLinks.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex flex-col items-center gap-1 group"
+                >
+                  <div className="w-10 h-10 rounded-2xl bg-gray-800 border border-gray-700 group-hover:border-blue-500 theme-green:group-hover:border-green-500 group-hover:bg-gray-700 transition-all duration-300 flex items-center justify-center">
+                    <Icon className="w-4.5 h-4.5 text-gray-300 group-hover:text-blue-400 theme-green:group-hover:text-green-400 transition-colors" />
+                  </div>
+                  <span className="text-[9px] text-gray-500 group-hover:text-gray-300 transition-colors">{label}</span>
+                </a>
+              ))}
+              <a
+                href="https://topmate.io/elanchezhiyan_poosamani"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Book a Call"
+                className="flex flex-col items-center gap-1 group"
+              >
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 theme-green:from-green-600 theme-green:to-emerald-700 border border-blue-500/40 theme-green:border-green-500/40 group-hover:scale-110 transition-all duration-300 flex items-center justify-center shadow-lg">
+                  <Phone className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-[9px] text-gray-500 group-hover:text-gray-300 transition-colors">Book Call</span>
+              </a>
+            </div>
+
+            {/* Divider */}
+            <div className="h-px bg-gray-800" />
+
+            {/* ── Quick links grid ─────────────────────────────── */}
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 text-center mb-3">Navigation</p>
+              <div className="grid grid-cols-3 gap-y-2 gap-x-1">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`flex items-center gap-1.5 px-2 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 ${
+                      isActive(item.href)
+                        ? "bg-blue-900/40 text-blue-400 theme-green:bg-green-900/40 theme-green:text-green-400 border border-blue-700/40 theme-green:border-green-700/40"
+                        : "text-gray-400 hover:text-gray-200 hover:bg-gray-800"
+                    }`}
+                  >
+                    <item.icon className="w-3 h-3 flex-shrink-0" />
+                    <span className="truncate">{item.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="h-px bg-gray-800" />
+
+            {/* ── CTA strip ────────────────────────────────────── */}
+            <div className="rounded-2xl bg-gradient-to-r from-blue-900/40 to-indigo-900/40 theme-green:from-green-900/40 theme-green:to-emerald-900/40 border border-blue-800/40 theme-green:border-green-800/40 p-4 flex items-center justify-between gap-3">
               <div>
-                <h4 className="font-semibold mb-2 text-center text-xs">Quick Links</h4>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {navigation.map((item) => (
+                <p className="text-xs font-bold text-gray-200">Let's build together</p>
+                <p className="text-[10px] text-gray-500 mt-0.5">elanche97@gmail.com</p>
+              </div>
+              <Link
+                to="/contact"
+                className="flex-shrink-0 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 theme-green:from-green-600 theme-green:to-emerald-600 text-white text-xs font-bold shadow-lg hover:scale-105 transition-transform duration-200"
+              >
+                Contact Me
+              </Link>
+            </div>
+
+            {/* ── Copyright ────────────────────────────────────── */}
+            <p className="text-center text-[10px] text-gray-600 pt-1 select-none">
+              &copy; {new Date().getFullYear()} Elanchezhiyan P. All rights reserved.
+            </p>
+
+          </div>
+        </footer>
+      ) : (
+        /* ── DESKTOP FOOTER ─────────────────────────────────────────────── */
+        <footer className="bg-gray-900 dark:bg-black/95 backdrop-blur-sm text-gray-300 py-6 md:py-8 mt-2">
+          <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+            <div>
+              <h3 className="text-lg md:text-xl font-extrabold mb-1.5 md:mb-2 bg-gradient-to-r from-blue-500 to-indigo-500 theme-green:from-green-500 theme-green:to-emerald-500 bg-clip-text text-transparent">
+                Elanchezhiyan P
+              </h3>
+              <p className="text-xs md:text-sm leading-relaxed max-w-xs">
+                Seasoned Software Developer crafting scalable, maintainable cloud solutions.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Quick Links</h4>
+              <ul className="space-y-1 md:space-y-1.5">
+                {navigation.map((item) => (
+                  <li key={item.name}>
                     <Link
-                      key={item.name}
                       to={item.href}
-                      className="text-xs hover:text-blue-400 theme-green:hover:text-green-400 transition-colors px-1.5 py-0.5"
+                      className="text-xs md:text-sm hover:text-blue-400 theme-green:hover:text-green-400 transition-colors"
                     >
                       {item.name}
                     </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Social Icons + Contact - Compact */}
-              <div className="flex flex-col items-center gap-3 w-full px-4">
-                <div className="flex items-center gap-3">
-                  {socialLinks.map(({ icon: Icon, href, label, color }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`rounded-full p-2 transition ${color}`}
-                      aria-label={label}
-                    >
-                      <Icon className="w-4 h-4" />
-                    </a>
-                  ))}
-                </div>
-                <NewsletterSignup variant="footer" />
-                <Link
-                  to="/contact"
-                  className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors text-xs font-semibold"
-                >
-                  Contact Me
-                </Link>
-              </div>
-            </>
-          ) : (
-            <>
-              {/* Desktop: Original 4-column layout */}
-              <div>
-                <h3 className="text-lg md:text-xl font-extrabold mb-1.5 md:mb-2 bg-gradient-to-r from-blue-500 to-indigo-500 theme-green:from-green-500 theme-green:to-emerald-500 bg-clip-text text-transparent">
-                  Elanchezhiyan P
-                </h3>
-                <p className="text-xs md:text-sm leading-relaxed max-w-xs">
-                  Seasoned Software Developer crafting scalable, maintainable cloud
-                  solutions.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Quick Links</h4>
-                <ul className="space-y-1 md:space-y-1.5">
-                  {navigation.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        to={item.href}
-                        className="text-xs md:text-sm hover:text-blue-400 theme-green:hover:text-green-400 transition-colors"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <NewsletterSignup variant="footer" />
-              <div>
-                <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Get In Touch</h4>
-                <p className="text-xs md:text-sm mb-1.5">Ready to build something amazing together?</p>
-                <Link
-                  to="/contact"
-                  className="inline-block mt-1.5 md:mt-2 px-3 md:px-4 py-1 md:py-1.5 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors text-xs md:text-sm font-semibold"
-                >
-                  Contact Me
-                </Link>
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className={`${isMobile ? 'mt-3 pt-3' : 'mt-4 md:mt-6 pt-3 md:pt-4'} border-t border-gray-800 text-center text-xs md:text-sm text-gray-500 select-none`}>
-          &copy; {new Date().getFullYear()} Elanchezhiyan P. All rights
-          reserved.
-        </div>
-      </footer>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <NewsletterSignup variant="footer" />
+            <div>
+              <h4 className="font-semibold mb-2 md:mb-3 text-xs md:text-sm">Get In Touch</h4>
+              <p className="text-xs md:text-sm mb-1.5">Ready to build something amazing together?</p>
+              <Link
+                to="/contact"
+                className="inline-block mt-1.5 md:mt-2 px-3 md:px-4 py-1 md:py-1.5 bg-blue-600 hover:bg-blue-700 theme-green:bg-green-600 theme-green:hover:bg-green-700 rounded-lg transition-colors text-xs md:text-sm font-semibold"
+              >
+                Contact Me
+              </Link>
+            </div>
+          </div>
+          <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-800 text-center text-xs md:text-sm text-gray-500 select-none">
+            &copy; {new Date().getFullYear()} Elanchezhiyan P. All rights reserved.
+          </div>
+        </footer>
+      )}
 
       {/* Floating Components */}
       {!isMobile && <FloatingSocialSidebar />}

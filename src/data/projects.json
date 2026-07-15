@@ -16,7 +16,11 @@
       "Integration with Seahorse analyzers"
     ],
     "technicalImplementation": "Developed with .NET Core for backend APIs and SignalR for live data feeds. PostgreSQL serves as the primary data store. Data visualizations are rendered using AmChart within a Canvas-powered UI for responsive performance.",
-    "projectType": "Web Application"
+    "projectType": "Web Application",
+    "myRole": "Backend engineer — owned the API layer and real-time data pipeline",
+    "team": "Small cross-functional team (backend, frontend, QA)",
+    "ownership": "Designed the SignalR live-feed architecture and PostgreSQL schema for high-frequency assay data",
+    "architectureDiagram": "seahorse"
   },
   {
     "id": "mps-finance",
@@ -35,7 +39,10 @@
       "Secure data handling"
     ],
     "technicalImplementation": "Engineered using .NET Core and SQL Server. HangFire manages background jobs such as batch reporting and periodic transaction summarization. Frontend logic leverages JavaScript-based dynamic charts and tables.",
-    "projectType": "Web Application"
+    "projectType": "Web Application",
+    "myRole": "Backend engineer — owned transaction processing and background jobs",
+    "team": "Small cross-functional team",
+    "ownership": "Built the HangFire job pipeline for batch reporting and transaction summarization"
   },
   {
     "id": "query-builder",
@@ -92,7 +99,10 @@
       "Secure communication and alert system"
     ],
     "technicalImplementation": "React is used for the frontend, while backend APIs are built in .NET Core. Real-time updates and alerts are managed using SignalR. Azure provides cloud hosting, identity, and access management.",
-    "projectType": "Windows Desktop Application"
+    "projectType": "Windows Desktop Application",
+    "myRole": "Full-stack engineer — owned the React frontend and real-time alerting integration",
+    "team": "Small cross-functional team",
+    "ownership": "Built the SignalR-based live location and alert system end-to-end on the frontend"
   },
   {
     "id": "ios-backup-tool",
@@ -292,7 +302,10 @@
       "Supports scraping and device info export"
     ],
     "technicalImplementation": "Built with .NET Core and C#. Connects to iOS devices via proprietary Apple interfaces and extracts system details. Supports data scraping, export, and integration with third-party tools.",
-    "projectType": "Windows Desktop Application"
+    "projectType": "Windows Desktop Application",
+    "myRole": "Open-source contributor (not the original author)",
+    "team": "Community project maintained by artehe",
+    "ownership": "Contributed device-metadata parsing improvements to the upstream project"
   },
   {
     "id": "ArcticCodeVaultContributor",
@@ -337,7 +350,15 @@
       "Lightweight .NET console utility"
     ],
     "technicalImplementation": "Developed as a .NET console app. Leverages Windows APIs and external DLLs to handle HEIC decoding and JPEG encoding. Optimized for performance in batch operations and desktop pipelines.",
-    "projectType": "Nuget Package"
+    "projectType": "Nuget Package",
+    "myRole": "Solo developer",
+    "team": "Solo side project",
+    "ownership": "Designed, built, and published as a standalone NuGet package",
+    "caseStudy": {
+      "blogUrl": "https://elanchezhiyan-p.medium.com/heic-to-jpg-converter-efficiently-convert-heic-images-to-jpg-using-heicjpegtoolkit-148c99c24653",
+      "metric": "Published on NuGet",
+      "summary": "Wrote up the HEIC decoding approach and packaging process on Medium."
+    }
   },
   {
     "id": "telemedix",
@@ -368,7 +389,11 @@
       "DICOM Viewer for medical imaging"
     ],
     "technicalImplementation": "TeleMEDix combines .NET Core for backend API services and React for the dynamic frontend interface, creating a responsive and user-friendly experience. The backend integrates CosmosDB for scalable, secure patient data storage, while Azure Blob Storage is used to manage consultation files, medical records, and images. The application follows CCDA standards for patient data exchange and integrates with Kno2 for secure data interoperability. For medical imaging, a DICOM Viewer is implemented, allowing healthcare professionals to view and interact with medical images seamlessly. Persona is used for secure user management and authentication, ensuring robust user access control across the platform. This entire solution is hosted on Azure App Service, providing scalability and reliability.",
-    "projectType": "Web API Application"
+    "projectType": "Web API Application",
+    "myRole": "Backend engineer — owned CosmosDB data model and CCDA/HL7 FHIR compliance layer",
+    "team": "Cross-functional team (backend, frontend, QA, DevOps)",
+    "ownership": "Built the CCDA/HL7 FHIR interoperability layer and the Kno2 secure data-exchange integration",
+    "architectureDiagram": "telemedix"
   },
   {
     "id": "invoice-pilot",
@@ -455,7 +480,15 @@
       "Extensible architecture for additional PDF engines"
     ],
     "technicalImplementation": "Built with .NET 8 and C#, the solution features a modular architecture with separate projects for core domain models, CCDA XML parsing, and PDF generation engines. The QuestPDF implementation builds layouts programmatically, while IronPDF uses HTML templates tuned to match QuestPDF's output. The benchmarking module measures execution time, memory usage, PDF size, and throughput across multiple iterations. Google Gemini AI integration optionally enhances clinical narratives. The console application orchestrates parsing, AI enhancement, PDF generation, and benchmark execution with configurable options via appsettings.json.",
-    "projectType": "Console Application"
+    "projectType": "Console Application",
+    "myRole": "Solo developer",
+    "team": "Solo side project",
+    "ownership": "Designed the dual PDF-engine architecture and the benchmarking suite end-to-end",
+    "caseStudy": {
+      "blogUrl": "https://elanchezhiyan-p.medium.com/benchmarking-healthcare-pdf-generation-in-net-535cdfb00f86",
+      "metric": "🏆 Runner-Up — Iron Software Writing Contest",
+      "summary": "This IronPDF vs QuestPDF benchmark won a $500 runner-up award in Iron Software's global developer writing contest."
+    }
   },
   {
     "id": "python-package-visualizer",
@@ -483,7 +516,15 @@
       "Export tools for requirements.txt and lock files"
     ],
     "technicalImplementation": "Built with TypeScript using the VS Code Extension API. The sidebar webview renders package data fetched by calling pip and PyPI REST APIs. D3.js powers the interactive dependency graph. Static import analysis identifies unused packages across the workspace. CVE data is retrieved from public vulnerability databases and displayed as severity badges. The extension supports both venv and global Python environments and is compatible with VS Code and Cursor editors.",
-    "projectType": "VS Code Extension"
+    "projectType": "VS Code Extension",
+    "myRole": "Solo developer",
+    "team": "Solo side project",
+    "ownership": "Designed and shipped the extension end-to-end, including the D3.js dependency graph and CVE detection",
+    "caseStudy": {
+      "blogUrl": "https://elanchezhiyan-p.medium.com/i-got-tired-of-juggling-5-tabs-to-manage-python-packages-so-i-built-a-vs-code-extension-058c59ed2593",
+      "metric": "Published on VS Code Marketplace",
+      "summary": "Wrote up why 5 tabs of pip commands led to building a full dependency-visualization extension instead."
+    }
   },
   {
     "id": "smart-finance-system",
@@ -517,6 +558,14 @@
       "Offline-first desktop application"
     ],
     "technicalImplementation": "Built as a desktop application using Electron for the shell and React with TypeScript for the UI. SQLite (better-sqlite3) serves as the local database, enabling offline operation. Electron IPC handles secure communication between the frontend and backend processes. The application uses React Router for navigation and React Query for data management. PDF generation is implemented for receipts, loan schedules, and daily collection reports. The app is packaged as a Windows .exe using electron-builder, making it easy to distribute and install. All data is stored locally, eliminating the need for server hosting while providing full access to the filesystem for document management.",
-    "projectType": "Windows Desktop Application"
+    "projectType": "Windows Desktop Application",
+    "myRole": "Solo developer",
+    "team": "Solo side project",
+    "ownership": "Designed the offline-first Electron architecture and SQLite schema end-to-end",
+    "caseStudy": {
+      "blogUrl": "https://elanchezhiyan-p.medium.com/%EF%B8%8F-building-a-smart-finance-system-with-electron-react-sqlite-4b37246f282e",
+      "metric": "Offline-first, zero hosting cost",
+      "summary": "Wrote up the architecture decisions behind an offline-first NBFC loan system built for low-connectivity areas."
+    }
   }
 ]

@@ -377,7 +377,7 @@ const Contact = () => {
         {/* Hero Section */}
         <div className="container mx-auto px-4 py-8 md:py-20">
           <div className="text-center mb-8 md:mb-16">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6">Contact Me</h1>
+            <h1 className="text-3xl lg:text-4xl font-bold mb-6">Contact Me</h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Let's discuss your next project and build something amazing
               together
@@ -680,7 +680,7 @@ const Contact = () => {
           {/* Call to Action */}
           <div className="mt-16 text-center">
             <div className="glass rounded-xl p-12 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
-              <h2 className="text-3xl font-bold mb-4">
+              <h2 className="text-2xl font-bold mb-4">
                 Ready to Start Your Project?
               </h2>
               <p className="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">

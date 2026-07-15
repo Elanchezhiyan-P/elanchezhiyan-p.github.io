@@ -23,10 +23,13 @@ export const MobileTimeline: React.FC<MobileTimelineProps> = ({ experiences }) =
       <div className="space-y-6 md:space-y-12">
         {experiences.map((item, index) => (
           <div key={index} className="relative flex items-start">
-            <div className="absolute left-4 w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600 rounded-full border-2 md:border-4 border-white dark:border-gray-900 shadow-xl z-10 flex items-center justify-center backdrop-blur-sm">
-              <div className="text-white text-[10px] md:text-xs font-bold">
-                {item.year.split(' ')[0].slice(-2)}
-              </div>
+            <div className="absolute left-3 w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-500 theme-green:to-teal-600 rounded-full border-2 md:border-[3px] border-white dark:border-gray-900 shadow-xl z-10 flex flex-col items-center justify-center gap-0 backdrop-blur-sm">
+              <span className="text-white text-[9px] md:text-[10px] font-black leading-none">
+                {item.year.split(' ')[1]?.slice(0, 3) ?? ''}
+              </span>
+              <span className="text-white/80 text-[8px] md:text-[9px] font-semibold leading-none">
+                '{item.year.split(' ')[0].slice(-2)}
+              </span>
             </div>
 
             <div className="ml-16 md:ml-20 w-full">
@@ -36,7 +39,7 @@ export const MobileTimeline: React.FC<MobileTimelineProps> = ({ experiences }) =
                     <div className="p-1.5 md:p-2 rounded-lg md:rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600">
                       <Calendar className="w-3 h-3 md:w-4 md:h-4 text-white" />
                     </div>
-                    <span className="text-xs md:text-sm font-bold bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent px-2 md:px-3 py-0.5 md:py-1 rounded-full glass">
+                    <span className="text-xs md:text-sm font-bold text-blue-600 dark:text-blue-400 theme-green:text-green-600 theme-green:dark:text-green-400 px-2 md:px-3 py-0.5 md:py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 theme-green:bg-green-50 theme-green:dark:bg-green-900/30 border border-blue-200 dark:border-blue-700 theme-green:border-green-200 theme-green:dark:border-green-700">
                       {item.year}
                     </span>
                   </div>

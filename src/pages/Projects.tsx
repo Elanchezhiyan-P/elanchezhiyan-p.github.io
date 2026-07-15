@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { ExternalLink, Github, Filter, Star } from "lucide-react";
+import { ExternalLink, Github, Filter, Star, Users, BookOpen, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import projectsData from "../data/projects.json";
 import { projectImageMap } from "@/utils/imageMap";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ArchitectureDiagram from "@/components/ArchitectureDiagram";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Projects = () => {
 
@@ -48,7 +56,7 @@ const Projects = () => {
       </Helmet>
       <div className="container mx-auto px-4 py-8 md:py-20">
         <div className="text-center mb-8 md:mb-16">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Projects</h1>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">Projects</h1>
         <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Explore a portfolio of enterprise-grade applications built for
           scalability, performance, and impact.
@@ -148,6 +156,63 @@ const Projects = () => {
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {project.description}
               </p>
+
+              {(project as any).myRole && (
+                <div className="flex items-start gap-2 mb-4 text-xs text-gray-500 dark:text-gray-400">
+                  <Users className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div>
+                      <span className="font-semibold text-gray-700 dark:text-gray-300">Role: </span>
+                      {(project as any).myRole}
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700 dark:text-gray-300">Team: </span>
+                      {(project as any).team}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {(project as any).caseStudy && (
+                <a
+                  href={(project as any).caseStudy.blogUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2 mb-4 p-2.5 rounded-lg bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 border border-blue-200 dark:border-blue-800 theme-green:border-green-200 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                >
+                  <BookOpen className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-blue-600 dark:text-blue-400 theme-green:text-green-600" />
+                  <div className="text-xs">
+                    <span className="font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-700">
+                      {(project as any).caseStudy.metric}
+                    </span>
+                    <span className="text-gray-600 dark:text-gray-400">
+                      {" — " + (project as any).caseStudy.summary}
+                    </span>
+                  </div>
+                </a>
+              )}
+
+              {(project as any).architectureDiagram && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="w-full gap-2 mb-4 border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-600"
+                    >
+                      <Workflow className="h-4 w-4" />
+                      View Architecture
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-lg">
+                    <DialogHeader>
+                      <DialogTitle>{project.title} — Architecture</DialogTitle>
+                    </DialogHeader>
+                    <ArchitectureDiagram kind={(project as any).architectureDiagram} />
+                  </DialogContent>
+                </Dialog>
+              )}
 
               <div className="flex flex-wrap gap-1 mb-4">
                 {project.technologies.slice(0, 3).map((tech) => (

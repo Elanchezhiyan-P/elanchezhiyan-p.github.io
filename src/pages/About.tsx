@@ -61,39 +61,27 @@ const About = () => {
       companyWebsite: "https://uncia.ai",
     },
     {
-      year: "2021 Apr",
-      title: "Software Developer",
+      year: "2021 May",
+      title: "Dotnet Developer",
       company: "App Innovation Technologies",
       location: "Coimbatore, Tamil Nadu, India",
       type: "job" as const,
       intro:
         "Focused on .NET Core and Azure to develop scalable web applications and REST APIs for business clients.",
       description:
-        "Advanced to Senior Developer role, architecting scalable cloud solutions and mentoring junior developers.",
+        "Built and maintained REST APIs using .NET Core, working across the SDLC on production systems for global clients.",
       companyWebsite: "https://aitechindia.com",
     },
     {
-      year: "2022 Jun",
-      title: "Technical Lead",
+      year: "2023 Feb",
+      title: "Development Team Lead",
       company: "App Innovation Technologies",
       location: "Coimbatore, Tamil Nadu, India",
       type: "promotion" as const,
       intro:
-        "Took on leadership responsibilities including code reviews, technical mentoring, and architecture decisions.",
+        "Promoted to lead a team of developers, taking on architecture decisions, code reviews, and technical mentoring.",
       description:
-        "Currently leading technical architecture decisions and driving innovation in cloud-native applications.",
-      companyWebsite: "https://aitechindia.com",
-    },
-    {
-      year: "2024 Jun",
-      title: "Senior Software Developer",
-      company: "App Innovation Technologies",
-      location: "Coimbatore, Tamil Nadu, India",
-      type: "promotion" as const,
-      intro:
-        "Elevated to a senior role, specializing in cloud architecture, performance optimization, and DevOps practices.",
-      description:
-        "Currently leading technical architecture decisions and driving innovation in cloud-native applications.",
+        "Currently leading a development team, architecting scalable cloud solutions and driving REST API performance and reliability improvements for global clients.",
       companyWebsite: "https://aitechindia.com",
     },
   ];
@@ -157,6 +145,17 @@ const About = () => {
       glowColor: "#F97316",
       category: "Infrastructure",
     },
+    {
+      name: "IronPDF Writing Contest — Runner-Up",
+      issuer: "Iron Software",
+      date: "Apr 2026",
+      link: "https://www.linkedin.com/pulse/meet-winners-ironpdf-writing-contest-ironsoftware-qzvjc",
+      badge: "🏆",
+      gradientFrom: "from-amber-500",
+      gradientTo: "to-yellow-600",
+      glowColor: "#F59E0B",
+      category: "Writing Award",
+    },
   ];
 
   return (
@@ -186,7 +185,7 @@ const About = () => {
       <div className="container mx-auto px-4 pt-8 pb-4 md:py-12">
         {/* Hero Section */}
         <section className="text-center mb-4 md:mb-6">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             About Me
           </h1>
           <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl mx-auto backdrop-blur-xl border border-white/20 space-y-4">
@@ -203,8 +202,8 @@ const About = () => {
               <span className="font-bold text-blue-600 theme-green:text-green-600">
                 {yearsOfExperience}+ years
               </span>{" "}
-              at App Innovation Technologies, I progressed from Developer to Technical Lead to
-              Senior Developer — shipping 30+ production systems, contributing to open-source
+              at App Innovation Technologies, I progressed from Dotnet Developer to Development
+              Team Lead — shipping 30+ production systems, contributing to open-source
               tooling with Arctic Code Vault recognition, and mentoring engineers across
               cloud-native projects.
             </p>
@@ -250,7 +249,7 @@ const About = () => {
 
         {/* Experience Timeline */}
         <section className="mb-6 md:mb-12">
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
+          <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-center mb-6 md:mb-12 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             Professional Journey
           </h2>
 
@@ -312,7 +311,7 @@ const About = () => {
                           
                           <div className="relative z-10">
                             <div className="flex items-center gap-3 mb-6 flex-wrap">
-                              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+                              <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
                                 {exp.title}
                               </h3>
                               {exp.type === "promotion" && (
@@ -391,7 +390,7 @@ const About = () => {
 
         {/* Technical Expertise Section */}
         <section className="mb-6 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-bold text-center mb-6 md:mb-10 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
+          <h2 className="text-xl md:text-3xl font-bold text-center mb-6 md:mb-10 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
             Technical Expertise
           </h2>
           <div className="glass rounded-2xl md:rounded-3xl p-4 md:p-8 backdrop-blur-xl border border-white/20">
@@ -401,7 +400,7 @@ const About = () => {
 
         {/* Certifications */}
         <section>
-          <h2 className="text-2xl md:text-4xl font-bold text-center mb-6 md:mb-12 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent pt-4 md:pt-10">
+          <h2 className="text-xl md:text-3xl font-bold text-center mb-6 md:mb-12 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent pt-4 md:pt-10">
             Certifications & Achievements
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -424,7 +423,7 @@ const About = () => {
         {/* Call to Action */}
         <section className="text-center">
           <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-12 backdrop-blur-xl border-2 md:border-4 border-blue-500 dark:border-blue-400 theme-green:border-green-500 theme-green:dark:border-green-400 bg-gradient-to-br from-blue-50/50 via-purple-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <h2 className="text-xl md:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+            <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
               Ready to Build Something Amazing?
             </h2>
             <p className="text-base md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto">

@@ -18,7 +18,7 @@ export const Loader: React.FC = () => {
             />
           </div>
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-600 via-blue-500 to-purple-600 bg-clip-text text-transparent tracking-wide drop-shadow-lg">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-indigo-600 via-blue-500 to-purple-600 bg-clip-text text-transparent tracking-wide drop-shadow-lg">
           Elanchezhiyan P
         </h1>
         <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-2 font-medium italic">

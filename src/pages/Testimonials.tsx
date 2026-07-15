@@ -104,7 +104,7 @@ const Testimonials = () => {
             Client Testimonials
           </span>
         </div>
-        <h1 className="text-2xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="text-xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           What People Say
         </h1>
         <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -235,9 +235,11 @@ const Testimonials = () => {
                           loading="lazy"
                           className="w-14 h-14 rounded-xl object-cover border-2 border-blue-500/20 shadow-lg"
                         />
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                          <CheckCircle className="h-3 w-3 text-white" />
-                        </div>
+                        {testimonial.linkedin && (
+                          <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center" title="Verified via LinkedIn">
+                            <CheckCircle className="h-3 w-3 text-white" />
+                          </div>
+                        )}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
