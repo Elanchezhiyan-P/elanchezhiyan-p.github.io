@@ -27,6 +27,7 @@ import ClinicalDischargePdfImage from "@/assets/project/ClinicalDischargePdf.png
 import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PhoneCarousel } from "@/components/ui/phone-mockups-1-utils/phone-carousel";
 
 const Projects = () => {
   const imageMap = {
@@ -57,6 +58,20 @@ const Projects = () => {
 
   const [filter, setFilter] = useState("all");
   const [projects] = useState(projectsData);
+
+  const quickLookIds = [
+    "seahorse-analytics",
+    "remotecom",
+    "telemedix",
+    "smart-finance-system",
+    "clinical-discharge-pdf-engine",
+  ];
+  const quickLookImages = quickLookIds
+    .map((id) => {
+      const project = projects.find((p) => p.id === id);
+      return project ? { src: imageMap[id], alt: project.title } : null;
+    })
+    .filter((item): item is { src: string; alt: string } => item !== null);
 
   // Extract unique technologies from the projects
   const allprojectType = Array.from(
@@ -101,45 +116,52 @@ const Projects = () => {
         </p>
       </div>
 
-      {/* Filter Controls */}
-      <div className="mb-6 md:mb-8">
-        <div className="flex flex-wrap gap-2 justify-center">
-          <div className="group relative">
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300 rounded-md" />
-            <Button
-              variant={filter === "all" ? "default" : "outline"}
-              onClick={() => setFilter("all")}
-              size="sm"
-              className={`relative z-10 transition-all duration-300 ${
-                filter === "all"
-                  ? ""
-                  : "hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-950 dark:hover:text-blue-300 hover:border-blue-300 dark:hover:border-blue-600 theme-green:hover:bg-green-50 theme-green:hover:text-green-700 theme-green:dark:hover:bg-green-950 theme-green:dark:hover:text-green-300 theme-green:hover:border-green-300 theme-green:dark:hover:border-green-600"
-              }`}
-            >
-              <Filter className="h-4 w-4" />
-              All Projects
-            </Button>
+      {/* Quick Look + Filters */}
+      <div className="mb-8 md:mb-12 glass rounded-2xl md:rounded-3xl p-4 md:p-8 border border-white/20 backdrop-blur-xl">
+        <h2 className="text-center text-lg md:text-xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent">
+          Quick Look
+        </h2>
+        <PhoneCarousel images={quickLookImages} variant="tablet" />
+
+        <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-200/50 dark:border-gray-700/50">
+          <div className="flex flex-wrap gap-2 justify-center">
+            <div className="group relative">
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300 rounded-md" />
+              <Button
+                variant={filter === "all" ? "default" : "outline"}
+                onClick={() => setFilter("all")}
+                size="sm"
+                className={`relative z-10 transition-all duration-300 ${
+                  filter === "all"
+                    ? ""
+                    : "hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-950 dark:hover:text-blue-300 hover:border-blue-300 dark:hover:border-blue-600 theme-green:hover:bg-green-50 theme-green:hover:text-green-700 theme-green:dark:hover:bg-green-950 theme-green:dark:hover:text-green-300 theme-green:hover:border-green-300 theme-green:dark:hover:border-green-600"
+                }`}
+              >
+                <Filter className="h-4 w-4" />
+                All Projects
+              </Button>
+            </div>
+            {allprojectType
+              .slice(0, 100)
+              .sort((a, b) => a.localeCompare(b))
+              .map((tech) => (
+                <div key={tech} className="group relative">
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300 rounded-md" />
+                  <Button
+                    variant={filter === tech ? "default" : "outline"}
+                    onClick={() => setFilter(tech)}
+                    size="sm"
+                    className={`relative z-10 transition-all duration-300 ${
+                      filter === tech
+                        ? ""
+                        : "hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-950 dark:hover:text-blue-300 hover:border-blue-300 dark:hover:border-blue-600 theme-green:hover:bg-green-50 theme-green:hover:text-green-700 theme-green:dark:hover:bg-green-950 theme-green:dark:hover:text-green-300 theme-green:hover:border-green-300 theme-green:dark:hover:border-green-600"
+                    }`}
+                  >
+                    {tech}
+                  </Button>
+                </div>
+              ))}
           </div>
-          {allprojectType
-            .slice(0, 100)
-            .sort((a, b) => a.localeCompare(b))
-            .map((tech) => (
-              <div key={tech} className="group relative">
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300 rounded-md" />
-                <Button
-                  variant={filter === tech ? "default" : "outline"}
-                  onClick={() => setFilter(tech)}
-                  size="sm"
-                  className={`relative z-10 transition-all duration-300 ${
-                    filter === tech
-                      ? ""
-                      : "hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-950 dark:hover:text-blue-300 hover:border-blue-300 dark:hover:border-blue-600 theme-green:hover:bg-green-50 theme-green:hover:text-green-700 theme-green:dark:hover:bg-green-950 theme-green:dark:hover:text-green-300 theme-green:hover:border-green-300 theme-green:dark:hover:border-green-600"
-                  }`}
-                >
-                  {tech}
-                </Button>
-              </div>
-            ))}
         </div>
       </div>
 

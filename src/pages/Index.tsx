@@ -18,6 +18,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatedBanner } from "@/components/ui/animated-banner";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { useCountUp } from "@/hooks/useCountUp";
 import { trackBookCall, trackProjectView, trackCertificationClick } from "@/utils/analytics";
@@ -290,6 +291,17 @@ const Index = () => {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Promo Banner */}
+      <section className="container mx-auto px-4 py-4">
+        <AnimatedBanner
+          ctaLabel="View All Projects"
+          href="/projects"
+          posterSrc={SeahorseImage}
+          subtitle="30+ projects spanning cloud architecture, DevOps automation, and full-stack apps."
+          title="Explore My Work"
+        />
       </section>
 
       {/* Featured Projects Carousel */}
