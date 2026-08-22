@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MessageCircle, X, Mail } from "lucide-react";
-import ChatbotAvatar from "@/assets/chatbot.jpg";
+import ChatbotAvatar from "@/assets/chatbot.webp";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
