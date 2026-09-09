@@ -9,9 +9,6 @@ import {
 } from "motion/react";
 import {
   ArrowRight,
-  Code,
-  Cloud,
-  Zap,
   ChevronLeft,
   ChevronRight,
   Github,
@@ -24,20 +21,13 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AnimatedBanner } from "@/components/ui/animated-banner";
 import { RecognitionSection } from "@/components/RecognitionSection";
+import { BuildCTA } from "@/components/BuildCTA";
+import { Certifications } from "@/components/Certifications";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 import { useCountUp } from "@/hooks/useCountUp";
 import { trackBookCall, trackProjectView, trackCertificationClick } from "@/utils/analytics";
 import projectsData from "@/data/projects.json";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 import SeahorseImage from "@/assets/project/Seahorse.webp";
 import MpsImage from "@/assets/project/MPS.webp";
@@ -60,6 +50,7 @@ import TeleMedixImage from "@/assets/project/telemedix.webp";
 import InvoicePilotImage from "@/assets/project/invoice-pdf-image.webp";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.webp";
 import ClinicalDischargePdfImage from "@/assets/project/ClinicalDischargePdf.webp";
+import PythonPackageVisualizerImage from "@/assets/project/python-package-visualizer.webp";
 import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.webp";
 
 /* --------------------------------------------------------------------------
@@ -73,6 +64,15 @@ import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.webp";
  * ------------------------------------------------------------------------ */
 
 const SPRING = { type: "spring", stiffness: 300, damping: 30 } as const;
+
+/** Featured-projects "peek" carousel: each slide takes this % of the track's
+ *  own width (percentages here resolve against the track, not the slide —
+ *  the track is block-level and always matches the viewport, regardless of
+ *  how wide its overflowing children are). Centering keeps the active slide
+ *  in the middle with equal prev/next peeks on either side. */
+const PEEK_SLIDE_WIDTH = 82;
+const PEEK_CENTERING = (100 - PEEK_SLIDE_WIDTH) / 2;
+
 const EASE_OUT = {
   duration: 0.4,
   ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
@@ -87,6 +87,17 @@ const fadeUp: Variants = {
     opacity: 1,
     y: 0,
     transition: { ...SPRING, opacity: EASE_OUT },
+  },
+};
+
+/** Hero-only: a longer rise from further below, so the opening beat reads
+ *  as content arriving from off-screen rather than a small fade-in. */
+const heroRise: Variants = {
+  hidden: { opacity: 0, y: 56 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 180, damping: 22, opacity: EASE_OUT },
   },
 };
 
@@ -117,6 +128,7 @@ const pressable = {
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [selectedTech, setSelectedTech] = useState<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const featuredProjects = projectsData.filter((project) => project.featured);
@@ -145,7 +157,7 @@ const Index = () => {
     ghl: GoHighLevelImage,
     "clinical-discharge-pdf-engine": ClinicalDischargePdfImage,
     "smart-finance-system": SmartFinanceSystemImage,
-    "python-package-visualizer": "https://raw.githubusercontent.com/Elanchezhiyan-P/python-package-visualizer/main/media/screenshots/dashboard.png",
+    "python-package-visualizer": PythonPackageVisualizerImage,
   };
 
   useEffect(() => {
@@ -176,7 +188,7 @@ const Index = () => {
           <title>Elanchezhiyan P - Seasoned Software Developer | .NET &amp; Azure Expert</title>
           <meta
             name="description"
-            content={`Hire Elanchezhiyan P — Senior .NET & Azure Developer, ${yearsOfExperience}+ yrs exp. Available for full-time, contract & freelance. Cloud, DevOps, React.`}
+            content={`Hire Elanchezhiyan P — Senior .NET & Azure Developer, ${yearsOfExperience}+ yrs exp. Open for freelance projects. Cloud, DevOps, React.`}
           />
           <meta
             name="keywords"
@@ -188,26 +200,46 @@ const Index = () => {
 
         {/* Hero Section — above the fold, so it plays on mount rather than on scroll */}
         <motion.section
-          className="container mx-auto px-4 py-4 md:py-6"
+          className="relative container mx-auto px-4 py-4 md:py-6 overflow-hidden"
           variants={stagger(0.1)}
           initial="hidden"
           animate="show"
         >
+          {/* Ambient backdrop — dot-grid + soft radial glow, sits behind the
+              hero content only (not the whole page, unlike ParticleBackground). */}
+          <div
+            className="absolute inset-0 -z-10 opacity-60 dark:opacity-40"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, rgba(59,130,246,0.35) 1px, transparent 1.4px)",
+              backgroundSize: "28px 28px",
+              maskImage:
+                "radial-gradient(ellipse 60% 60% at 30% 30%, black 40%, transparent 80%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 60% 60% at 30% 30%, black 40%, transparent 80%)",
+            }}
+            aria-hidden="true"
+          />
+          <div
+            className="absolute -z-10 -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-blue-500/10 theme-green:bg-green-500/10 blur-3xl"
+            aria-hidden="true"
+          />
+
           <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-10 items-start">
             <div className="space-y-4">
               <div className="space-y-3">
-                <motion.div variants={fadeUp} className="flex items-center gap-2">
+                <motion.div variants={heroRise} className="flex items-center gap-2">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
                   </span>
                   <span className="font-mono text-[11px] font-medium tracking-[0.08em] uppercase text-green-700 dark:text-green-400 theme-green:text-green-700">
-                    Status: Open to work — Full-time / Contract / Freelance
+                    Status: Open for freelance projects
                   </span>
                 </motion.div>
 
                 <motion.h1
-                  variants={fadeUp}
+                  variants={heroRise}
                   className="font-mono font-bold text-4xl md:text-5xl lg:text-6xl leading-[1.02] tracking-tight text-balance text-gray-900 dark:text-gray-100"
                 >
                   Elanchezhiyan P
@@ -215,14 +247,14 @@ const Index = () => {
                 </motion.h1>
 
                 <motion.p
-                  variants={fadeUp}
+                  variants={heroRise}
                   className="font-plex text-lg md:text-xl font-semibold text-blue-700 dark:text-blue-400 theme-green:text-green-700 theme-green:dark:text-green-400"
                 >
                   Senior .NET &amp; Azure Developer
                 </motion.p>
 
                 <motion.p
-                  variants={fadeUp}
+                  variants={heroRise}
                   className="font-plex text-base leading-relaxed text-gray-600 dark:text-gray-400 max-w-[46ch]"
                 >
                   B.E (Bachelor of Engineering) graduate with{" "}
@@ -258,7 +290,7 @@ const Index = () => {
                     <Button
                       size="lg"
                       variant="outline"
-                      className="group px-5 md:px-6 py-2.5 md:py-3 text-sm font-mono font-semibold rounded-sm border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 hover:border-blue-700 dark:hover:border-blue-400 theme-green:hover:border-green-700 hover:text-blue-700 dark:hover:text-blue-400 theme-green:hover:text-green-700 transition-colors duration-200"
+                      className="group px-5 md:px-6 py-2.5 md:py-3 text-sm font-mono font-semibold rounded-sm border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-900 shadow-sm text-gray-800 dark:text-gray-200 hover:border-blue-700 dark:hover:border-blue-400 theme-green:hover:border-green-700 hover:text-blue-700 dark:hover:text-blue-400 theme-green:hover:text-green-700 transition-colors duration-200"
                     >
                       Book a call
                     </Button>
@@ -281,7 +313,7 @@ const Index = () => {
               <AnimatedStats yearsOfExperience={yearsOfExperience} />
             </div>
 
-            <motion.div variants={fadeUp}>
+            <motion.div variants={heroRise}>
               <TerminalHero prefersReducedMotion={prefersReducedMotion} />
             </motion.div>
           </div>
@@ -297,8 +329,8 @@ const Index = () => {
               Core Technologies
             </h2>
           </motion.div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3">
-            {[
+          {(() => {
+            const techs = [
               { name: ".NET", icon: "💻" },
               { name: "React", icon: "⚛️" },
               { name: "Azure", icon: "☁️" },
@@ -307,21 +339,60 @@ const Index = () => {
               { name: "Docker", icon: "🐳" },
               { name: "Git", icon: "🔀" },
               { name: "API", icon: "🔌" },
-            ].map((tech, index) => (
-              <motion.div
-                key={index}
-                variants={fadeUp}
-                {...pressable}
-                className="group glass rounded-xl p-2 sm:p-3 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-colors duration-300 hover:shadow-lg text-center min-w-0"
-              >
-                <div className="text-xl sm:text-2xl mb-1">{tech.icon}</div>
-                <div className="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-300 break-words overflow-hidden">
-                  <span className="hidden sm:inline">{tech.name}</span>
-                  <span className="sm:hidden">{tech.shortName || tech.name}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+            ];
+            const arcCenter = (techs.length - 1) / 2;
+            return (
+              <div className="flex justify-center gap-3 sm:gap-4 md:gap-6 overflow-x-auto md:overflow-visible pb-3 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {techs.map((tech, index) => {
+                  const normalized = (index - arcCenter) / arcCenter; // -1..1
+                  // True arc: a parabola across the whole row, not just the
+                  // middle few — center sits highest, edges settle lowest.
+                  const lift = 34 * (1 - normalized * normalized);
+                  const rotate = normalized * 14;
+                  const isSelected = selectedTech === index;
+                  return (
+                    <motion.button
+                      key={index}
+                      type="button"
+                      variants={fadeUp}
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.96 }}
+                      onClick={() =>
+                        setSelectedTech((prev) => (prev === index ? null : index))
+                      }
+                      style={{ y: -lift, rotate: isSelected ? 0 : rotate }}
+                      className="group relative flex flex-col items-center gap-1.5 flex-shrink-0 focus:outline-none"
+                      aria-pressed={isSelected}
+                    >
+                      {/* Circling ring — appears only once clicked, "orbits" the badge */}
+                      <span
+                        className={`absolute -inset-1.5 rounded-full border-2 border-dashed transition-opacity duration-300 ${
+                          isSelected
+                            ? "opacity-100 border-blue-500 dark:border-blue-400 theme-green:border-green-500 animate-spin"
+                            : "opacity-0 border-transparent"
+                        }`}
+                        style={{ animationDuration: "4s" }}
+                        aria-hidden="true"
+                      />
+                      <div
+                        className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-full glass border-2 flex items-center justify-center shadow-md transition-all duration-300 ${
+                          isSelected
+                            ? "border-blue-500 dark:border-blue-400 theme-green:border-green-500 shadow-lg shadow-blue-500/20"
+                            : "border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 group-hover:border-blue-400 dark:group-hover:border-blue-600 theme-green:group-hover:border-green-400"
+                        }`}
+                      >
+                        <span className="text-2xl sm:text-3xl">{tech.icon}</span>
+                      </div>
+                      <div className="text-[10px] sm:text-xs font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                        <span className="hidden sm:inline">{tech.name}</span>
+                        <span className="sm:hidden">{tech.shortName || tech.name}</span>
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            );
+          })()}
         </motion.section>
 
         {/* Key Achievements */}
@@ -364,23 +435,6 @@ const Index = () => {
           </div>
         </motion.section>
 
-        {/* Promo Banner */}
-        <motion.section
-          className="container mx-auto px-4 py-4"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-        >
-          <AnimatedBanner
-            ctaLabel="View All Projects"
-            href="/projects"
-            posterSrc={SeahorseImage}
-            subtitle="30+ projects spanning cloud architecture, DevOps automation, and full-stack apps."
-            title="Explore My Work"
-          />
-        </motion.section>
-
         {/* Featured Projects Carousel */}
         <motion.section className="container mx-auto px-4 py-4" {...reveal(0.1)}>
           <div className="text-center mb-4">
@@ -394,7 +448,7 @@ const Index = () => {
             </motion.div>
             <motion.h2
               variants={fadeUp}
-              className="text-2xl md:text-3xl font-extrabold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent"
+              className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent"
             >
               Featured Projects
             </motion.h2>
@@ -404,137 +458,143 @@ const Index = () => {
             >
               Showcasing scalable solutions and innovative architectures
             </motion.p>
+            <motion.p
+              variants={fadeUp}
+              className="mt-1 font-mono text-[11px] tracking-wide text-gray-400 dark:text-gray-500"
+            >
+              ↔ drag, or use the arrows
+            </motion.p>
           </div>
 
-          <motion.div
-            variants={fadeUp}
-            className="relative overflow-hidden rounded-3xl shadow-2xl bg-white dark:bg-gray-900 border-2 border-gray-200/50 dark:border-gray-800/50 transition-shadow duration-500 hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <motion.div
-              className="flex"
-              style={{ willChange: "transform" }}
-              animate={{ x: `-${currentSlide * 100}%` }}
-              transition={SPRING}
+          <motion.div variants={fadeUp} className="relative">
+            <div
+              className="overflow-hidden rounded-2xl"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              {featuredProjects.map((project) => (
-                <div key={project.id} className="w-full flex-shrink-0">
-                  <Card className="group flex flex-col lg:flex-row overflow-hidden border-none bg-transparent shadow-none">
-                    {/* Image Side */}
-                    <div className="lg:w-1/2 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 p-4 lg:p-6">
-                      <div className="relative w-full h-48 lg:h-64 flex items-center justify-center group/image">
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-indigo-500/20 theme-green:from-green-500/20 theme-green:via-emerald-500/20 theme-green:to-teal-500/20 rounded-2xl blur-xl group-hover/image:opacity-75 transition-opacity duration-500"></div>
+              <motion.div
+                className="flex cursor-grab active:cursor-grabbing"
+                style={{ willChange: "transform" }}
+                animate={{ x: `${PEEK_CENTERING - currentSlide * PEEK_SLIDE_WIDTH}%` }}
+                transition={SPRING}
+                drag="x"
+                dragElastic={0.15}
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={(_, info) => {
+                  const swipeThreshold = 60;
+                  if (info.offset.x < -swipeThreshold) {
+                    nextSlide();
+                  } else if (info.offset.x > swipeThreshold) {
+                    prevSlide();
+                  }
+                }}
+              >
+                {featuredProjects.map((project, index) => {
+                  const isCurrent = index === currentSlide;
+                  return (
+                  <motion.div
+                    key={project.id}
+                    style={{
+                      width: `${PEEK_SLIDE_WIDTH}%`,
+                      pointerEvents: isCurrent ? "auto" : "none",
+                    }}
+                    animate={{ scale: isCurrent ? 1 : 0.9, opacity: isCurrent ? 1 : 0.45 }}
+                    transition={SPRING}
+                    className="flex-shrink-0 px-2 md:px-3"
+                    aria-hidden={!isCurrent}
+                  >
+                    <div className="group grid md:grid-cols-2 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-xl transition-shadow duration-500">
+                      {/* Image */}
+                      <div className="relative aspect-[16/10] md:aspect-auto overflow-hidden">
                         <img
                           src={imageMap[project.id]}
                           alt={project.title}
                           loading="lazy"
-                          className="relative w-full h-full object-cover rounded-2xl shadow-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110 group-hover:shadow-2xl"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      </div>
-                    </div>
-                    {/* Content Side */}
-                    <div className="lg:w-1/2 flex flex-col justify-center p-4 lg:p-6 bg-gradient-to-br from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-800/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge className="bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 theme-green:from-green-100 theme-green:to-emerald-100 theme-green:dark:from-green-900/30 theme-green:dark:to-emerald-900/30 text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300 px-2.5 py-0.5 rounded-full text-xs font-bold tracking-wide border-2 border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 shadow-sm">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-transparent" />
+                        <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 dark:bg-gray-900/95 backdrop-blur text-[11px] font-mono font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-700 shadow-sm">
                           ⭐ Featured
-                        </Badge>
+                        </span>
                       </div>
-                      <h3 className="text-xl lg:text-2xl font-extrabold mb-2 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 theme-green:group-hover:from-green-600 theme-green:group-hover:to-emerald-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-700 dark:text-gray-300 mb-3 text-xs lg:text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-1.5 mb-3">
-                        {project.technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="inline-block bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-2.5 py-0.5 rounded-lg text-xs font-semibold border-2 border-gray-200 dark:border-gray-700 shadow-sm hover:border-blue-300 dark:hover:border-blue-600 theme-green:hover:border-green-300 theme-green:dark:hover:border-green-600 hover:scale-105 transition-all duration-200"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex gap-2 mt-1">
-                        {project.links?.github && (
-                          <motion.div {...pressable}>
-                            <Button
-                              variant="outline"
-                              className="group/btn flex items-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 border-blue-300 dark:border-blue-700 theme-green:border-green-300 theme-green:dark:border-green-700 shadow-md hover:shadow-lg transition-shadow duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/20"
-                              asChild
+                      {/* Content */}
+                      <div className="flex flex-col justify-center p-6 md:p-8 lg:p-10">
+                        <h3 className="font-mono text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                          {project.title}
+                        </h3>
+                        <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                          {project.description}
+                        </p>
+                        <div className="mb-6">
+                          <TechTagList technologies={project.technologies} />
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {project.links?.github && (
+                            <motion.a
+                              {...pressable}
+                              href={project.links.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              tabIndex={isCurrent ? 0 : -1}
+                              className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-sm border-2 border-gray-300 dark:border-gray-700 text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 hover:border-blue-700 dark:hover:border-blue-400 theme-green:hover:border-green-700 hover:text-blue-700 dark:hover:text-blue-400 theme-green:hover:text-green-700 transition-colors duration-200"
                             >
-                              <a
-                                href={project.links.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <Github className="h-4 w-4 group-hover/btn:rotate-12 transition-transform duration-300" />
-                                View Code
-                              </a>
-                            </Button>
-                          </motion.div>
-                        )}
-                        {project.links?.live && project.links.live !== "#" && (
-                          <motion.div {...pressable}>
-                            <Button
-                              className="group/btn bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 theme-green:hover:from-green-700 theme-green:hover:via-emerald-700 theme-green:hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300 inline-flex items-center gap-2"
-                              asChild
+                              <Github className="w-4 h-4" />
+                              View Code
+                            </motion.a>
+                          )}
+                          {project.links?.live && project.links.live !== "#" && (
+                            <motion.a
+                              {...pressable}
+                              href={project.links.live}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              tabIndex={isCurrent ? 0 : -1}
+                              className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-blue-700 theme-green:bg-green-700 hover:bg-blue-800 theme-green:hover:bg-green-800 text-white text-sm font-mono font-semibold transition-colors duration-200"
                             >
-                              <a
-                                href={project.links.live}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <ExternalLink className="h-4 w-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
-                                Live Demo
-                              </a>
-                            </Button>
-                          </motion.div>
-                        )}
+                              <ExternalLink className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                              Live Demo
+                            </motion.a>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </Card>
-                </div>
-              ))}
-            </motion.div>
+                  </motion.div>
+                  );
+                })}
+              </motion.div>
+            </div>
 
-            {/* Navigation Buttons — `y` lives on motion, not in a Tailwind
-                `-translate-y-1/2`, so the hover scale can't wipe the centering. */}
+            {/* Navigation buttons */}
             <motion.button
               onClick={prevSlide}
               style={{ y: "-50%" }}
               {...pressable}
-              className="absolute left-2 md:left-4 top-[30%] md:top-1/2 p-2 md:p-3 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/30 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-colors duration-300 z-10"
+              className="absolute -left-2 md:-left-5 top-1/2 p-2 md:p-2.5 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-md hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 transition-colors duration-300 z-10"
               aria-label="Previous project"
             >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300" />
+              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 text-gray-700 dark:text-gray-300" />
             </motion.button>
             <motion.button
               onClick={nextSlide}
               style={{ y: "-50%" }}
               {...pressable}
-              className="absolute right-2 md:right-4 top-[30%] md:top-1/2 p-2 md:p-3 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 theme-green:hover:bg-green-50 theme-green:dark:hover:bg-green-900/30 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 transition-colors duration-300 z-10"
+              className="absolute -right-2 md:-right-5 top-1/2 p-2 md:p-2.5 rounded-full bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-md hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 transition-colors duration-300 z-10"
               aria-label="Next project"
             >
-              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300" />
+              <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-gray-700 dark:text-gray-300" />
             </motion.button>
 
-            {/* Dots Indicator */}
-            <div
-              className="absolute bottom-4 left-1/2 flex space-x-2 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md px-3 py-2 rounded-full border border-gray-200/50 dark:border-gray-700/50 shadow-lg"
-              style={{ transform: "translateX(-50%)" }}
-            >
+            {/* Dots indicator */}
+            <div className="flex justify-center gap-1.5 mt-5">
               {featuredProjects.map((_, index) => (
                 <motion.button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   {...pressable}
-                  className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
+                  className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 ${
                     index === currentSlide
-                      ? "bg-blue-600 theme-green:bg-green-600 w-8 shadow-md"
-                      : "w-2.5 bg-gray-300 dark:bg-gray-600 hover:bg-blue-400 dark:hover:bg-blue-500 theme-green:hover:bg-green-400 theme-green:dark:hover:bg-green-500"
+                      ? "bg-blue-700 theme-green:bg-green-700 w-6"
+                      : "w-2 bg-gray-300 dark:bg-gray-600 hover:bg-blue-400 dark:hover:bg-blue-500 theme-green:hover:bg-green-400 theme-green:dark:hover:bg-green-500"
                   }`}
                   aria-label={`Go to project ${index + 1}`}
                 />
@@ -545,261 +605,252 @@ const Index = () => {
 
         {/* Services/Skills Preview */}
         <motion.section className="container mx-auto px-4 py-4" {...reveal(0.1)}>
-          <div className="text-center mb-4">
-            <motion.div
-              variants={fadeUp}
-              className="inline-block px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 mb-2"
-            >
-              <span className="text-xs font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300">
-                Services & Expertise
-              </span>
-            </motion.div>
-            <motion.h2
-              variants={fadeUp}
-              className="text-xl md:text-2xl lg:text-3xl font-extrabold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent"
-            >
-              What I Do
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              className="text-sm md:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
-            >
-              Specialized in modern cloud-native development and scalable
-              solutions
-            </motion.p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-3 lg:gap-4">
-            {/* Full-Stack Development Card */}
-            <motion.div variants={fadeUp} {...pressable} className="h-full">
-              <Card className="group relative h-full overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-[box-shadow,border-color] duration-500 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:via-emerald-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl"></div>
-                <div className="relative flex flex-col items-center p-4">
-                  <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 theme-green:from-green-500 theme-green:to-emerald-600 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <Code className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 theme-green:group-hover:from-green-600 theme-green:group-hover:to-emerald-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                    Full-Stack Development
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
-                    Building scalable applications with .NET Core, React, and modern
-                    JavaScript frameworks.
-                  </p>
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* Cloud Solutions Card */}
-            <motion.div variants={fadeUp} {...pressable} className="h-full">
-              <Card className="group relative h-full overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-[box-shadow,border-color] duration-500 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:via-emerald-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl"></div>
-                <div className="relative flex flex-col items-center p-4">
-                  <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <Cloud className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 theme-green:group-hover:from-green-600 theme-green:group-hover:to-emerald-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                    Cloud Solutions
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
-                    Azure expertise in App Services, SQL Database, Blob Storage, and
-                    serverless architectures.
-                  </p>
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* DevOps & Automation Card */}
-            <motion.div variants={fadeUp} {...pressable} className="h-full">
-              <Card className="group relative h-full overflow-hidden border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 rounded-2xl bg-white dark:bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/30 theme-green:hover:shadow-green-500/20 theme-green:dark:hover:shadow-green-500/30 transition-[box-shadow,border-color] duration-500 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-indigo-500/5 theme-green:group-hover:from-green-500/5 theme-green:group-hover:via-emerald-500/5 theme-green:group-hover:to-teal-500/5 transition-all duration-500 rounded-2xl"></div>
-                <div className="relative flex flex-col items-center p-4">
-                  <div className="flex items-center justify-center w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 theme-green:from-emerald-500 theme-green:to-teal-600 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                    <Zap className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-indigo-600 theme-green:group-hover:from-emerald-600 theme-green:group-hover:to-teal-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                    DevOps & Automation
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs text-center leading-relaxed">
-                    CI/CD pipelines, Infrastructure as Code, and automated
-                    deployment strategies.
-                  </p>
-                </div>
-              </Card>
-            </motion.div>
-          </div>
+          <WhatIDoSection />
         </motion.section>
 
-        {/* Certifications & Achievements */}
-        <motion.section
-          className="container mx-auto px-4 pt-8 pb-4 relative z-0"
-          {...reveal(0.05)}
-        >
-          <motion.h2
-            variants={fadeUp}
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 md:mb-8 bg-gradient-to-r from-blue-600 to-purple-600 theme-green:from-green-600 theme-green:to-emerald-600 bg-clip-text text-transparent relative z-10"
-          >
-            Certifications & Achievements
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-10 max-w-7xl mx-auto items-stretch">
-            {[
-              {
-                name: ".NET Full Stack Developer - C# Corner",
-                issuer: "C# Corner",
-                date: "May 2025",
-                link: "https://www.c-sharpcorner.com/uploadfile/certification-exam/rzmmaqtc/certification.pdf?trk=public_profile_see-credential",
-                icon: "💻",
-                category: "Development",
-              },
-              {
-                name: "Foundational C# with Microsoft",
-                issuer: "freeCodeCamp",
-                date: "Feb 2025",
-                credentialId: "elanchezhiyan-p-fcswm",
-                link: "https://freecodecamp.org/certification/Elanchezhiyan-P/foundational-c-sharp-with-microsoft?trk=public_profile_see-credential",
-                icon: "🔷",
-                category: "Programming",
-              },
-              {
-                name: "Responsive Web Design",
-                issuer: "freeCodeCamp",
-                date: "Feb 2025",
-                credentialId: "elanchezhiyan-p-rwd",
-                link: "https://www.freecodecamp.org/certification/Elanchezhiyan-P/responsive-web-design?trk=public_profile_see-credential",
-                icon: "📱",
-                category: "Web Design",
-              },
-            ].map((cert, index) => (
-              <motion.div
-                key={cert.name}
-                variants={fadeUp}
-                {...pressable}
-                className="h-full"
-              >
-                <Card className="group h-full overflow-hidden hover:shadow-xl transition-[box-shadow,border-color] duration-500 relative z-10 border-2 border-blue-200/50 dark:border-blue-800/50 theme-green:border-green-200/50 theme-green:dark:border-green-800/50 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 theme-green:dark:hover:border-green-600 w-full min-w-0">
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 theme-green:from-green-500 theme-green:to-emerald-500 rounded-t-xl"></div>
-
-                  <CardContent className="p-4 md:p-6 min-w-0">
-                    <div className="space-y-3 md:space-y-4">
-                      {/* Header with icon and external link */}
-                      <div className="flex items-center justify-between">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 theme-green:from-green-500 theme-green:to-emerald-600 flex items-center justify-center shadow-lg">
-                          <span className="text-lg md:text-xl">{cert.icon}</span>
-                        </div>
-                        <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300" />
-                      </div>
-
-                      {/* Content */}
-                      <div className="space-y-2 md:space-y-3">
-                        <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base md:text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 theme-green:dark:group-hover:text-green-400 transition-colors duration-300">
-                          {cert.name}
-                        </h3>
-
-                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                          {cert.issuer}
-                        </p>
-
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="text-xs">
-                            {cert.category}
-                          </Badge>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">
-                            {cert.date}
-                          </span>
-                        </div>
-
-                        {cert.credentialId && (
-                          <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-                            <span className="text-xs text-gray-500 dark:text-gray-400">
-                              ID: {cert.credentialId}
-                            </span>
-                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-
-                  <a
-                    href={cert.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute inset-0"
-                    aria-label={`View ${cert.name} certification`}
-                  />
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+        <div className="container mx-auto px-4">
+          <Certifications limit={4} />
+        </div>
 
         <RecognitionSection />
 
         {/* Call to Action */}
-        <motion.section className="text-center py-4 md:py-6" {...reveal(0.1)}>
-          <div className="relative mx-auto max-w-3xl">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 theme-green:from-green-500/10 theme-green:via-emerald-500/10 theme-green:to-teal-500/10 rounded-3xl blur-3xl"></div>
-
-            <div className="relative overflow-hidden glass rounded-3xl border-2 border-blue-300/50 dark:border-blue-700/50 theme-green:border-green-300/50 theme-green:dark:border-green-700/50 shadow-2xl p-5 md:p-6">
-              <div className="relative flex flex-col items-center">
-              <motion.div
-                variants={fadeUp}
-                className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-600 theme-green:from-green-500 theme-green:via-emerald-600 theme-green:to-teal-600 rounded-2xl flex items-center justify-center mb-3 shadow-lg"
-              >
-                <span className="text-xl md:text-2xl">🚀</span>
-              </motion.div>
-              <motion.h3
-                variants={fadeUp}
-                className="text-lg md:text-xl lg:text-2xl font-extrabold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent"
-              >
-                Ready to Build Something Amazing?
-              </motion.h3>
-              <motion.p
-                variants={fadeUp}
-                className="text-xs md:text-sm text-gray-700 dark:text-gray-300 mb-4 max-w-2xl leading-relaxed"
-              >
-                Let's turn your ideas into reality with robust, scalable, and
-                beautiful software solutions.
-              </motion.p>
-              <motion.div
-                variants={stagger(0.05)}
-                className="flex flex-col sm:flex-row gap-3 justify-center"
-              >
-                <motion.div variants={fadeUp} {...pressable}>
-                  <Link to="/contact">
-                    <Button className="group bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 theme-green:hover:from-green-700 theme-green:hover:via-emerald-700 theme-green:hover:to-teal-700 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden relative">
-                      <span className="relative z-10 flex items-center gap-2">
-                        Let's Connect
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                      </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 theme-green:from-green-700 theme-green:via-emerald-700 theme-green:to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </Button>
-                  </Link>
-                </motion.div>
-                <motion.div variants={fadeUp} {...pressable}>
-                  <a
-                    href="https://topmate.io/elanchezhiyan_poosamani"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button
-                      variant="outline"
-                      className="group px-5 md:px-6 py-2.5 md:py-3 text-sm font-semibold rounded-xl border-2 border-purple-500 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 transition-colors duration-300 hover:shadow-lg"
-                    >
-                      <span className="flex items-center gap-2">
-                        Book a Free Call
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                      </span>
-                    </Button>
-                  </a>
-                </motion.div>
-              </motion.div>
-              </div>
-            </div>
-          </div>
+        <motion.section className="py-4 md:py-6" {...reveal(0.1)}>
+          <BuildCTA />
         </motion.section>
       </div>
     </MotionConfig>
+  );
+};
+
+/** How many tech tags show before a card needs "+N". */
+const TECH_TAG_PREVIEW_COUNT = 4;
+
+/**
+ * Tech-stack pills for a featured-project card, capped to a fixed count so
+ * every card in the carousel settles to roughly the same height regardless
+ * of how many technologies a project lists — a project with 10 tags no
+ * longer stretches its card taller than one with 4. Click "+N" to see the
+ * rest, in place, no navigation.
+ */
+const TechTagList: React.FC<{ technologies: string[] }> = ({ technologies }) => {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded
+    ? technologies
+    : technologies.slice(0, TECH_TAG_PREVIEW_COUNT);
+  const hiddenCount = technologies.length - visible.length;
+
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {visible.map((tech) => (
+        <span
+          key={tech}
+          className="font-mono text-[11px] font-semibold px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-800 theme-green:bg-green-50 theme-green:dark:bg-green-900/30 text-gray-600 dark:text-gray-300 theme-green:text-green-700"
+        >
+          {tech}
+        </span>
+      ))}
+      {hiddenCount > 0 && (
+        <button
+          type="button"
+          onClick={() => setExpanded(true)}
+          className="font-mono text-[11px] font-semibold px-2 py-1 rounded-md text-blue-600 dark:text-blue-400 theme-green:text-green-600 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+        >
+          +{hiddenCount}
+        </button>
+      )}
+      {expanded && technologies.length > TECH_TAG_PREVIEW_COUNT && (
+        <button
+          type="button"
+          onClick={() => setExpanded(false)}
+          className="font-mono text-[11px] font-semibold px-2 py-1 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+        >
+          Show less
+        </button>
+      )}
+    </div>
+  );
+};
+
+/* --------------------------------------------------------------------------
+ * "What I Do" — two-column services layout. Left column is the fixed pitch;
+ * right column is a clickable list of service cards. Clicking (not just
+ * hovering) sets a card active, so the left accent border stays a visible,
+ * deliberate state rather than a hover-only affordance touch devices miss.
+ * ------------------------------------------------------------------------ */
+
+type ServiceItem = {
+  title: string;
+  description: string;
+  tags: string[];
+  icon: React.FC<{ className?: string }>;
+  image: string;
+};
+
+const FullStackIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className}>
+    <path
+      d="M8 6 3 12l5 6M16 6l5 6-5 6M14 4l-4 16"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const CloudSolutionsIcon: React.FC<{ className?: string }> = ({
+  className,
+}) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className}>
+    <path
+      d="M7 18a4.5 4.5 0 0 1-.4-8.98A5.5 5.5 0 0 1 17.3 8.3 4 4 0 0 1 17 16H7Z"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const DevOpsIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="none" className={className}>
+    <path
+      d="M7 15a3 3 0 1 1 0-6c1.5 0 2.5 1 3.5 3s2 3 3.5 3a3 3 0 1 0 0-6c-1.5 0-2.5 1-3.5 3s-2 3-3.5 3Z"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const SERVICES: ServiceItem[] = [
+  {
+    title: "Full-Stack Development",
+    description:
+      "Building scalable applications with .NET Core, React, and modern JavaScript frameworks.",
+    tags: [".NET Core", "React"],
+    icon: FullStackIcon,
+    image: SeahorseImage,
+  },
+  {
+    title: "Cloud Solutions",
+    description:
+      "Azure expertise in App Services, SQL Database, Blob Storage, and serverless architectures.",
+    tags: ["Azure", ".NET Core"],
+    icon: CloudSolutionsIcon,
+    image: MpsImage,
+  },
+  {
+    title: "DevOps & Automation",
+    description:
+      "CI/CD pipelines, Infrastructure as Code, and automated deployment strategies.",
+    tags: ["Azure", "React"],
+    icon: DevOpsIcon,
+    image: TeleMedixImage,
+  },
+];
+
+const WhatIDoSection: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <div className="grid md:grid-cols-2 gap-8 lg:gap-14 items-start">
+      {/* Left column — heading + pitch */}
+      <motion.div variants={fadeUp} className="md:sticky md:top-24 space-y-4">
+        <span className="inline-block px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 text-xs font-semibold text-blue-700 dark:text-blue-300 theme-green:text-green-700 theme-green:dark:text-green-300">
+          Services &amp; Expertise
+        </span>
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 theme-green:from-green-600 theme-green:via-emerald-600 theme-green:to-teal-600 bg-clip-text text-transparent">
+          What I Do
+        </h2>
+        <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed max-w-md">
+          Specialized in modern cloud-native development and scalable
+          solutions — from the first line of code to the pipeline that ships
+          it.
+        </p>
+
+        {/* Fanned photo stack — hover/click a service on the right to bring
+            its screenshot to the front; the rest settle into a dimmed fan
+            behind it. Pure state + Framer Motion, no extra library. */}
+        <div className="relative h-40 sm:h-48 md:h-56 max-w-xs" aria-hidden="true">
+          {SERVICES.map((service, index) => {
+            const isActive = index === activeIndex;
+            const offset = index - activeIndex;
+            return (
+              <motion.img
+                key={service.title}
+                src={service.image}
+                alt=""
+                loading="lazy"
+                animate={{
+                  opacity: isActive ? 1 : 0.45,
+                  scale: isActive ? 1 : 0.88,
+                  rotate: isActive ? 0 : offset * 8,
+                  x: isActive ? 0 : offset * 28,
+                  y: isActive ? 0 : Math.abs(offset) * 12,
+                  zIndex: isActive ? 30 : 10 - Math.abs(offset),
+                }}
+                transition={{ type: "spring", stiffness: 260, damping: 26 }}
+                className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-xl border-4 border-white dark:border-gray-900"
+              />
+            );
+          })}
+        </div>
+      </motion.div>
+
+      {/* Right column — interactive service list */}
+      <motion.div variants={stagger(0.08)} className="space-y-3">
+        {SERVICES.map((service, index) => {
+          const isActive = index === activeIndex;
+          const Icon = service.icon;
+          return (
+            <motion.button
+              key={service.title}
+              type="button"
+              variants={fadeUp}
+              onClick={() => setActiveIndex(index)}
+              onMouseEnter={() => setActiveIndex(index)}
+              aria-pressed={isActive}
+              className={`group w-full text-left flex items-start gap-4 rounded-xl border-2 border-l-4 bg-white dark:bg-gray-900 p-4 shadow-sm transition-all duration-300 ${
+                isActive
+                  ? "border-blue-600 dark:border-blue-500 theme-green:border-green-600 border-l-blue-600 dark:border-l-blue-500 theme-green:border-l-green-600 shadow-lg shadow-blue-500/10 dark:shadow-blue-500/20 theme-green:shadow-green-500/10"
+                  : "border-gray-200 dark:border-gray-800 border-l-transparent hover:border-blue-300 dark:hover:border-blue-700 theme-green:hover:border-green-300 hover:shadow-md"
+              }`}
+            >
+              <div
+                className={`flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-xl transition-colors duration-300 ${
+                  isActive
+                    ? "bg-gradient-to-br from-blue-500 to-indigo-600 theme-green:from-green-500 theme-green:to-emerald-600 text-white shadow-md"
+                    : "bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 text-blue-600 dark:text-blue-400 theme-green:text-green-600"
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">
+                  {service.title}
+                </h3>
+                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-2">
+                  {service.description}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {service.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800 theme-green:bg-green-50 theme-green:dark:bg-green-900/30 text-gray-600 dark:text-gray-300 theme-green:text-green-700 theme-green:dark:text-green-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.button>
+          );
+        })}
+      </motion.div>
+    </div>
   );
 };
 
@@ -849,11 +900,18 @@ const AnimatedStats: React.FC<{ yearsOfExperience: number }> = ({
         <motion.div
           key={index}
           variants={fadeUp}
-          className="flex flex-col gap-0.5"
+          className="group flex flex-col items-center gap-1"
           ref={stat.ref}
         >
-          <div className="font-mono font-semibold text-xl md:text-2xl tabular-nums text-gray-900 dark:text-gray-100">
-            {stat.displayValue}
+          <div className="relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16">
+            <span
+              className="absolute inset-0 rounded-full border-2 border-dashed border-blue-400/40 dark:border-blue-500/40 theme-green:border-green-400/40 group-hover:animate-spin"
+              style={{ animationDuration: "3s" }}
+              aria-hidden="true"
+            />
+            <div className="font-mono font-semibold text-xl md:text-2xl tabular-nums text-gray-900 dark:text-gray-100">
+              {stat.displayValue}
+            </div>
           </div>
           <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-gray-500 dark:text-gray-400">
             {stat.label}
@@ -878,7 +936,7 @@ const TerminalHero: React.FC<{
     "elanchezhiyan-p — senior .net & azure developer",
     "",
     "$ cat status",
-    "● available for hire",
+    "● open for freelance projects",
     "",
     "$ _",
   ];
@@ -922,7 +980,6 @@ const TerminalHero: React.FC<{
           alt="Elanchezhiyan P"
           width={18}
           height={18}
-          fetchpriority="high"
           className="w-4 h-4 md:w-[18px] md:h-[18px] rounded-full object-cover"
         />
         <span className="font-mono text-[11px] md:text-xs text-gray-400">elan@cloud — zsh</span>

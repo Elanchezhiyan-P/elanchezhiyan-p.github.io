@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ExternalLink, Github, Filter, Star } from "lucide-react";
+import { ExternalLink, Github, Filter, Star, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import projectsData from "../data/projects.json";
@@ -25,6 +25,7 @@ import InvoicePilotImage from "@/assets/project/invoice-pdf-image.webp";
 import GoHighLevelImage from "@/assets/project/GoHighLevelImage.webp";
 import ClinicalDischargePdfImage from "@/assets/project/ClinicalDischargePdf.webp";
 import SmartFinanceSystemImage from "@/assets/project/SmartFinanceSystem.webp";
+import PythonPackageVisualizerImage from "@/assets/project/python-package-visualizer.webp";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PhoneCarousel } from "@/components/ui/phone-mockups-1-utils/phone-carousel";
@@ -53,10 +54,11 @@ const Projects = () => {
     ghl: GoHighLevelImage,
     "clinical-discharge-pdf-engine": ClinicalDischargePdfImage,
     "smart-finance-system": SmartFinanceSystemImage,
-    "python-package-visualizer": "https://raw.githubusercontent.com/Elanchezhiyan-P/python-package-visualizer/main/media/screenshots/dashboard.png",
+    "python-package-visualizer": PythonPackageVisualizerImage,
   };
 
   const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
   const [projects] = useState(projectsData);
 
   const quickLookIds = [
@@ -79,10 +81,20 @@ const Projects = () => {
   );
 
   // Filter projects by selected technology or show all
-  const filteredProjects =
+  const typeFilteredProjects =
     filter === "all"
       ? projects
       : projects.filter((p) => p.projectType.includes(filter));
+
+  // Then narrow further by a free-text search across title, description, and tech stack
+  const query = search.trim().toLowerCase();
+  const filteredProjects = query
+    ? typeFilteredProjects.filter((p) =>
+        [p.title, p.description, ...p.technologies].some((field) =>
+          field.toLowerCase().includes(query)
+        )
+      )
+    : typeFilteredProjects;
 
   return (
     <>
@@ -124,6 +136,28 @@ const Projects = () => {
         <PhoneCarousel images={quickLookImages} variant="tablet" />
 
         <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-200/50 dark:border-gray-700/50">
+          <div className="relative max-w-md mx-auto mb-4 md:mb-6">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search projects by name, tech, or keyword…"
+              aria-label="Search projects"
+              className="w-full pl-9 pr-9 py-2.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 theme-green:focus:ring-green-400 transition-shadow"
+            />
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+
           <div className="flex flex-wrap gap-2 justify-center">
             <div className="group relative">
               <div className="absolute inset-0 border-2 border-transparent group-hover:border-t-blue-500 group-hover:border-l-blue-500 theme-green:group-hover:border-t-green-500 theme-green:group-hover:border-l-green-500 transition-all duration-300 rounded-md" />
@@ -166,6 +200,11 @@ const Projects = () => {
       </div>
 
       {/* All Projects Grid */}
+      {filteredProjects.length === 0 && (
+        <div className="text-center py-16 text-gray-500 dark:text-gray-400">
+          No projects match "{search}". Try a different keyword.
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {filteredProjects.map((project, index) => (
           <Card

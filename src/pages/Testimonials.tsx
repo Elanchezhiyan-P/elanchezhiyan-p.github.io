@@ -1,408 +1,399 @@
 import React, { useEffect, useState } from "react";
-import { Star, Quote, Award, Users, Clock, CheckCircle, Linkedin } from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
+import {
+  Quote,
+  Linkedin,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Rocket,
+  Layers,
+  Target,
+} from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import testimonialsData from "../data/testimonials.json";
 import { calculateYearsOfExperience } from "@/utils/dateUtils";
 
+const VIEWPORT = { once: true, margin: "-80px" };
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
+const stagger = (staggerChildren: number): Variants => ({
+  hidden: {},
+  show: { transition: { staggerChildren, delayChildren: 0.05 } },
+});
+
+interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  avatar: string;
+  rating: number;
+  linkedin?: string;
+  tags?: string[];
+}
+
+const testimonials = testimonialsData as Testimonial[];
+
+/**
+ * Featured testimonial — Giri Rajendran's, not the first in the list.
+ * Chosen because it's the only quote that explicitly speaks to architecture
+ * and scalability ("architect scalable solutions", "handles millions of
+ * events daily"), which is what this portfolio is trying to establish.
+ * The other quotes are genuine but speak to delivery/coding skill rather
+ * than architecture, so they read better as supporting evidence in the
+ * carousel below than as the lead.
+ */
+const FEATURED_ID = 3;
+const featuredTestimonial =
+  testimonials.find((t) => t.id === FEATURED_ID) ?? testimonials[0];
+const carouselTestimonials = testimonials.filter(
+  (t) => t.id !== featuredTestimonial.id
+);
+
+const TagPill: React.FC<{ tag: string }> = ({ tag }) => (
+  <span className="font-mono text-[10px] font-semibold px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 text-blue-700 dark:text-blue-300 theme-green:text-green-700">
+    {tag}
+  </span>
+);
+
+const ReviewerIdentity: React.FC<{
+  testimonial: Testimonial;
+  avatarSize?: string;
+}> = ({ testimonial, avatarSize = "w-12 h-12" }) => (
+  <div className="flex items-center gap-3">
+    <img
+      src={testimonial.avatar}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      className={`${avatarSize} rounded-full object-cover border border-slate-200 dark:border-slate-700 flex-shrink-0`}
+    />
+    <div className="min-w-0">
+      <div className="flex items-center gap-1.5">
+        <span className="font-bold text-slate-900 dark:text-white text-sm truncate">
+          {testimonial.name}
+        </span>
+        {testimonial.linkedin && (
+          <a
+            href={testimonial.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${testimonial.name} on LinkedIn`}
+            className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex-shrink-0"
+          >
+            <Linkedin className="w-3.5 h-3.5" />
+          </a>
+        )}
+      </div>
+      <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
+        {testimonial.role} &middot; {testimonial.company}
+      </div>
+    </div>
+  </div>
+);
+
 const Testimonials = () => {
   const yearsExperience = calculateYearsOfExperience();
+  const prefersReducedMotion = useReducedMotion();
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // Find Senthil Kumar D testimonial for top section
-  const senthilTestimonial = testimonialsData.find(
-    (t) => t.name === "Senthil Kumar D"
-  ) || testimonialsData[0];
-
-  // Filter out Senthil Kumar D from carousel
-  const carouselTestimonials = testimonialsData.filter(
-    (t) => t.name !== "Senthil Kumar D"
-  );
-
-  // Auto-scroll functionality
   useEffect(() => {
-    if (!api) {
-      return;
-    }
+    if (!api) return;
 
     setCurrent(api.selectedScrollSnap());
+    setScrollSnaps(api.scrollSnapList());
 
-    const onSelect = () => {
-      setCurrent(api.selectedScrollSnap());
-    };
-
+    const onSelect = () => setCurrent(api.selectedScrollSnap());
     api.on("select", onSelect);
     api.on("reInit", onSelect);
 
-    // Auto-scroll every 5 seconds
-    const interval = setInterval(() => {
-      if (api.canScrollNext()) {
-        api.scrollNext();
-      } else if (api.canScrollPrev()) {
-        // If at the end and loop is enabled, it should wrap, but let's scroll to start
-        api.scrollTo(0, true);
-      }
-    }, 5000);
-
     return () => {
-      clearInterval(interval);
       api.off("select", onSelect);
       api.off("reInit", onSelect);
     };
   }, [api]);
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <Star
-        key={index}
-        className={`h-4 w-4 ${
-          index < rating
-            ? "text-yellow-400 fill-current"
-            : "text-gray-300 dark:text-gray-600"
-        }`}
-      />
-    ));
-  };
+  // Gentle autoplay — pauses on hover/focus and never runs for visitors who
+  // asked for reduced motion (WCAG 2.2.2: no unstoppable moving content).
+  useEffect(() => {
+    if (!api || isPaused || prefersReducedMotion) return;
+
+    const interval = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        api.scrollTo(0);
+      }
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [api, isPaused, prefersReducedMotion]);
 
   return (
     <>
       <Helmet>
-        <title>Testimonials - Elanchezhiyan P | Client Reviews</title>
+        <title>Testimonials - Elanchezhiyan P | Client & Leadership Feedback</title>
         <meta
           name="description"
-          content="Read testimonials and reviews from clients and colleagues about Elanchezhiyan P's work. 20+ happy clients, 99% satisfaction rate, and proven track record in software development."
+          content="Feedback from clients and technical leadership Elanchezhiyan P has worked with — on .NET development, scalable architecture, and delivery."
         />
         <meta
           name="keywords"
-          content="Elanchezhiyan P Testimonials, Client Reviews, Software Developer Reviews, .NET Developer Testimonials"
+          content="Elanchezhiyan P Testimonials, Client Feedback, Software Developer Reviews, .NET Developer Testimonials"
         />
         <meta
           property="og:title"
-          content="Testimonials - Elanchezhiyan P | Client Reviews"
+          content="Testimonials - Elanchezhiyan P | Client & Leadership Feedback"
         />
         <meta
           property="og:description"
-          content="Discover why clients and colleagues trust Elanchezhiyan P to deliver exceptional results and innovative solutions."
+          content="Feedback from clients and technical leadership on .NET development, scalable architecture, and delivery."
         />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://codebyelan.in/testimonials" />
       </Helmet>
-      <div className="container mx-auto px-4 py-8">
-      {/* Header Section */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full mb-3">
-          <Award className="h-3 w-3 text-blue-600" />
-          <span className="text-xs font-medium text-blue-600">
-            Client Testimonials
-          </span>
-        </div>
-        <h1 className="text-2xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          What People Say
-        </h1>
-        <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Discover why clients and colleagues trust me to deliver exceptional
-          results and innovative solutions
-        </p>
-      </div>
 
-      {/* Featured Testimonial */}
-      <div className="mb-8">
-        <div className="relative">
-          {/* Background decoration */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-2xl"></div>
-
-          <div className="relative glass rounded-2xl p-4 md:p-6 max-w-3xl mx-auto animate-slide-up border border-white/20 backdrop-blur-sm">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
-
-            <div className="relative z-10">
-              <div className="flex items-start gap-3 md:gap-4">
-                <div className="flex-shrink-0">
-                  <div className="relative">
-                    <img
-                      src={senthilTestimonial.avatar}
-                      alt={senthilTestimonial.name}
-                      loading="lazy"
-                      className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover border-2 border-white/20 shadow-md"
-                    />
-                    <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-blue-500 to-purple-500 p-1 rounded-full">
-                      <Quote className="h-2.5 w-2.5 md:h-3 md:w-3 text-white" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex gap-0.5 mb-2">
-                    {renderStars(senthilTestimonial.rating)}
-                  </div>
-
-                  <blockquote className="text-sm md:text-base lg:text-lg font-medium mb-3 leading-relaxed text-gray-800 dark:text-gray-100">
-                    "{senthilTestimonial.quote}"
-                  </blockquote>
-
-                  <div className="flex items-center justify-between flex-wrap gap-2">
-                    <div>
-                      <div className="font-bold text-base md:text-lg text-gray-900 dark:text-white">
-                        {senthilTestimonial.name}
-                      </div>
-                      <div className="text-gray-600 dark:text-gray-300 text-xs md:text-sm">
-                        {senthilTestimonial.role}
-                      </div>
-                      <div className="text-blue-600 dark:text-blue-400 text-xs font-medium">
-                        {senthilTestimonial.company}
-                      </div>
-                    </div>
-
-                    <div className="hidden md:flex items-center gap-2">
-                      {senthilTestimonial.linkedin && (
-                        <a
-                          href={senthilTestimonial.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/20 px-2.5 py-1 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
-                        >
-                          <Linkedin className="h-2.5 w-2.5 text-blue-600" />
-                          <span className="text-xs font-medium text-blue-600">
-                            LinkedIn
-                          </span>
-                        </a>
-                      )}
-                      <div className="flex items-center gap-1.5 bg-green-50 dark:bg-green-900/20 px-2.5 py-1 rounded-full">
-                        <CheckCircle className="h-2.5 w-2.5 text-green-600" />
-                        <span className="text-xs font-medium text-green-600">
-                          Verified
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Testimonials Carousel */}
-      <div className="max-w-7xl mx-auto mb-8">
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <div className="w-6 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-          <h2 className="text-xl md:text-2xl font-bold text-center">
-            Client Reviews
-          </h2>
-          <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"></div>
-        </div>
-
-        <div className="relative">
-          <Carousel
-            setApi={setApi}
-            opts={{
-              align: "start",
-              loop: true,
-              slidesToScroll: 1,
-              dragFree: false,
-            }}
-            className="w-full"
+      <div className="container mx-auto px-4 py-8 md:py-12">
+        {/* Header */}
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={stagger(0.08)}
+          className="text-center mb-8 md:mb-12 max-w-2xl mx-auto"
+        >
+          <motion.span
+            variants={fadeUp}
+            className="inline-block px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 border border-blue-200 dark:border-blue-800 theme-green:border-green-200 theme-green:dark:border-green-800 text-xs font-semibold tracking-[0.08em] uppercase text-blue-700 dark:text-blue-300 theme-green:text-green-700 mb-4"
           >
-            <CarouselContent className="-ml-4 md:-ml-6">
-            {carouselTestimonials.map((testimonial, index) => (
-              <CarouselItem
-                key={testimonial.id}
-                className="pl-4 md:pl-6 basis-full sm:basis-1/2 lg:basis-[45%] xl:basis-1/3"
-              >
-                <div className="group relative">
-                  {/* Card background with gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 pointer-events-none"></div>
+            Client & Leadership Feedback
+          </motion.span>
+          <motion.h1
+            variants={fadeUp}
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3"
+          >
+            What People I've Worked With Say
+          </motion.h1>
+          <motion.p
+            variants={fadeUp}
+            className="text-sm md:text-base text-slate-500 dark:text-slate-400 leading-relaxed"
+          >
+            Trusted by people I've worked with across engineering, delivery, and
+            technical leadership.
+          </motion.p>
+        </motion.div>
 
-                  <div className="relative glass rounded-2xl p-8 h-full hover:scale-105 transition-all duration-500 border border-white/10 backdrop-blur-sm group-hover:border-blue-500/30">
-                    {/* Quote icon */}
-                    <div className="absolute top-6 right-6 opacity-20 group-hover:opacity-40 transition-opacity">
-                      <Quote className="h-8 w-8 text-blue-500" />
-                    </div>
-
-                    {/* Avatar and info */}
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="relative">
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.name}
-                          loading="lazy"
-                          className="w-14 h-14 rounded-xl object-cover border-2 border-blue-500/20 shadow-lg"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                          <CheckCircle className="h-3 w-3 text-white" />
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <div className="font-bold text-lg text-gray-900 dark:text-white">
-                            {testimonial.name}
-                          </div>
-                          {testimonial.linkedin && (
-                            <a
-                              href={testimonial.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-                              aria-label={`View ${testimonial.name} on LinkedIn`}
-                            >
-                              <Linkedin className="h-4 w-4" />
-                            </a>
-                          )}
-                        </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
-                          {testimonial.role}
-                        </div>
-                        <div className="text-xs text-blue-600 dark:text-blue-400 font-medium">
-                          {testimonial.company}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Rating */}
-                    <div className="flex gap-1 mb-4">
-                      {renderStars(testimonial.rating)}
-                    </div>
-
-                    {/* Quote */}
-                    <blockquote className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm font-medium">
-                      "{testimonial.quote}"
-                    </blockquote>
-
-                    {/* Hover effect indicator */}
-                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-                    </div>
-                  </div>
+        {/* Featured Feedback */}
+        <motion.section
+          aria-labelledby="featured-feedback-heading"
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={fadeUp}
+          className="mb-12 md:mb-16 max-w-3xl mx-auto"
+        >
+          <h2
+            id="featured-feedback-heading"
+            className="text-center text-xs font-semibold tracking-[0.08em] uppercase text-slate-400 dark:text-slate-500 mb-4"
+          >
+            Featured Feedback
+          </h2>
+          <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-6 md:p-8 shadow-sm">
+            <Quote
+              className="absolute top-6 right-6 w-6 h-6 text-slate-200 dark:text-slate-700"
+              aria-hidden="true"
+            />
+            <blockquote className="text-base md:text-lg font-medium text-slate-800 dark:text-slate-100 leading-relaxed mb-6 pr-8">
+              "{featuredTestimonial.quote}"
+            </blockquote>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <ReviewerIdentity testimonial={featuredTestimonial} avatarSize="w-14 h-14" />
+              {featuredTestimonial.tags && featuredTestimonial.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {featuredTestimonial.tags.map((tag) => (
+                    <TagPill key={tag} tag={tag} />
+                  ))}
                 </div>
-              </CarouselItem>
-            ))}
-            </CarouselContent>
-            <CarouselPrevious
-              className="!absolute !left-2 md:!left-4 !top-1/2 !-translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50 pointer-events-auto cursor-pointer"
-            />
-            <CarouselNext
-              className="!absolute !right-2 md:!right-4 !top-1/2 !-translate-y-1/2 h-8 w-8 md:h-10 md:w-10 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 border-0 shadow-lg z-50 pointer-events-auto cursor-pointer"
-            />
-          </Carousel>
-        </div>
-      </div>
-
-      {/* Stats Section */}
-      <div className="mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-            <div className="relative glass rounded-xl p-4 md:p-5 text-center animate-slide-up border border-white/10">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-2">
-                <Award className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </div>
-              <div className="text-2xl md:text-3xl font-bold text-blue-600 mb-1">
-                30+
-              </div>
-              <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Projects Completed
-              </div>
+              )}
             </div>
           </div>
+        </motion.section>
 
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-            <div
-              className="relative glass rounded-xl p-4 md:p-5 text-center animate-slide-up border border-white/10"
-              style={{ animationDelay: "0.1s" }}
+        {/* More Feedback — carousel */}
+        <motion.section
+          aria-label="More client and leadership feedback"
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={fadeUp}
+          className="max-w-6xl mx-auto mb-12 md:mb-16"
+        >
+          <h2 className="text-center text-xs font-semibold tracking-[0.08em] uppercase text-slate-400 dark:text-slate-500 mb-6">
+            More Feedback
+          </h2>
+
+          <div
+            className="relative px-8 md:px-12"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onFocusCapture={() => setIsPaused(true)}
+            onBlurCapture={() => setIsPaused(false)}
+          >
+            <Carousel
+              setApi={setApi}
+              opts={{ align: "start", loop: true }}
+              className="w-full"
             >
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-2">
-                <Users className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </div>
-              <div className="text-2xl md:text-3xl font-bold text-green-600 mb-1">
-                20+
-              </div>
-              <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Happy Clients
-              </div>
-            </div>
-          </div>
+              <CarouselContent className="-ml-4 md:-ml-6">
+                {/* Capped at 2-per-row (not 3) even on wide screens — with
+                    only a handful of real testimonials, showing all of them
+                    at once leaves nothing to scroll to, which makes the
+                    prev/next controls silently do nothing. */}
+                {carouselTestimonials.map((testimonial) => (
+                  <CarouselItem
+                    key={testimonial.id}
+                    className="pl-4 md:pl-6 basis-full sm:basis-1/2"
+                  >
+                    <div className="h-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
+                      <Quote
+                        className="w-5 h-5 text-slate-200 dark:text-slate-700 mb-3"
+                        aria-hidden="true"
+                      />
+                      <blockquote className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-5 flex-1">
+                        "{testimonial.quote}"
+                      </blockquote>
+                      <ReviewerIdentity testimonial={testimonial} />
+                      {testimonial.tags && testimonial.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                          {testimonial.tags.map((tag) => (
+                            <TagPill key={tag} tag={tag} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
 
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-            <div
-              className="relative glass rounded-xl p-4 md:p-5 text-center animate-slide-up border border-white/10"
-              style={{ animationDelay: "0.2s" }}
+            <button
+              type="button"
+              onClick={() => api?.scrollPrev()}
+              aria-label="Previous feedback"
+              className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-2">
-                <Clock className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </div>
-              <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1">
-                {yearsExperience}+
-              </div>
-              <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Years Experience
-              </div>
-            </div>
-          </div>
-
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-            <div
-              className="relative glass rounded-xl p-4 md:p-5 text-center animate-slide-up border border-white/10"
-              style={{ animationDelay: "0.3s" }}
+              <ChevronLeft className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+            </button>
+            <button
+              type="button"
+              onClick={() => api?.scrollNext()}
+              aria-label="Next feedback"
+              className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white dark:bg-gray-900 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-2">
-                <CheckCircle className="h-5 w-5 md:h-6 md:w-6 text-white" />
-              </div>
-              <div className="text-2xl md:text-3xl font-bold text-orange-600 mb-1">
-                99%
-              </div>
-              <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">
-                Client Satisfaction
-              </div>
-            </div>
+              <ChevronRight className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+            </button>
           </div>
-        </div>
-      </div>
 
-      {/* Call to Action */}
-      <div className="text-center">
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-2xl"></div>
-          <div className="relative glass rounded-2xl p-6 md:p-8 border border-white/20 backdrop-blur-sm">
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <Quote className="h-6 w-6 md:h-8 md:w-8 text-white" />
+          {scrollSnaps.length > 1 && (
+            <div className="flex justify-center gap-1.5 mt-6">
+              {scrollSnaps.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => api?.scrollTo(index)}
+                  aria-label={`Go to feedback ${index + 1}`}
+                  aria-current={index === current}
+                  className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
+                    index === current
+                      ? "bg-blue-600 theme-green:bg-green-600 w-6"
+                      : "w-1.5 bg-slate-300 dark:bg-slate-600 hover:bg-blue-400 dark:hover:bg-blue-500"
+                  }`}
+                />
+              ))}
             </div>
-            <h2 className="text-xl md:text-2xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          )}
+        </motion.section>
+
+        {/* Evidence strip — only claims backed by real data elsewhere on the
+            site (years of experience is computed; "30+" projects matches the
+            count used on Home/About). No client counts or satisfaction
+            percentages, since nothing in the portfolio measures those. */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={stagger(0.08)}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12 md:mb-16"
+        >
+          {[
+            { icon: Clock, value: `${yearsExperience}+`, label: "Years Experience" },
+            { icon: Rocket, value: "30+", label: "Projects Shipped" },
+            { icon: Layers, value: "Architecture", label: "Scalable backend & cloud systems" },
+            { icon: Target, value: "Delivery", label: "Complex enterprise solutions" },
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              variants={fadeUp}
+              className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-4 text-center"
+            >
+              <stat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400 theme-green:text-green-600 mx-auto mb-2" />
+              <div className="text-lg md:text-xl font-bold text-slate-900 dark:text-white leading-tight">
+                {stat.value}
+              </div>
+              <div className="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={fadeUp}
+          className="text-center"
+        >
+          <div className="max-w-xl mx-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-6 md:p-8">
+            <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">
               Ready to work together?
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm md:text-base max-w-2xl mx-auto">
-              Let's discuss your project and create something amazing together.
-              I'm here to turn your vision into reality.
+            <p className="text-slate-500 dark:text-slate-400 mb-5 text-sm">
+              Let's discuss your project and what it would take to bring it to
+              production.
             </p>
-            <div className="flex flex-col sm:flex-row gap-2 justify-center">
+            <div className="flex flex-col sm:flex-row gap-2.5 justify-center">
               <a
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 text-sm md:text-base"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-700 theme-green:bg-green-700 hover:bg-blue-800 theme-green:hover:bg-green-800 text-white font-semibold rounded-lg transition-colors duration-200 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
               >
-                <span>Get In Touch</span>
-                <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                Get In Touch
               </a>
               <a
                 href="/projects"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 text-sm md:text-base"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border-2 border-slate-300 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 theme-green:hover:border-green-400 text-slate-700 dark:text-slate-200 font-semibold rounded-lg transition-colors duration-200 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
               >
-                <span>View My Work</span>
-                <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                View My Work
               </a>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
     </>
   );
 };

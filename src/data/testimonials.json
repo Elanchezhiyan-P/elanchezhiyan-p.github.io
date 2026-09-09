@@ -7,7 +7,8 @@
     "quote": "We are extremely delighted with our newly launched website for Anjaneyas Associates – HR & Tax Consultancy. The design, layout, and overall presentation are truly wonderful and highly professional. The website is user-friendly, informative, and perfectly reflects the nature of our services. We sincerely appreciate the hard work, creativity, and dedication of the software developer Mr. Elanchezhiyan. Thank you for delivering such an impressive and outstanding website.",
     "avatar": "/testimonials/senthil-kumar.jpg",
     "rating": 5,
-    "linkedin": "https://in.linkedin.com/in/anjaneyas-associates-418246391"
+    "linkedin": "https://in.linkedin.com/in/anjaneyas-associates-418246391",
+    "tags": ["Delivery"]
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "quote": "I recommend Elanchezhiyan for his exceptional skills in .NET development. His proficiency in coding, problem-solving, and dedication to delivering high-quality solutions make them an asset to any team.",
     "avatar": "https://media.licdn.com/dms/image/v2/D5603AQF8w4f_Suz0MA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1701147321636?e=2147483647&v=beta&t=7UBP5lDqggajOfwo0T6mlST8zruANiukqMsQYBxXUwg",
     "rating": 5,
-    "linkedin": "https://in.linkedin.com/in/arun-prasadh-senthil-kumar"
+    "linkedin": "https://in.linkedin.com/in/arun-prasadh-senthil-kumar",
+    "tags": [".NET Development", "Problem Solving"]
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "quote": "Elanchezhiyan's ability to architect scalable solutions is remarkable. Our real-time analytics platform handles millions of events daily thanks to his innovative approach.",
     "avatar": "https://plus.unsplash.com/premium_photo-1677363682086-c8493a6dae52?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "rating": 5,
-    "linkedin": "https://in.linkedin.com/in/girirajendran93"
+    "linkedin": "https://in.linkedin.com/in/girirajendran93",
+    "tags": ["Architecture", "Scalability"]
   },
   {
     "id": 4,
@@ -36,6 +39,7 @@
     "company": "Freelance",
     "quote": "Working with Elanchezhiyan was a game-changer for our project. His ability to turn complex requirements into elegant solutions in .NET was invaluable. He consistently exceeded our expectations and delivered on time.",
     "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7",
-    "rating": 5
+    "rating": 5,
+    "tags": ["Problem Solving", "Delivery"]
   }
 ]

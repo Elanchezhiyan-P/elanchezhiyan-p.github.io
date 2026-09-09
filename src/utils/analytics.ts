@@ -74,11 +74,3 @@ export const trackCertificationClick = (certName: string) => {
 export const trackAchievementClick = (label: string) => {
   trackEvent("Engagement", "Achievement Click", label);
 };
-
-export const trackExitIntentShown = () => {
-  trackEvent("Engagement", "Exit Intent Popup Shown");
-};
-
-export const trackExitIntentAction = (action: string) => {
-  trackEvent("Lead Generation", "Exit Intent Action", action);
-};

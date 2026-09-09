@@ -22,7 +22,6 @@ import { Button } from "@/components/ui/button";
 import { FloatingSocialSidebar } from "./FloatingSocialSidebar";
 import { FloatingChatbot } from "./FloatingChatbot";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
-import { ExitIntentPopup } from "./ExitIntentPopup";
 import { NewsletterSignup } from "./NewsletterSignup";
 import { ParticleBackground } from "./ParticleBackground";
 import { ThemeSettings } from "./ThemeSettings";
@@ -114,7 +113,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 theme-green:from-green-50 theme-green:via-emerald-50 theme-green:to-teal-100 theme-green:dark:from-green-900 theme-green:dark:via-emerald-800 theme-green:dark:to-teal-900 transition-colors duration-500">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50/70 dark:from-slate-900 dark:to-slate-950 theme-green:from-green-50 theme-green:to-emerald-50/70 theme-green:dark:from-green-950 theme-green:dark:to-slate-950 transition-colors duration-500">
       <ParticleBackground />
 
       {/* Desktop Header */}
@@ -245,7 +244,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Main Content */}
       <main
         className={
-          isMobile ? "pt-12 pb-2 px-4" : "pt-0 pb-2 px-8 max-w-6xl mx-auto"
+          isMobile ? "pt-20 pb-2 px-4" : "pt-0 pb-2 px-8 max-w-6xl mx-auto"
         }
       >
         {children}
@@ -366,9 +365,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {!isMobile && <FloatingSocialSidebar />}
       <FloatingChatbot isMobile={isMobile} />
       <FloatingWhatsApp isMobile={isMobile} />
-
-      {/* Exit Intent Popup (desktop only) */}
-      {!isMobile && <ExitIntentPopup />}
 
       {/* Theme Settings Panel */}
       {showSettings && <ThemeSettings onClose={() => setShowSettings(false)} />}

@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
-import { Calendar, ExternalLink, Clock } from "lucide-react";
+import { Calendar, ExternalLink, Clock, Search, X } from "lucide-react";
 import {
   getCachedBlogData,
   fetchBlogPosts,
@@ -16,6 +16,7 @@ const Blog: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [mediumLink, setMediumLink] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const loadBlogPosts = async () => {
@@ -68,6 +69,17 @@ const Blog: React.FC = () => {
   };
 
   const latestPost = blogPosts.find((post) => post.isLatest);
+
+  const query = search.trim().toLowerCase();
+  const searchedPosts = query
+    ? blogPosts.filter(
+        (post) =>
+          !post.isLatest &&
+          [post.title, post.excerpt, ...post.tags].some((field) =>
+            field.toLowerCase().includes(query)
+          )
+      )
+    : blogPosts.filter((post) => !post.isLatest);
 
   // Show loading state only if no cache and still loading
   if (isLoading && blogPosts.length === 0) {
@@ -246,10 +258,34 @@ const Blog: React.FC = () => {
           <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
             All Articles
           </h2>
+          <div className="relative max-w-md mb-6 md:mb-8">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search articles by title or tag…"
+              aria-label="Search articles"
+              className="w-full pl-9 pr-9 py-2.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition-shadow"
+            />
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          {searchedPosts.length === 0 && (
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+              No articles match "{search}". Try a different keyword.
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
-            {blogPosts
-              .filter((post) => !post.isLatest)
-              .map((post, index) => (
+            {searchedPosts.map((post, index) => (
                 <Card
                   key={post.id}
                   className="group overflow-hidden hover:shadow-xl transition-all duration-500 relative rounded-xl"

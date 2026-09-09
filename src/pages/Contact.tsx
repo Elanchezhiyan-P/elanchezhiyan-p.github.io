@@ -1,25 +1,104 @@
 import React, { useState, useCallback, useRef } from "react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   Mail,
   MapPin,
   Phone,
+  Linkedin,
   Send,
-  CheckCircle,
   ArrowRight,
-  Star,
-  MessageSquare,
-  Clock,
-  Users,
-  Zap,
+  Cloud,
+  Server,
+  Plug,
+  Layers,
+  Activity,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { Helmet } from "react-helmet-async";
 import emailjs from "emailjs-com";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { trackContactFormSubmit, trackBookCall } from "@/utils/analytics";
+import { EXPERTISE_DOMAINS } from "@/data/technicalExpertise";
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
+const stagger = (staggerChildren: number): Variants => ({
+  hidden: {},
+  show: { transition: { staggerChildren, delayChildren: 0.05 } },
+});
+
+const VIEWPORT = { once: true, margin: "-80px" };
+
+/**
+ * "What I Can Help With" reuses the same 6 capability domains defined for
+ * the Technical Expertise section (single source of truth) — Data &
+ * Persistence is left out here since it reads more as a skill than
+ * something someone would reach out about.
+ */
+const HELP_DOMAIN_IDS = [
+  "cloud-azure",
+  "dotnet-backend",
+  "api-integration",
+  "architecture-practices",
+  "devops-reliability",
+];
+const HELP_ICONS: Record<string, React.FC<{ className?: string }>> = {
+  "cloud-azure": Cloud,
+  "dotnet-backend": Server,
+  "api-integration": Plug,
+  "architecture-practices": Layers,
+  "devops-reliability": Activity,
+};
+const helpDomains = HELP_DOMAIN_IDS.map((id) =>
+  EXPERTISE_DOMAINS.find((d) => d.id === id)
+).filter((d): d is (typeof EXPERTISE_DOMAINS)[number] => !!d);
+
+/**
+ * FAQ — every answer here is either directly supported elsewhere in the
+ * portfolio (tech stack, freelance/client project history) or deliberately
+ * reworded to drop unverifiable specifics (no invented timelines, pricing,
+ * or "packages") that the original copy claimed without any backing data.
+ */
+const FAQS = [
+  {
+    question: "What technologies do you specialize in?",
+    answer:
+      "Azure, .NET Core, and cloud architecture — backend systems, APIs, and integrations, with React on the frontend where needed.",
+  },
+  {
+    question: "What type of projects do you work on?",
+    answer:
+      "Enterprise APIs and web applications, CRM and third-party integrations, and cloud-native systems on Azure — see the Projects page for specifics.",
+  },
+  {
+    question: "Do you work with remote teams?",
+    answer:
+      "Yes — I've worked remotely with clients and on freelance projects throughout my career.",
+  },
+  {
+    question: "What's your typical project timeline?",
+    answer:
+      "It depends on scope and complexity. I'll give you a realistic estimate once we've discussed the requirements, rather than a generic number.",
+  },
+  {
+    question: "Do you provide ongoing support after delivery?",
+    answer:
+      "I'm open to ongoing support and maintenance work where it makes sense for the project — happy to discuss what that looks like for yours.",
+  },
+];
 
 const Contact = () => {
+  const prefersReducedMotion = useReducedMotion();
   const formMountTime = useRef(Date.now());
   const [formData, setFormData] = useState({
     name: "",
@@ -43,6 +122,15 @@ const Contact = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const scrollToForm = useCallback(() => {
+    const nameField = document.getElementById("name");
+    nameField?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "center",
+    });
+    nameField?.focus();
+  }, [prefersReducedMotion]);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -132,57 +220,21 @@ const Contact = () => {
       label: "Email",
       value: "elanche97@gmail.com",
       href: "mailto:elanche97@gmail.com",
-      description: "Send me an email anytime",
     },
     {
       icon: Phone,
       label: "Phone",
       value: "+91 9942644999",
       href: "tel:+919942644999",
-      description: "Call me directly",
     },
     {
-      icon: MapPin,
-      label: "Location",
-      value: "Coimbatore, Tamil Nadu, India",
-      href: "https://maps.google.com/?q=Coimbatore,Tamil+Nadu,India",
-      description: "Based in South India",
+      icon: Linkedin,
+      label: "LinkedIn",
+      value: "linkedin.com/in/elanchezhiyan-p",
+      href: "https://linkedin.com/in/elanchezhiyan-p",
+      external: true,
     },
   ];
-
-  const features = [
-    {
-      icon: Clock,
-      title: "Quick Response",
-      description: "I typically respond within 24 hours",
-    },
-    {
-      icon: MessageSquare,
-      title: "Free Consultation",
-      description: "Let's discuss your project requirements",
-    },
-    {
-      icon: Users,
-      title: "Remote Work",
-      description: "Work with teams worldwide",
-    },
-    {
-      icon: Zap,
-      title: "Fast Delivery",
-      description: "Efficient development process",
-    },
-  ];
-
-  // Disable right-click on this page
-  React.useEffect(() => {
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-    };
-    document.addEventListener("contextmenu", handleContextMenu);
-    return () => {
-      document.removeEventListener("contextmenu", handleContextMenu);
-    };
-  }, []);
 
   // Email validation function
   const isValidEmail = (email: string) => {
@@ -353,373 +405,401 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact - Elanchezhiyan P | Get In Touch</title>
+        <title>Contact - Elanchezhiyan P | Let's Build Something</title>
         <meta
           name="description"
-          content="Contact Elanchezhiyan P for freelance projects, consultations, or collaborations. B.E graduate and Senior .NET & Azure Developer available for remote work. Quick response guaranteed."
+          content="Get in touch with Elanchezhiyan P, a Senior .NET & Azure Developer, about cloud architecture, backend engineering, API integrations, or technical consulting."
         />
         <meta
           name="keywords"
-          content="Contact Elanchezhiyan P, Hire Developer, Freelance .NET Developer, Azure Developer, Software Development Services"
+          content="Contact Elanchezhiyan P, .NET Developer, Azure Developer, Solution Architect, Technical Consulting"
         />
         <meta
           property="og:title"
-          content="Contact - Elanchezhiyan P | Get In Touch"
+          content="Contact - Elanchezhiyan P | Let's Build Something"
         />
         <meta
           property="og:description"
-          content="Get in touch for freelance projects, consultations, or collaborations. Quick response within 24 hours."
+          content="Get in touch about cloud architecture, backend engineering, API integrations, or technical consulting."
         />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://codebyelan.in/contact" />
       </Helmet>
-      <div className="min-h-screen">
-        {/* Hero Section */}
-        <div className="container mx-auto px-4 py-8 md:py-20">
-          <div className="text-center mb-8 md:mb-16">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6">Contact Me</h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Let's discuss your next project and build something amazing
-              together
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Form */}
-            <div className="space-y-8">
-              <div className="glass rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-6">Send me a message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    tabIndex={-1}
-                    autoComplete="off"
-                    className="absolute opacity-0 pointer-events-none h-0 w-0"
-                    aria-hidden="true"
-                  />
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-medium mb-2"
-                      >
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors"
-                        placeholder="John Doe"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium mb-2"
-                      >
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors"
-                        placeholder="john@example.com"
-                      />
-                    </div>
-                  </div>
+      <div className="container mx-auto px-4 py-8 md:py-16">
+        {/* Hero / intro */}
+        <motion.section
+          initial="hidden"
+          animate="show"
+          variants={stagger(0.08)}
+          className="text-center max-w-2xl mx-auto mb-10 md:mb-14"
+        >
+          <motion.h1
+            variants={fadeUp}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4"
+          >
+            Let's Build Something
+          </motion.h1>
+          <motion.p
+            variants={fadeUp}
+            className="text-base md:text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-6"
+          >
+            Have a project, architecture challenge, or technical problem to
+            discuss? I'm open to conversations around Azure, .NET, cloud
+            architecture, integrations, backend systems, and technical
+            consulting.
+          </motion.p>
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3"
+          >
+            <Button
+              onClick={scrollToForm}
+              size="lg"
+              className="bg-blue-700 theme-green:bg-green-700 hover:bg-blue-800 theme-green:hover:bg-green-800 text-white font-semibold"
+            >
+              Start a Conversation
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+            <a
+              href="https://topmate.io/elanchezhiyan_poosamani"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={trackBookCall}
+            >
+              <Button size="lg" variant="outline" className="font-semibold">
+                Book a Call
+              </Button>
+            </a>
+            <a
+              href="mailto:elanche97@gmail.com"
+              className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors underline-offset-4 hover:underline"
+            >
+              or email me directly
+            </a>
+          </motion.div>
+        </motion.section>
 
-                  <div>
-                    <label
-                      htmlFor="inquiryType"
-                      className="block text-sm font-medium mb-2"
-                    >
-                      Inquiry Type *
-                    </label>
-                    <select
-                      id="inquiryType"
-                      name="inquiryType"
-                      value={formData.inquiryType}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors"
-                    >
-                      <option value="">Select inquiry type</option>
-                      <option value="Job Opportunity">Job Opportunity</option>
-                      <option value="Freelance Project">Freelance Project</option>
-                      <option value="Collaboration">Collaboration</option>
-                      <option value="Consultation">Consultation</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-sm font-medium mb-2"
-                    >
-                      Subject *
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors"
-                      placeholder="Project Discussion"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium mb-2"
-                    >
-                      Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={6}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 transition-colors resize-none"
-                      placeholder="Tell me about your project..."
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey="0x4AAAAAACewOzRpVzmZoHfo"
-                      appearance="interaction-only"
-                      onSuccess={(token) => {
-                        setTurnstileToken(token);
-                        setFormError(null);
-                      }}
-                      onExpire={() => {
-                        setTurnstileToken(null);
-                        setFormError(
-                          "Verification expired. Please complete the verification again.",
-                        );
-                      }}
-                      onError={() => {
-                        setTurnstileToken(null);
-                        setFormError(
-                          "Verification failed. Please refresh the page and try again.",
-                        );
-                      }}
-                    />
-                    {formError && (
-                      <p className="text-sm text-red-500">{formError}</p>
-                    )}
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting || !isFormValid || !turnstileToken}
-                    className="w-full"
-                    size="lg"
+        {/* Contact info + form */}
+        <motion.section
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={stagger(0.1)}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-14 md:mb-20"
+        >
+          {/* Contact info */}
+          <motion.div variants={fadeUp} className="space-y-6">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-6 md:p-8">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-5">
+                Contact
+              </h3>
+              <div className="space-y-4">
+                {contactInfo.map((info) => (
+                  <a
+                    key={info.label}
+                    href={info.href}
+                    target={info.external ? "_blank" : undefined}
+                    rel={info.external ? "noopener noreferrer" : undefined}
+                    className="group flex items-center gap-3.5"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4 mr-2" />
-                        Send Message
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </div>
-            </div>
-
-            {/* Contact Info & Features */}
-            <div className="space-y-8">
-              {/* Contact Information */}
-              <div className="glass rounded-xl p-8">
-                <h2 className="text-2xl font-bold mb-6">Get in touch</h2>
-                <div className="space-y-4">
-                  {contactInfo.map((info, index) => (
-                    <a
-                      key={index}
-                      href={info.href}
-                      className="flex items-center gap-4 p-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors group"
-                    >
-                      <div className="flex-shrink-0">
-                        <info.icon className="h-6 w-6 text-blue-600 group-hover:scale-110 transition-transform" />
-                      </div>
-                      <div>
-                        <div className="font-medium">{info.label}</div>
-                        <div className="text-gray-600 dark:text-gray-300">
-                          {info.value}
-                        </div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              {/* Features Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="glass rounded-xl p-4 md:p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 min-w-0"
-                  >
-                    <div className="flex items-center gap-2 md:gap-3 mb-3 min-w-0">
-                      <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex-shrink-0">
-                        <feature.icon className="h-4 w-4 md:h-5 md:w-5 text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <h3 className="font-semibold text-xs md:text-sm break-words min-w-0 flex-1">
-                        {feature.title}
-                      </h3>
+                    <div className="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 flex items-center justify-center flex-shrink-0 text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                      <info.icon className="w-4 h-4" />
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-xs break-words">
-                      {feature.description}
-                    </p>
-                  </div>
+                    <div className="min-w-0">
+                      <div className="text-xs text-slate-400 dark:text-slate-500">
+                        {info.label}
+                      </div>
+                      <div className="text-sm font-medium text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 theme-green:group-hover:text-green-600 transition-colors truncate">
+                        {info.value}
+                      </div>
+                    </div>
+                  </a>
                 ))}
               </div>
 
-              {/* Quick Response Promise */}
-              <div className="glass rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="h-6 w-6 text-green-500" />
-                  <h3 className="font-bold">Quick Response Guarantee</h3>
+              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-1.5 text-sm text-slate-500 dark:text-slate-400">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                  Based in Coimbatore, Tamil Nadu, India
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  I typically respond to all inquiries within 24 hours. For
-                  urgent projects, feel free to reach out via phone or LinkedIn
-                  for faster communication.
-                </p>
+                <div className="pl-[22px] text-slate-400 dark:text-slate-500">
+                  Available for remote collaboration
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Embedded Map */}
-          <div className="mt-16 max-w-6xl mx-auto">
-            <div className="glass rounded-xl overflow-hidden">
-              <div className="aspect-video bg-gray-200 dark:bg-gray-700 relative">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d159370.4936359196!2d76.8703483!3d11.0168449!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1642092741015!5m2!1sen!2sus"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Coimbatore Location"
-                  className="rounded-lg"
+          {/* Form */}
+          <motion.div variants={fadeUp}>
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-6 md:p-8">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-5">
+                Send a Message
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="absolute opacity-0 pointer-events-none h-0 w-0"
+                  aria-hidden="true"
                 />
-              </div>
-            </div>
-          </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
+                    >
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 focus:border-transparent bg-white dark:bg-slate-800 text-sm transition-shadow"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 focus:border-transparent bg-white dark:bg-slate-800 text-sm transition-shadow"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
 
-          {/* FAQ Section */}
-          <div className="mt-16 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-8 text-center">
-              Frequently Asked Questions
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="glass rounded-xl p-6">
-                <h3 className="font-bold mb-2">
-                  What's your typical project timeline?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Project timelines vary based on complexity, but most web
-                  applications take 2-8 weeks from start to deployment.
-                </p>
-              </div>
-              <div className="glass rounded-xl p-6">
-                <h3 className="font-bold mb-2">
-                  Do you work with remote teams?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Yes! I have extensive experience working with distributed
-                  teams across different time zones.
-                </p>
-              </div>
-              <div className="glass rounded-xl p-6">
-                <h3 className="font-bold mb-2">
-                  What technologies do you specialize in?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  I specialize in .NET Core, Azure cloud services, React, and
-                  modern DevOps practices.
-                </p>
-              </div>
-              <div className="glass rounded-xl p-6">
-                <h3 className="font-bold mb-2">
-                  Do you provide ongoing support?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Yes, I offer maintenance and support packages to keep your
-                  applications running smoothly.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Call to Action */}
-          <div className="mt-16 text-center">
-            <div className="glass rounded-xl p-12 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
-              <h2 className="text-3xl font-bold mb-4">
-                Ready to Start Your Project?
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                Let's discuss your ideas and turn them into reality. I'm here to
-                help you build something amazing.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  onClick={() => document.getElementById("name")?.focus()}
-                  className="h-12 px-8 text-lg font-semibold bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
-                >
-                  Start a Project
-                </Button>
-                <Button
-                  asChild
-                  className="h-12 px-8 text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white transition-all duration-300 transform hover:scale-105"
-                >
-                  <a
-                    href="https://topmate.io/elanchezhiyan_poosamani"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={trackBookCall}
+                <div>
+                  <label
+                    htmlFor="inquiryType"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
                   >
-                    Book a Free Call
-                  </a>
-                </Button>
+                    Project Type
+                  </label>
+                  <select
+                    id="inquiryType"
+                    name="inquiryType"
+                    value={formData.inquiryType}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 focus:border-transparent bg-white dark:bg-slate-800 text-sm transition-shadow"
+                  >
+                    <option value="">Select an option</option>
+                    <option value="Job Opportunity">Job Opportunity</option>
+                    <option value="Freelance Project">Freelance Project</option>
+                    <option value="Collaboration">Collaboration</option>
+                    <option value="Consultation">Consultation</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
+                  >
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 focus:border-transparent bg-white dark:bg-slate-800 text-sm transition-shadow"
+                    placeholder="Project discussion"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={6}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-400 theme-green:focus:ring-green-400 focus:border-transparent bg-white dark:bg-slate-800 text-sm resize-none transition-shadow"
+                    placeholder="Tell me what you're building, or where you're stuck..."
+                  />
+                </div>
+
+                <div className="space-y-2 pt-1">
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey="0x4AAAAAACewOzRpVzmZoHfo"
+                    appearance="interaction-only"
+                    onSuccess={(token) => {
+                      setTurnstileToken(token);
+                      setFormError(null);
+                    }}
+                    onExpire={() => {
+                      setTurnstileToken(null);
+                      setFormError(
+                        "Verification expired. Please complete the verification again.",
+                      );
+                    }}
+                    onError={() => {
+                      setTurnstileToken(null);
+                      setFormError(
+                        "Verification failed. Please refresh the page and try again.",
+                      );
+                    }}
+                  />
+                  {formError && (
+                    <p role="alert" className="text-sm text-red-600 dark:text-red-400 flex items-start gap-1.5">
+                      {formError}
+                    </p>
+                  )}
+                </div>
+
                 <Button
-                  variant="outline"
-                  onClick={() =>
-                    window.open("mailto:elanche97@gmail.com", "_blank")
-                  }
-                  className="h-12 px-8 text-lg font-semibold"
+                  type="submit"
+                  disabled={isSubmitting || !isFormValid || !turnstileToken}
+                  className="w-full bg-blue-700 theme-green:bg-green-700 hover:bg-blue-800 theme-green:hover:bg-green-800 text-white font-semibold"
+                  size="lg"
                 >
-                  Send Email
+                  {isSubmitting ? (
+                    <>
+                      <div
+                        className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"
+                        aria-hidden="true"
+                      />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4 mr-2" />
+                      Send Message
+                    </>
+                  )}
                 </Button>
-              </div>
+              </form>
             </div>
+          </motion.div>
+        </motion.section>
+
+        {/* What I Can Help With */}
+        <motion.section
+          aria-labelledby="help-heading"
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={stagger(0.08)}
+          className="max-w-5xl mx-auto mb-14 md:mb-20"
+        >
+          <motion.h3
+            id="help-heading"
+            variants={fadeUp}
+            className="text-center text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-8"
+          >
+            What I Can Help With
+          </motion.h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {helpDomains.map((domain) => {
+              const Icon = HELP_ICONS[domain.id] ?? Layers;
+              return (
+                <motion.div
+                  key={domain.id}
+                  variants={fadeUp}
+                  whileHover={{ y: -3 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-5"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-900/20 theme-green:bg-green-50 theme-green:dark:bg-green-900/20 flex items-center justify-center mb-3 text-blue-600 dark:text-blue-400 theme-green:text-green-600">
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white mb-1.5 leading-tight">
+                    {domain.title}
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {domain.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
-        </div>
+        </motion.section>
+
+        {/* FAQ */}
+        <motion.section
+          aria-labelledby="faq-heading"
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={fadeUp}
+          className="max-w-2xl mx-auto mb-14 md:mb-20"
+        >
+          <h3
+            id="faq-heading"
+            className="text-center text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-6"
+          >
+            Frequently Asked Questions
+          </h3>
+          <Accordion type="single" collapsible className="w-full">
+            {FAQS.map((faq, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="text-left text-sm font-semibold text-slate-800 dark:text-slate-100">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.section>
+
+        {/* Final CTA */}
+        <motion.section
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          variants={fadeUp}
+          className="text-center"
+        >
+          <div className="max-w-xl mx-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-900 p-8 md:p-10">
+            <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              Have a Technical Challenge?
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
+              Tell me what you're building, what you're trying to solve, or
+              where you're stuck.
+            </p>
+            <Button
+              onClick={scrollToForm}
+              size="lg"
+              className="bg-blue-700 theme-green:bg-green-700 hover:bg-blue-800 theme-green:hover:bg-green-800 text-white font-semibold"
+            >
+              Start a Conversation
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+        </motion.section>
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/Layout";
 import { JsonLd } from "./components/JsonLd";
+import { Preloader } from "./components/Preloader";
 import React, { Suspense, useEffect } from "react";
 import { preloadBlogData } from "./utils/blogService";
 import { trackPageView } from "./utils/analytics";
@@ -35,10 +36,21 @@ const PageLoader = () => (
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useEffect(() => {
+    // `behavior: "instant"` bypasses the global `scroll-behavior: smooth`
+    // (index.css) — without it, this animates and can be fought by the
+    // user's own scroll input right after a page load or route change.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     trackPageView(pathname);
   }, [pathname]);
+
   return null;
 };
 
@@ -54,6 +66,7 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
+          <Preloader />
           <Toaster />
           <Sonner />
           <BrowserRouter>

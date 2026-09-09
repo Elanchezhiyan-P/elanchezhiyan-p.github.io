@@ -350,8 +350,12 @@
       "Azure",
       "WebHooks",
       "CosmosDB",
+      "MongoDB",
       "Kno2",
-      "Stripe Payment gateway"
+      "Stripe Payment gateway",
+      "Stedi",
+      "Healthie",
+      "Medplum"
     ],
     "links": {
       "live": "https://tmx-web-bterbta3czakfpcq.z03.azurefd.net/auth"
@@ -365,9 +369,12 @@
       "Secure data storage and retrieval",
       "React-based frontend",
       "Persona integration for user management",
-      "DICOM Viewer for medical imaging"
+      "DICOM Viewer for medical imaging",
+      "Insurance eligibility & claims integration (270/271 eligibility, CMS-1500/837P claims, 835 ERA)",
+      "Multi-tenant, five-role access architecture",
+      "Azure cost optimization across compute, storage, and database tiers"
     ],
-    "technicalImplementation": "TeleMEDix combines .NET Core for backend API services and React for the dynamic frontend interface, creating a responsive and user-friendly experience. The backend integrates CosmosDB for scalable, secure patient data storage, while Azure Blob Storage is used to manage consultation files, medical records, and images. The application follows CCDA standards for patient data exchange and integrates with Kno2 for secure data interoperability. For medical imaging, a DICOM Viewer is implemented, allowing healthcare professionals to view and interact with medical images seamlessly. Persona is used for secure user management and authentication, ensuring robust user access control across the platform. This entire solution is hosted on Azure App Service, providing scalability and reliability.",
+    "technicalImplementation": "TeleMEDix combines .NET Core for backend API services and React for the dynamic frontend interface, creating a responsive and user-friendly experience. The backend integrates CosmosDB for scalable, secure patient data storage, while Azure Blob Storage is used to manage consultation files, medical records, and images. The application follows CCDA standards for patient data exchange and integrates with Kno2 for secure data interoperability. For medical imaging, a DICOM Viewer is implemented, allowing healthcare professionals to view and interact with medical images seamlessly. Persona is used for secure user management and authentication, ensuring robust user access control across a multi-tenant, five-role architecture. This entire solution is hosted on Azure App Service, providing scalability and reliability. For insurance eligibility and claims, I evaluated Stedi, Healthie, and Medplum as build-vs-buy options — verifying Stedi's real-time 270/271 eligibility and insurance-card OCR pipeline, and integrating Healthie's GraphQL API for payer selection, policy updates, and CMS-1500/837P claim generation with prior-authorization numbers carried in Box 23 (referral_info.prior_auth_number). On the infrastructure side, I diagnosed a Cosmos DB throttling issue as a hot-partition (429) problem rather than a genuine RU capacity ceiling, avoiding an unnecessary capacity upgrade, and reduced monthly Azure spend through serverless SQL, storage tiering, App Service right-sizing, and VM scheduling. A self-hosted MongoDB instance supporting the platform is monitored with PMM (Percona Monitoring and Management), with WiredTiger cache tuning, query profiling, OOM protection, and Slack alerting for long-running queries.",
     "projectType": "Web API Application"
   },
   {
